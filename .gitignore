@@ -1,2 +1,5 @@
-/spring-company.iml
-/.idea/
+/.classpath
+/target/
+/.settings/
+/.project
+/.gitignore
