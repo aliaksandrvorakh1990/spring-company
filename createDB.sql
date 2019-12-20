@@ -10,4 +10,4 @@ CREATE TABLE  job_title (title_id INT AUTO_INCREMENT, title VARCHAR(20) NOT NULL
 
 CREATE TABLE employee (employee_id INT AUTO_INCREMENT, personal_data_id INT, title_id INT, company_id INT, CONSTRAINT employee_pk PRIMARY KEY (employee_id), CONSTRAINT emp_company_fk FOREIGN KEY (company_id) REFERENCES company (company_id));
 
-CREATE TABLE  employee_to_skill (employee_id INT , skill_id INT);
+CREATE TABLE  employee_to_skill (employee_id INT , skill_id INT, CONSTRAINT emp_skill_fk FOREIGN KEY (employee_id) REFERENCES employee (employee_id));
