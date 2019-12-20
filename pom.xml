@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>by.vorakh.alex</groupId>
-    <artifactId>spting-company</artifactId>
+    <artifactId>spring-company</artifactId>
     <version>1.0</version>
 
     <parent>
