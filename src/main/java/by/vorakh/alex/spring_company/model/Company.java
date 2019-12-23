@@ -2,9 +2,21 @@ package by.vorakh.alex.spring_company.model;
 
 public class Company {
   	
-    private int id;
+    private Integer id;
     private String name;
     
+    public Company() {}
+    
+    public Company(CompanyForm form) {
+	this.id = form.getId();
+	this.name = form.getName();
+    }
+    
+    public Company(Integer id, String name) {
+	this.id = id;
+	this.name = name;
+    }
+
     public Company setId(int id) {
         this.id = id;
         return this;
@@ -15,7 +27,7 @@ public class Company {
         return this;
     }
     	
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     
@@ -32,7 +44,7 @@ public class Company {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = prime * result + id.hashCode();
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }

@@ -8,6 +8,9 @@ public class Employee {
     private JobTitle jobTitle;
     private List<Skill> skills;
     
+    public Employee() {}
+    
+    
     public Employee(int id, PersonalData pesonalData, JobTitle jobTitle, List<Skill> skills) {
 	this.id = id;
 	this.pesonalData = pesonalData;

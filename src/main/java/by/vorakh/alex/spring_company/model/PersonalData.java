@@ -5,6 +5,8 @@ public class PersonalData {
     private String firstName;
     private String lastName;
     
+    public PersonalData() {}
+    
     public PersonalData(int id, String firstName, String lastName) {
 	this.id = id;
 	this.firstName = firstName;
