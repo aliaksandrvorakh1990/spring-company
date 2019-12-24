@@ -1,7 +1,10 @@
 package mess;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Task_254 {
@@ -12,30 +15,30 @@ public class Task_254 {
 	    int earldomCounts = scanner.nextInt();
 	    
 	    int[] patronElectionsForEarldom = new int[earldomCounts];
-	    int[]  patronElectionsForconfederation = new int[earldomCounts];  // for compering Elections
-	    // result between Earldoms and confederation
 
 	    for (int earldom = 0; earldom < earldomCounts; earldom++) {
 		int approval = scanner.nextInt();
 		patronElectionsForEarldom[earldom] = approval;
-		patronElectionsForconfederation[earldom] = approval;
 	    }
 
 	    int confederationApprovalsCount = scanner.nextInt();
 	    
+	    Map<Integer,Integer> patronElectionsForConfederation = new HashMap<>();
+	    
 	    for (int approvalNumber = 0; approvalNumber < confederationApprovalsCount; approvalNumber++) {
-		int alterablePatron = scanner.nextInt();
-		int desiredPatron =  scanner.nextInt();
+		Integer alterablePatron = scanner.nextInt();
+		Integer desiredPatron =  scanner.nextInt();
 		
-		for (int earldom = 0; earldom < earldomCounts; earldom++) {
-		    if (patronElectionsForEarldom[earldom] == alterablePatron) {
-			patronElectionsForconfederation[earldom] = desiredPatron;
-		    }   
-		}
+		patronElectionsForConfederation.put(alterablePatron, desiredPatron);
+	    }
+	    
+	    for (int earldom = 0; earldom < earldomCounts; earldom++) {
+		patronElectionsForEarldom[earldom] = patronElectionsForConfederation
+			.getOrDefault(patronElectionsForEarldom[earldom], patronElectionsForEarldom[earldom]);
 	    }
 	    
 	    //  write result to file
-	    for (int patron : patronElectionsForconfederation) {
+	    for (int patron : patronElectionsForEarldom) {
 		printWriter.print(patron + " ");
 	    }
 	}
