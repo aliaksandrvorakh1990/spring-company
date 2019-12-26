@@ -19,58 +19,11 @@ import by.vorakh.alex.spring_company.repository.dao.CompanyDAO;
 @RestController 
 public class MainRESTController {
     
-    @Autowired
-    private CompanyDAO companyDAO;
-    
-    @RequestMapping(value = "/companies", 
-            method = RequestMethod.GET, 
-            produces = { MediaType.APPLICATION_JSON_VALUE, 
-                    MediaType.APPLICATION_XML_VALUE })
-    @ResponseBody
-    public List<Company> getCompanies() {
-        List<Company> list = companyDAO.getAllCompanies();
-        return list;
-    }
-    
-    @RequestMapping(value = "/company/{id}", 
-            method = RequestMethod.GET, 
-            produces = { MediaType.APPLICATION_JSON_VALUE, 
-                    MediaType.APPLICATION_XML_VALUE })
-    @ResponseBody
+   
+   
+    @RequestMapping("/company/{id}")
     public Company getEmployee(@PathVariable("id") Integer id) {
-        return companyDAO.getCompany(id);
+        return new Company(id, "test");
     }
-    
 
-    @RequestMapping(value = "/company", 
-            method = RequestMethod.POST, 
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    @ResponseBody
-    public Company addCompany(@RequestBody CompanyForm form) {
-	System.out.println("(Service Side) Creating company with id: " + form.getId());
-	return companyDAO.addCompany(form);
-    }
-    
-    @RequestMapping(value = "/company", 
-            method = RequestMethod.PUT, 
-            produces = { MediaType.APPLICATION_JSON_VALUE, 
-                    MediaType.APPLICATION_XML_VALUE })
-    @ResponseBody
-    public Company updateCompany(@RequestBody CompanyForm form) {
-        System.out.println("(Service Side) Editing company with id: " + form.getId());
-	return companyDAO.updateCompany(form);
-    }
-    
-    
-    @RequestMapping(value = "/company/{id}", 
-            method = RequestMethod.DELETE, 
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    @ResponseBody
-    public void deleteEmployee(@PathVariable("id")  Integer id) {
-  
-        System.out.println("(Service Side) Deleting company with Id: " + id);
-  
-        companyDAO.deleteCompany(id);
-    }
-    
 }

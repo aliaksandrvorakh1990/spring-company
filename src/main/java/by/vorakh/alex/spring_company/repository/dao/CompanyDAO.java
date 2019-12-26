@@ -13,7 +13,6 @@ import by.vorakh.alex.spring_company.model.Company;
 import by.vorakh.alex.spring_company.model.CompanyForm;
 
 
-@Repository
 public class CompanyDAO {
     
     private static final Map<Integer, Company> companyMap = new HashMap<Integer, Company>();
