@@ -17,6 +17,7 @@ public class Company  {
     
     @NotNull
     @Size(min = 2, max = 40)
+    @OneToMany(fetch = FetchType.EAGER)
     @Column(name = "name", length=40, nullable=false, unique=true)
     private String name;
     

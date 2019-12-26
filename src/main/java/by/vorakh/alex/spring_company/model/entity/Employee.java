@@ -17,10 +17,10 @@ public class Employee {
     @Column(name = "employee_id")
     private int id;
     
-    @Column(name = "personal_data_id")
+   
     private PersonalData pesonalData;
     
-    @Column(name = "title_id")
+    
     private JobTitle jobTitle;
     
     private List<Skill> skills;

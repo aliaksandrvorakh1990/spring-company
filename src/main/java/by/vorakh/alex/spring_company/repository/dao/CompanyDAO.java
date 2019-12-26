@@ -9,6 +9,7 @@ import by.vorakh.alex.spring_company.utility.HibernateUtility;
 
 public class CompanyDAO implements DAO<Company>{
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Company> getAll() {
 	Session session = HibernateUtility.getSessionFactory().openSession(); 
@@ -44,6 +45,10 @@ public class CompanyDAO implements DAO<Company>{
 	Session session = HibernateUtility.getSessionFactory().openSession(); 
 	session.delete(object);
 	session.close();
+    }
+    
+    public static void main(String[] args) {
+	System.out.println(new CompanyDAO().getById(1));
     }
 
 }
