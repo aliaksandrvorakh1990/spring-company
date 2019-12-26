@@ -2,11 +2,12 @@ package by.vorakh.alex.spring_company.repository.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import by.vorakh.alex.spring_company.model.entity.Company;
 import by.vorakh.alex.spring_company.repository.dao.CompanyDAO;
 
 public class CompanyService implements Service<Company>{
-    
+    @Autowired
     private CompanyDAO companyDAO = new CompanyDAO();
     
     @Override

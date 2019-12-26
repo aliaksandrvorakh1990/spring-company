@@ -1,6 +1,8 @@
 package by.vorakh.alex.spring_company.model.entity;
 
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="company")
-public class Company  {
+public class Company implements Serializable {
     
     @Id 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,7 +19,6 @@ public class Company  {
     
     @NotNull
     @Size(min = 2, max = 40)
-    @OneToMany(fetch = FetchType.EAGER)
     @Column(name = "name", length=40, nullable=false, unique=true)
     private String name;
     
