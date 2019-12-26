@@ -1,16 +1,15 @@
-package by.vorakh.alex.spring_company.model;
+package by.vorakh.alex.spring_company.model.entity;
 
-public class Company {
+import java.io.Serializable;
+
+public class Company implements Serializable {
   	
+    private static final long serialVersionUID = 1L;
+    
     private Integer id;
     private String name;
     
     public Company() {}
-    
-    public Company(CompanyForm form) {
-	this.id = form.getId();
-	this.name = form.getName();
-    }
     
     public Company(Integer id, String name) {
 	this.id = id;
