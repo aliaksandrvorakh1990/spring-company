@@ -1,12 +1,23 @@
 package by.vorakh.alex.spring_company.model.entity;
 
-import java.io.Serializable;
 
-public class Company implements Serializable {
-  	
-    private static final long serialVersionUID = 1L;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+
+@Entity
+@Table(name="company")
+public class Company  {
     
+    @Id 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "company_id")
     private Integer id;
+    
+    @NotNull
+    @Size(min = 2, max = 40)
+    @Column(name = "name", length=40, nullable=false, unique=true)
     private String name;
     
     public Company() {}

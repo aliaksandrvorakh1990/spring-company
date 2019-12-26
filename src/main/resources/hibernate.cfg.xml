@@ -4,14 +4,19 @@
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+        
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.password">123</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/scbase</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/scbase?useSSL=false</property>
         <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">123</property>
+        
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="current_session_context_class">thread</property>
+        <property name="hibernate.connection.pool_size">10</property>
+        
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
         <property name="show_sql">true</property>
 
-        <mapping resource="by/vorakh/alex/spring_company/Company.hbm.xml"></mapping>
+        <mapping class="by.vorakh.alex.spring_company.model.entity.Company"></mapping>
     </session-factory>
 </hibernate-configuration>

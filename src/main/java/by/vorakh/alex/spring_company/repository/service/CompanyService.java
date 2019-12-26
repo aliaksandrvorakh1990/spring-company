@@ -32,7 +32,8 @@ public class CompanyService implements Service<Company>{
 
     @Override
     public void delete(int id) {
-	companyDAO.delete(id);
+	Company deletedCompany = companyDAO.getById(id);
+	companyDAO.delete(deletedCompany);
     }
 
 }
