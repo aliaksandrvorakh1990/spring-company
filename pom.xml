@@ -25,6 +25,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+        <dependency>
+		    <groupId>com.mchange</groupId>
+		    <artifactId>c3p0</artifactId>
+		    <version>0.9.5.5</version>
+        </dependency>
+		
 		<dependency>
 		    <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -32,7 +39,7 @@
         </dependency>
 		<dependency>
 			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId><!--$NO-MVN-MAN-VER$-->
+			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.18</version>
 		</dependency>
 	</dependencies>
