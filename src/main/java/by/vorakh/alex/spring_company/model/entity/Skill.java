@@ -1,7 +1,26 @@
-package by.vorakh.alex.spring_company.model;
+package by.vorakh.alex.spring_company.model.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name="employee_skill")
 public class Skill {
+    
+    @Id 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "skill_id")
     private int id;
+    
+    @NotNull
+    @Size(min = 2, max = 25)
+    @Column(name = "skill", length=25, nullable=false, unique=true)
     private String skillName;
     
     public Skill() {}

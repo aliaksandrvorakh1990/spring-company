@@ -1,11 +1,28 @@
-package by.vorakh.alex.spring_company.model;
+package by.vorakh.alex.spring_company.model.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="employee")
 public class Employee {
-    private int id;   
+    @Id 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "employee_id")
+    private int id;
+    
+    @Column(name = "personal_data_id")
     private PersonalData pesonalData;
+    
+    @Column(name = "title_id")
     private JobTitle jobTitle;
+    
     private List<Skill> skills;
     
     public Employee() {}

@@ -1,8 +1,31 @@
-package by.vorakh.alex.spring_company.model;
+package by.vorakh.alex.spring_company.model.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name="personal_data")
 public class PersonalData {
+
+    @Id 
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "personal_data_id")
     private int id;
+    
+    @NotNull
+    @Size(min = 2, max = 20)
+    @Column(name = "first_name", length=20, nullable=false)
     private String firstName;
+    
+    @NotNull
+    @Size(min = 2, max = 20)
+    @Column(name = "last_name", length=20, nullable=false)
     private String lastName;
     
     public PersonalData() {}
