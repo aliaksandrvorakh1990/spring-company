@@ -9,8 +9,8 @@ import javax.validation.constraints.Size;
 public class JobTitle {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "title_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "title_id", unique = true, nullable = false)
     private int id;
 
     @NotNull
