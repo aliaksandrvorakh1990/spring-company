@@ -36,6 +36,7 @@ public class CompanyService implements ServiceInterface<Company> {
     @Override
     public void delete(int id) {
         Company deletedCompany = companyDAO.getById(id);
+        System.out.println(deletedCompany);
         companyDAO.delete(deletedCompany);
     }
 
