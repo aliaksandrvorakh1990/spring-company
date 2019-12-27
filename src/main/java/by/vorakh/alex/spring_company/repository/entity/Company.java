@@ -55,8 +55,8 @@ public class Company implements Serializable {
 	result = prime * result + ((name == null) ? 0 : name.hashCode());
 	return result;
     }
-    
-    
+
+
 
     @Override
     public String toString() {
@@ -74,7 +74,7 @@ public class Company implements Serializable {
 	if (getClass() != obj.getClass()) {
 	    return false;
 	}
-	    
+
 	Company other = (Company) obj;
 	if (id == null) {
 	    if (other.id != null) {
@@ -90,11 +90,11 @@ public class Company implements Serializable {
 	} else if (!name.equals(other.name)) {
 	    return false;
 	}
-	    
+
 	return true;
     }
 
-    
-    
+
+
 
 }

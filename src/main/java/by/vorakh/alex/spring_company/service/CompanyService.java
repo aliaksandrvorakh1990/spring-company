@@ -5,9 +5,8 @@ import by.vorakh.alex.spring_company.repository.entity.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class CompanyService implements ServiceInterface<Company> {
@@ -31,11 +30,13 @@ public class CompanyService implements ServiceInterface<Company> {
     }
 
     @Override
+    @Transactional
     public void update(Company object) {
         companyDAO.update(object);
     }
 
     @Override
+    @Transactional
     public void delete(int id) {
         Company deletedCompany = companyDAO.getById(id);
         companyDAO.delete(deletedCompany);

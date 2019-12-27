@@ -1,57 +1,42 @@
 package by.vorakh.alex.spring_company.repository;
 
 import by.vorakh.alex.spring_company.repository.entity.Company;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 public class CompanyDAO implements DAO<Company> {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
     @Override
     public List<Company> getAll() {
-        Session session = sessionFactory.openSession();
-        List<Company> list = session.createQuery("from Company").list();
-        session.close();
-        return list;
+        return (List<Company>) entityManager.createQuery("select c from Company c").getResultList();
     }
 
     @Override
     public Company getById(int id) {
-        Session session = sessionFactory.openSession();
-
-        return session.get(Company.class, id);
+        return entityManager.find(Company.class, id);
     }
 
     @Override
     public void create(Company object) {
-        Session session = sessionFactory.openSession();
-        session.save(object);
+        entityManager.persist(object);
     }
 
     @Override
     public void update(Company object) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.saveOrUpdate(object);
-        session.getTransaction().commit();
-        session.close();
+        entityManager.merge(object);
     }
 
     @Override
     public void delete(Company object) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.delete(object);
-        session.getTransaction().commit();
-        session.close();
+        entityManager.remove(object);
     }
 
 }
