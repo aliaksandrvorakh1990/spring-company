@@ -3,18 +3,22 @@ package by.vorakh.alex.spring_company.repository;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import by.vorakh.alex.spring_company.repository.entity.Company;
-import by.vorakh.alex.spring_company.utility.HibernateUtility;
 
 @Repository
 public class CompanyDAO implements DAO<Company>{
+    
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @SuppressWarnings("unchecked")
     @Override
     public List<Company> getAll() {
-	Session session = HibernateUtility.getSessionFactory().openSession(); 
+	Session session = sessionFactory.openSession(); 
 	List<Company> list =session.createQuery("from Company").list();
 	session.close();
 	return list;
@@ -22,34 +26,30 @@ public class CompanyDAO implements DAO<Company>{
 
     @Override
     public Company getById(int id) {
-	Session session = HibernateUtility.getSessionFactory().openSession(); 
+	Session session = sessionFactory.openSession(); 
 
 	return session.get(Company.class, id);
     }
 
     @Override
     public void create(Company object) {
-	Session session = HibernateUtility.getSessionFactory().openSession(); 
+	Session session = sessionFactory.openSession(); 
 	session.save(object); 
 	session.close();
     }
 
     @Override
     public void update(Company object) {
-	Session session = HibernateUtility.getSessionFactory().openSession(); 
+	Session session = sessionFactory.openSession(); 
 	session.saveOrUpdate(object); 
 	session.close();
     }
 
     @Override
     public void delete(Company object) {
-	Session session = HibernateUtility.getSessionFactory().openSession(); 
+	Session session = sessionFactory.openSession(); 
 	session.delete(object);
 	session.close();
     }
     
-    public static void main(String[] args) {
-	System.out.println(new CompanyDAO().getById(1));
-    }
-
 }
