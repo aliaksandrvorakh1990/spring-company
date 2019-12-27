@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 @Service
 public class CompanyService implements ServiceInterface<Company> {
     @Autowired
@@ -23,9 +25,9 @@ public class CompanyService implements ServiceInterface<Company> {
     }
 
     @Override
+    @Transactional
     public void create(Company object) {
         companyDAO.create(object);
-
     }
 
     @Override
@@ -36,7 +38,6 @@ public class CompanyService implements ServiceInterface<Company> {
     @Override
     public void delete(int id) {
         Company deletedCompany = companyDAO.getById(id);
-        System.out.println(deletedCompany);
         companyDAO.delete(deletedCompany);
     }
 

@@ -33,10 +33,7 @@ public class CompanyDAO implements DAO<Company> {
     @Override
     public void create(Company object) {
         Session session = sessionFactory.openSession();
-        session.beginTransaction();
         session.save(object);
-        session.getTransaction().commit();
-        session.close();
     }
 
     @Override

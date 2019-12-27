@@ -13,7 +13,7 @@ public class Company implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "company_id")
+    @Column(name = "company_id", unique = true, nullable = false)
     private Integer id;
 
     @NotNull
