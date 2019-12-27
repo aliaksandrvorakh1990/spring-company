@@ -3,10 +3,12 @@ package by.vorakh.alex.spring_company.service;
 import by.vorakh.alex.spring_company.repository.CompanyDAO;
 import by.vorakh.alex.spring_company.repository.entity.Company;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class CompanyService implements Service<Company> {
+@Service
+public class CompanyService implements ServiceInterface<Company> {
     @Autowired
     private CompanyDAO companyDAO;
 
