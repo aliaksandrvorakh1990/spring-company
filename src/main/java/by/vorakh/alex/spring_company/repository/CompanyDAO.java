@@ -1,11 +1,11 @@
-package by.vorakh.alex.spring_company.repository.dao;
+package by.vorakh.alex.spring_company.repository;
 
 import java.util.List;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import by.vorakh.alex.spring_company.model.entity.Company;
+import by.vorakh.alex.spring_company.repository.entity.Company;
 import by.vorakh.alex.spring_company.utility.HibernateUtility;
 
 @Repository

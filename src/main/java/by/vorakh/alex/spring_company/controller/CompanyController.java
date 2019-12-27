@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import by.vorakh.alex.spring_company.model.entity.Company;
-import by.vorakh.alex.spring_company.repository.service.CompanyService;
+import by.vorakh.alex.spring_company.repository.entity.Company;
+import by.vorakh.alex.spring_company.service.CompanyService;
 
 
 @RestController

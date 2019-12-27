@@ -1,4 +1,4 @@
-package by.vorakh.alex.spring_company.model.entity;
+package by.vorakh.alex.spring_company.repository.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

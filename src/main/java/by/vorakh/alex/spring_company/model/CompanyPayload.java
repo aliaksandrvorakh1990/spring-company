@@ -1,6 +1,6 @@
 package by.vorakh.alex.spring_company.model;
 
-public class CompanyForm {
+public class CompanyPayload {
     private Integer id;
     private String name;
     

@@ -1,10 +1,11 @@
-package by.vorakh.alex.spring_company.repository.service;
+package by.vorakh.alex.spring_company.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import by.vorakh.alex.spring_company.model.entity.Company;
-import by.vorakh.alex.spring_company.repository.dao.CompanyDAO;
+
+import by.vorakh.alex.spring_company.repository.CompanyDAO;
+import by.vorakh.alex.spring_company.repository.entity.Company;
 
 public class CompanyService implements Service<Company>{
     @Autowired

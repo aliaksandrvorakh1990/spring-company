@@ -1,7 +1,8 @@
-package by.vorakh.alex.spring_company.model.entity;
+package by.vorakh.alex.spring_company.repository.entity;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,11 +23,14 @@ public class Company implements Serializable {
     @Column(name = "name", length=40, nullable=false, unique=true)
     private String name;
     
+    private List<Employee> employeeList;
+    
     public Company() {}
     
-    public Company(Integer id, String name) {
+    public Company(Integer id, String name, List<Employee> employeeList) {
 	this.id = id;
 	this.name = name;
+	this.employeeList = employeeList;
     }
 
     public Company setId(int id) {
@@ -39,6 +43,10 @@ public class Company implements Serializable {
         return this;
     }
     	
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -47,23 +55,30 @@ public class Company implements Serializable {
         return name;
     }
     
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
     @Override
     public String toString() {
-        return "Company[id=" + id + ", name=" + name + "]";
+	return "Company [id=" + id + ", name=" + name + ", employeeList=" + employeeList + "]";
     }
-    
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + id.hashCode();
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
+	final int prime = 31;
+	int result = 1;
+	
+	result = prime * result + ((id == null) ? 0 : id.hashCode());
+	result = prime * result + ((name == null) ? 0 : name.hashCode());
+	result = prime * result + ((employeeList == null) ? 0 : employeeList.hashCode());
+	
+	return result;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+	if (this == obj) {
             return true;
         }
         if (obj == null) {
@@ -83,6 +98,15 @@ public class Company implements Serializable {
         } else if (!name.equals(other.name)) {
             return false;
         }
+        if (employeeList == null) {
+	    if (other.employeeList != null) {
+		return false;
+	    }
+	} else if (!employeeList.equals(other.employeeList)) {
+	    return false;
+	}
+	   
         return true;
     }
+
 }

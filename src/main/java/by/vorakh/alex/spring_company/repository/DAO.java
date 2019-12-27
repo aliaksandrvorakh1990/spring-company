@@ -1,8 +1,8 @@
-package by.vorakh.alex.spring_company.repository.service;
+package by.vorakh.alex.spring_company.repository;
 
 import java.util.List;
 
-public interface Service<V> {
+public interface DAO<V> {
     List<V> getAll();
     
     V getById(int id);
@@ -11,5 +11,5 @@ public interface Service<V> {
     
     void update(V object);
     
-    void delete(int id);
+    void delete(V object);
 }

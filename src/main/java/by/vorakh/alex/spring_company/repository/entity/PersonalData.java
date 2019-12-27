@@ -1,4 +1,4 @@
-package by.vorakh.alex.spring_company.model.entity;
+package by.vorakh.alex.spring_company.repository.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

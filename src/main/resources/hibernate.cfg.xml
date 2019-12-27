@@ -16,7 +16,7 @@
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
         <property name="show_sql">true</property>
 
-        <mapping class="by.vorakh.alex.spring_company.model.entity.Company"></mapping>
+        <mapping class="by.vorakh.alex.spring_company.repository.entity.Company"></mapping>
       
     </session-factory>
 </hibernate-configuration>
