@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CompanyService implements Service<Company> {
     @Autowired
-    private CompanyDAO companyDAO = new CompanyDAO();
+    private CompanyDAO companyDAO;
 
     @Override
     public List<Company> getAll() {

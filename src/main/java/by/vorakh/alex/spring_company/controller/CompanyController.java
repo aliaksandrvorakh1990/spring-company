@@ -3,6 +3,8 @@ package by.vorakh.alex.spring_company.controller;
 
 import by.vorakh.alex.spring_company.repository.entity.Company;
 import by.vorakh.alex.spring_company.service.CompanyService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,8 +14,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/project")
 public class CompanyController {
-
-    private CompanyService companyService = new CompanyService();
+    @Autowired
+    private CompanyService companyService;
 
     @GetMapping("/companies")
     public List<Company> getCompanies() {
