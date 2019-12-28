@@ -36,7 +36,7 @@ public class PersonalDataController {
     }
 
     @PostMapping("/people")
-    public void createPersonalData(@Valid @RequestBody PersonalData newPersonalData) {
+    public void createPersonalData(@Valid @RequestBody PersonalDataPayload newPersonalData) {
 	personalDataService.create(newPersonalData);
     }
 

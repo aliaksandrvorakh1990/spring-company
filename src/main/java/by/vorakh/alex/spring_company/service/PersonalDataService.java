@@ -26,17 +26,11 @@ public class PersonalDataService implements ServiceInterface<PersonalData, Perso
     public PersonalData getById(int id) {
 	return personalDataDAO.getById(id);
     }
-
-
+    
+    @Override
     @Transactional
-    public void create(PersonalData object) {
-	personalDataDAO.create(object);
-    }
-
-   
-    @Transactional
-    public void update(PersonalData object) {
-	personalDataDAO.update(object);
+    public void create(PersonalDataPayload newPayload) {
+	personalDataDAO.create(new PersonalData(newPayload));
     }
     
     @Override
@@ -52,12 +46,6 @@ public class PersonalDataService implements ServiceInterface<PersonalData, Perso
     public void delete(int id) {
 	PersonalData deletedPersonalData = personalDataDAO.getById(id);
 	personalDataDAO.delete(deletedPersonalData);
-    }
-
-    @Override
-    public void create(PersonalDataPayload newPayload) {
-	// TODO Auto-generated method stub
-	
     }
 
 }
