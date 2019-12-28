@@ -7,11 +7,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import by.vorakh.alex.spring_company.model.JobTitlePayload;
 import by.vorakh.alex.spring_company.repository.JobTitleDAO;
 import by.vorakh.alex.spring_company.repository.entity.JobTitle;
 
 @Service
-public class JobTitleService implements ServiceInterface<JobTitle> {
+public class JobTitleService implements ServiceInterface<JobTitle, JobTitlePayload> {
 
     @Autowired
     private JobTitleDAO jobTitleDAO;
@@ -26,29 +27,33 @@ public class JobTitleService implements ServiceInterface<JobTitle> {
 	return jobTitleDAO.getById(id);
     }
 
-    @Override
     @Transactional
     public void create(JobTitle object) {
 	jobTitleDAO.create(object);
     }
 
-    
     @Transactional
     public void update(JobTitle object) {
 	jobTitleDAO.update(object);
     }
-    
-    //@Override
-   // public void update(int id, JobTitle editedObject) {
-	// TODO Auto-generated method stub
-	
-   // }
 
     @Override
     @Transactional
     public void delete(int id) {
 	JobTitle deletedJobTitle = jobTitleDAO.getById(id);
 	jobTitleDAO.delete(deletedJobTitle);
+    }
+
+    @Override
+    public void create(JobTitlePayload newPayload) {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void update(int id, JobTitlePayload editedPayload) {
+	// TODO Auto-generated method stub
+	
     }
 
     

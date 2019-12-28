@@ -2,16 +2,14 @@ package by.vorakh.alex.spring_company.service;
 
 import java.util.List;
 
-public interface ServiceInterface<V> {
-    List<V> getAll();
+public interface ServiceInterface<E,P> {
+    List<E> getAll();
 
-    V getById(int id);
+    E getById(int id);
 
-    void create(V object);
+    void create(P newPayload);
 
-    //void update(V object);
-    
-    //void update(int id, V editedObject);
+    void update(int id, P editedPayload);
 
     void delete(int id);
 }

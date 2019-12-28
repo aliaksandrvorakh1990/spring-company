@@ -12,7 +12,7 @@ import by.vorakh.alex.spring_company.repository.PersonalDataDAO;
 import by.vorakh.alex.spring_company.repository.entity.PersonalData;
 
 @Service
-public class PersonalDataService implements ServiceInterface<PersonalData>{
+public class PersonalDataService implements ServiceInterface<PersonalData, PersonalDataPayload>{
 
     @Autowired
     private PersonalDataDAO personalDataDAO;
@@ -27,7 +27,7 @@ public class PersonalDataService implements ServiceInterface<PersonalData>{
 	return personalDataDAO.getById(id);
     }
 
-    @Override
+
     @Transactional
     public void create(PersonalData object) {
 	personalDataDAO.create(object);
@@ -39,6 +39,7 @@ public class PersonalDataService implements ServiceInterface<PersonalData>{
 	personalDataDAO.update(object);
     }
     
+    @Override
     @Transactional
     public void update(int id, PersonalDataPayload objectForEdit) {
 	PersonalData personalDataForEditing = personalDataDAO.getById(id);
@@ -51,6 +52,12 @@ public class PersonalDataService implements ServiceInterface<PersonalData>{
     public void delete(int id) {
 	PersonalData deletedPersonalData = personalDataDAO.getById(id);
 	personalDataDAO.delete(deletedPersonalData);
+    }
+
+    @Override
+    public void create(PersonalDataPayload newPayload) {
+	// TODO Auto-generated method stub
+	
     }
 
 }

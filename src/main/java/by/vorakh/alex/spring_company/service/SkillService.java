@@ -7,11 +7,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import by.vorakh.alex.spring_company.model.SkillPayload;
 import by.vorakh.alex.spring_company.repository.SkillDAO;
 import by.vorakh.alex.spring_company.repository.entity.Skill;
 
 @Service
-public class SkillService implements ServiceInterface<Skill> {
+public class SkillService implements ServiceInterface<Skill, SkillPayload> {
 
     @Autowired
     private SkillDAO skillDAO;
@@ -26,7 +27,6 @@ public class SkillService implements ServiceInterface<Skill> {
 	return skillDAO.getById(id);
     }
 
-    @Override
     @Transactional
     public void create(Skill object) {
 	skillDAO.create(object);
@@ -37,17 +37,24 @@ public class SkillService implements ServiceInterface<Skill> {
     public void update(Skill object) {
 	skillDAO.create(object);
     }
-    
-    public void update(int id, Skill editedObject) {
-	// TODO Auto-generated method stub
-	
-    }
 
     @Override
     @Transactional
     public void delete(int id) {
 	Skill deletedSkill = skillDAO.getById(id);
 	skillDAO.create(deletedSkill);
+    }
+
+    @Override
+    public void create(SkillPayload newPayload) {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void update(int id, SkillPayload editedPayload) {
+	// TODO Auto-generated method stub
+	
     }
 
     

@@ -1,5 +1,6 @@
 package by.vorakh.alex.spring_company.service;
 
+import by.vorakh.alex.spring_company.model.CompanyPayload;
 import by.vorakh.alex.spring_company.repository.CompanyDAO;
 import by.vorakh.alex.spring_company.repository.entity.Company;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class CompanyService implements ServiceInterface<Company> {
+public class CompanyService implements ServiceInterface<Company, CompanyPayload> {
     
     @Autowired
     private CompanyDAO companyDAO;
@@ -24,10 +25,21 @@ public class CompanyService implements ServiceInterface<Company> {
         return companyDAO.getById(id);
     }
 
-    @Override
     @Transactional
     public void create(Company object) {
         companyDAO.create(object);
+    }
+    
+    @Override
+    public void create(CompanyPayload newPayload) {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void update(int id, CompanyPayload editedPayload) {
+	// TODO Auto-generated method stub
+	
     }
 
     //@Override
@@ -42,7 +54,5 @@ public class CompanyService implements ServiceInterface<Company> {
         Company deletedCompany = companyDAO.getById(id);
         companyDAO.delete(deletedCompany);
     }
-
-   
 
 }
