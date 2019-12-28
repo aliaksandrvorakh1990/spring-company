@@ -4,12 +4,11 @@ package by.vorakh.alex.spring_company.repository.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 
 @Entity
 @Table(name = "company")
-public class Company implements Serializable {
+public class Company  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

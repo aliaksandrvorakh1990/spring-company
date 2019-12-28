@@ -32,13 +32,12 @@ public class SkillService implements ServiceInterface<Skill> {
 	skillDAO.create(object);
     }
 
-    @Override
+
     @Transactional
     public void update(Skill object) {
 	skillDAO.create(object);
     }
     
-    @Override
     public void update(int id, Skill editedObject) {
 	// TODO Auto-generated method stub
 	

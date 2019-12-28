@@ -30,7 +30,7 @@ public class CompanyService implements ServiceInterface<Company> {
         companyDAO.create(object);
     }
 
-    @Override
+    //@Override
     @Transactional
     public void update(Company object) {
         companyDAO.update(object);
@@ -43,10 +43,6 @@ public class CompanyService implements ServiceInterface<Company> {
         companyDAO.delete(deletedCompany);
     }
 
-    @Override
-    public void update(int id, Company editedObject) {
-	// TODO Auto-generated method stub
-	
-    }
+   
 
 }

@@ -32,17 +32,17 @@ public class JobTitleService implements ServiceInterface<JobTitle> {
 	jobTitleDAO.create(object);
     }
 
-    @Override
+    
     @Transactional
     public void update(JobTitle object) {
 	jobTitleDAO.update(object);
     }
     
-    @Override
-    public void update(int id, JobTitle editedObject) {
+    //@Override
+   // public void update(int id, JobTitle editedObject) {
 	// TODO Auto-generated method stub
 	
-    }
+   // }
 
     @Override
     @Transactional

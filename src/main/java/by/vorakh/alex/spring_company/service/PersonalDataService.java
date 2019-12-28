@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import by.vorakh.alex.spring_company.model.PersonalDataPayload;
 import by.vorakh.alex.spring_company.repository.PersonalDataDAO;
 import by.vorakh.alex.spring_company.repository.entity.PersonalData;
 
@@ -30,28 +31,26 @@ public class PersonalDataService implements ServiceInterface<PersonalData>{
     @Transactional
     public void create(PersonalData object) {
 	personalDataDAO.create(object);
-	
     }
 
-    @Override
+   
     @Transactional
     public void update(PersonalData object) {
 	personalDataDAO.update(object);
     }
     
-    @Override
-    public void update(int id, PersonalData editedObject) {
-	// TODO Auto-generated method stub
-	
+    @Transactional
+    public void update(int id, PersonalDataPayload objectForEdit) {
+	PersonalData personalDataForEditing = personalDataDAO.getById(id);
+	personalDataForEditing.setFirstAndLastName(objectForEdit);
+	personalDataDAO.update(personalDataForEditing);
     }
 
     @Override
     @Transactional
     public void delete(int id) {
 	PersonalData deletedPersonalData = personalDataDAO.getById(id);
-	personalDataDAO.create(deletedPersonalData);
+	personalDataDAO.delete(deletedPersonalData);
     }
-
-    
 
 }
