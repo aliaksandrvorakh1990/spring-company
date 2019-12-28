@@ -1,10 +1,10 @@
 package by.vorakh.alex.spring_company.repository.entity;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import by.vorakh.alex.spring_company.model.CompanyPayload;
 
 @Entity
 @Table(name = "company")
@@ -20,7 +20,10 @@ public class Company  {
     @Column(name = "name", length = 40, nullable = false, unique = true)
     private String name;
 
-    public Company() {
+    public Company() {}
+    
+    public Company(CompanyPayload companyPayload) {
+	this.name = companyPayload.getName();
     }
 
     public Company(Integer id, String name) {
@@ -28,22 +31,27 @@ public class Company  {
         this.name = name;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
     public Company setId(int id) {
         this.id = id;
         return this;
     }
-
-    public String getName() {
-        return name;
-    }
-
+    
     public Company setName(String name) {
         this.name = name;
         return this;
+    }
+    
+    public Company setName(CompanyPayload companyPayload) {
+        this.name = companyPayload.getName();
+        return this;
+    }
+    
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -54,8 +62,6 @@ public class Company  {
 	result = prime * result + ((name == null) ? 0 : name.hashCode());
 	return result;
     }
-
-
 
     @Override
     public String toString() {
@@ -92,8 +98,5 @@ public class Company  {
 
 	return true;
     }
-
-
-
 
 }

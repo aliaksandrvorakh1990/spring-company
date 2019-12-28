@@ -1,6 +1,12 @@
 package by.vorakh.alex.spring_company.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class JobTitlePayload {
+    
+    @NotNull
+    @Size(min = 2, max = 20)
     private String title;
 
     public JobTitlePayload() {}
@@ -17,6 +23,4 @@ public class JobTitlePayload {
         return title;
     }
 
-    
-    
 }

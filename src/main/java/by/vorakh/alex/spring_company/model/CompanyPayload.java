@@ -1,21 +1,24 @@
 package by.vorakh.alex.spring_company.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class CompanyPayload {
-    private Integer id;
+    
+    @NotNull
+    @Size(min = 2, max = 40)
     private String name;
     
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public CompanyPayload() {}
     
+    public CompanyPayload(String name) {
+	this.name = name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
-    
-    public Integer getId() {
-        return id;
-    }
-    
+       
     public String getName() {
         return name;
     }
