@@ -42,5 +42,10 @@ public class JobTitle {
         return title;
     }
 
+    @Override
+    public String toString() {
+	return "JobTitle [id=" + id + ", title=" + title + "]";
+    }
+
 
 }

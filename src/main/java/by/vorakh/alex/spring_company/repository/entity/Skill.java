@@ -9,8 +9,8 @@ import javax.validation.constraints.Size;
 public class Skill {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "skill_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "skill_id", unique = true, nullable = false)
     private int id;
 
     @NotNull
@@ -18,8 +18,7 @@ public class Skill {
     @Column(name = "skill", length = 25, nullable = false, unique = true)
     private String skillName;
 
-    public Skill() {
-    }
+    public Skill() {}
 
     public Skill(int id, String skillName) {
         this.id = id;
@@ -40,6 +39,11 @@ public class Skill {
 
     public void setSkillName(String skillName) {
         this.skillName = skillName;
+    }
+
+    @Override
+    public String toString() {
+	return "Skill [id=" + id + ", skillName=" + skillName + "]";
     }
 
 }
