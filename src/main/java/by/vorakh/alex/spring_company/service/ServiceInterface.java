@@ -10,6 +10,8 @@ public interface ServiceInterface<V> {
     void create(V object);
 
     void update(V object);
+    
+    void update(int id, V editedObject);
 
     void delete(int id);
 }

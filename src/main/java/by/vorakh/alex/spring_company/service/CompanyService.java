@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class CompanyService implements ServiceInterface<Company> {
+    
     @Autowired
     private CompanyDAO companyDAO;
 
@@ -40,6 +41,12 @@ public class CompanyService implements ServiceInterface<Company> {
     public void delete(int id) {
         Company deletedCompany = companyDAO.getById(id);
         companyDAO.delete(deletedCompany);
+    }
+
+    @Override
+    public void update(int id, Company editedObject) {
+	// TODO Auto-generated method stub
+	
     }
 
 }

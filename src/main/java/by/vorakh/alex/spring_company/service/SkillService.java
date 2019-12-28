@@ -37,6 +37,12 @@ public class SkillService implements ServiceInterface<Skill> {
     public void update(Skill object) {
 	skillDAO.create(object);
     }
+    
+    @Override
+    public void update(int id, Skill editedObject) {
+	// TODO Auto-generated method stub
+	
+    }
 
     @Override
     @Transactional
@@ -44,5 +50,7 @@ public class SkillService implements ServiceInterface<Skill> {
 	Skill deletedSkill = skillDAO.getById(id);
 	skillDAO.create(deletedSkill);
     }
+
+    
 
 }

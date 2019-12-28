@@ -37,6 +37,12 @@ public class JobTitleService implements ServiceInterface<JobTitle> {
     public void update(JobTitle object) {
 	jobTitleDAO.update(object);
     }
+    
+    @Override
+    public void update(int id, JobTitle editedObject) {
+	// TODO Auto-generated method stub
+	
+    }
 
     @Override
     @Transactional
@@ -44,5 +50,7 @@ public class JobTitleService implements ServiceInterface<JobTitle> {
 	JobTitle deletedJobTitle = jobTitleDAO.getById(id);
 	jobTitleDAO.delete(deletedJobTitle);
     }
+
+    
 
 }
