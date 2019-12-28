@@ -25,27 +25,18 @@ public class CompanyService implements ServiceInterface<Company, CompanyPayload>
         return companyDAO.getById(id);
     }
 
-    @Transactional
-    public void create(Company object) {
-        companyDAO.create(object);
-    }
-    
     @Override
+    @Transactional
     public void create(CompanyPayload newPayload) {
-	// TODO Auto-generated method stub
-	
+	companyDAO.create(new Company(newPayload));
     }
 
     @Override
-    public void update(int id, CompanyPayload editedPayload) {
-	// TODO Auto-generated method stub
-	
-    }
-
-    //@Override
     @Transactional
-    public void update(Company object) {
-        companyDAO.update(object);
+    public void update(int id, CompanyPayload editedPayload) {
+	Company editedCompany = companyDAO.getById(id);
+	editedCompany.setName(editedPayload);
+	companyDAO.update(editedCompany);
     }
 
     @Override

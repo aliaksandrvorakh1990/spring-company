@@ -1,5 +1,6 @@
 package by.vorakh.alex.spring_company.controller;
 
+import by.vorakh.alex.spring_company.model.CompanyPayload;
 import by.vorakh.alex.spring_company.repository.entity.Company;
 import by.vorakh.alex.spring_company.service.CompanyService;
 
@@ -27,19 +28,14 @@ public class CompanyController {
     }
 
     @PostMapping("/companies")
-    public void createCompany(@Valid @RequestBody Company newCompany) {
-	
+    public void createCompany(@Valid @RequestBody CompanyPayload newCompany) {
         companyService.create(newCompany);
     }
 
     @PutMapping(value = "/companies/{id}")
     public void updateCompany(@PathVariable(value = "id") Integer id,
-                              @Valid @RequestBody Company editedCompany) {
-        Company company = companyService.getById(id);
-
-        company.setName(editedCompany.getName());
-
-        companyService.update(company);
+                              @Valid @RequestBody CompanyPayload editedCompany) {
+        companyService.update(id ,editedCompany);
     }
 
     @DeleteMapping(value = "/companies/{id}")
