@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import by.vorakh.alex.spring_company.model.JobTitlePayload;
 import by.vorakh.alex.spring_company.repository.entity.JobTitle;
 import by.vorakh.alex.spring_company.service.JobTitleService;
 
@@ -34,19 +35,14 @@ public class JobTitleController {
     }
 
     @PostMapping("/jobs")
-    public void createJobTitle(@Valid @RequestBody JobTitle newJobTitle) {
-	
+    public void createJobTitle(@Valid @RequestBody JobTitlePayload newJobTitle) {
 	jobTitleService.create(newJobTitle);
     }
 
     @PutMapping(value = "/jobs/{id}")
     public void updateJobTitle(@PathVariable(value = "id") Integer id,
-                              @Valid @RequestBody JobTitle editedJobTitle) {
-	JobTitle jobTitle = jobTitleService.getById(id);
-
-        jobTitle.setTitle(editedJobTitle.getTitle());
-
-        jobTitleService.update(jobTitle);
+                              @Valid @RequestBody JobTitlePayload editedJobTitle) {
+        jobTitleService.update(id, editedJobTitle);
     }
 
     @DeleteMapping(value = "/jobs/{id}")
