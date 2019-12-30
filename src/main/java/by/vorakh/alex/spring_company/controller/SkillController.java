@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import by.vorakh.alex.spring_company.model.SkillPayload;
 import by.vorakh.alex.spring_company.repository.entity.Skill;
 import by.vorakh.alex.spring_company.service.SkillService;
 
@@ -35,18 +36,14 @@ public class SkillController {
     }
 
     @PostMapping("/skills")
-    public void createSkill(@Valid @RequestBody Skill newSkill) {
+    public void createSkill(@Valid @RequestBody SkillPayload newSkill) {
 	skillService.create(newSkill);
     }
 
     @PutMapping(value = "/skills/{id}")
     public void updateSkill(@PathVariable(value = "id") Integer id,
-                              @Valid @RequestBody Skill editedSkill) {
-	Skill skill = skillService.getById(id);
-
-        skill.setSkillName(editedSkill.getSkillName());
-        
-        skillService.update(skill);
+                              @Valid @RequestBody SkillPayload editedSkill) {        
+        skillService.update(id, editedSkill);
     }
 
     @DeleteMapping(value = "/skills/{id}")
