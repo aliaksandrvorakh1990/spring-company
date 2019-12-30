@@ -24,7 +24,7 @@ public class PersonalData {
     @Size(min = 2, max = 20)
     @Column(name = "last_name", length = 20, nullable = false)
     private String lastName;
-
+    
     public PersonalData() {}
     
     public PersonalData(PersonalDataPayload personalDataPayload) {
