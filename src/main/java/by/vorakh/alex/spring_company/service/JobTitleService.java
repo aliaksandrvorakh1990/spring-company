@@ -7,8 +7,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import by.vorakh.alex.spring_company.model.NewPayloadEntityInterface;
-import by.vorakh.alex.spring_company.model.UpdatePyaloadEntityInterface;
 import by.vorakh.alex.spring_company.model.JobTitlePayload;
 import by.vorakh.alex.spring_company.repository.JobTitleDAO;
 import by.vorakh.alex.spring_company.repository.entity.JobTitle;
@@ -18,17 +16,7 @@ public class JobTitleService implements ServiceInterface<JobTitle, JobTitlePaylo
 
     @Autowired
     private JobTitleDAO jobTitleDAO;
-    
-    private NewPayloadEntityInterface<JobTitle, JobTitlePayload>  newJobTitleEntity = (payload) -> {
-	return new JobTitle(payload);
-    };
-    
-    private UpdatePyaloadEntityInterface<JobTitle, JobTitlePayload> editedJobTitleEntity = (id, payload) -> {
-	JobTitle editedJobTitle = jobTitleDAO.getById(id);
-	editedJobTitle.setTitle(payload);
-	return editedJobTitle;
-    };
-    
+        
     @Override
     public List<JobTitle> getAll() {
 	return jobTitleDAO.getAll();
@@ -42,13 +30,15 @@ public class JobTitleService implements ServiceInterface<JobTitle, JobTitlePaylo
     @Override
     @Transactional
     public void create(JobTitlePayload newPayload) {
-	jobTitleDAO.create(newJobTitleEntity.build(newPayload));
+	jobTitleDAO.create(new JobTitle(newPayload.getTitle()));
     }
 
     @Override
     @Transactional
     public void update(int id, JobTitlePayload editedPayload) {
-	jobTitleDAO.update(editedJobTitleEntity.edit(id, editedPayload));
+	JobTitle editedJobTitle = jobTitleDAO.getById(id);
+	editedJobTitle.setTitle(editedPayload.getTitle());
+	jobTitleDAO.update(editedJobTitle);
     }
    
     @Override

@@ -3,8 +3,6 @@ package by.vorakh.alex.spring_company.repository.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import by.vorakh.alex.spring_company.model.EmployeePayload;
-
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -19,9 +17,9 @@ public class Employee {
     private PersonalData personalData;
 
     public Employee() {}
-    
-    public Employee(EmployeePayload employeePayload) {
-	this.personalData = employeePayload.getPersonalData();
+   
+    public Employee(PersonalData personalData) {
+	this.personalData = personalData;
     }
 
     public Employee(int id, PersonalData personalData) {
@@ -29,18 +27,16 @@ public class Employee {
 	this.personalData = personalData;
     }
     
-    public void setId(int id) {
+    public Employee setId(int id) {
         this.id = id;
+        return this;
     }
 
-    public void setPersonalData(PersonalData personalData) {
+    public Employee setPersonalData(PersonalData personalData) {
         this.personalData = personalData;
+        return this;
     }
-    
-    public void set(EmployeePayload employeePayload) {
-	 this.personalData = employeePayload.getPersonalData();
-    }
-
+  
     public int getId() {
         return id;
     }

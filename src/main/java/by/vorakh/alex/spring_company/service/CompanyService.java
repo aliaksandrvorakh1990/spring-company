@@ -28,14 +28,14 @@ public class CompanyService implements ServiceInterface<Company, CompanyPayload>
     @Override
     @Transactional
     public void create(CompanyPayload newPayload) {
-	companyDAO.create(new Company(newPayload));
+	companyDAO.create(new Company(newPayload.getName()));
     }
 
     @Override
     @Transactional
     public void update(int id, CompanyPayload editedPayload) {
 	Company editedCompany = companyDAO.getById(id);
-	editedCompany.setName(editedPayload);
+	editedCompany.setName(editedPayload.getName());
 	companyDAO.update(editedCompany);
     }
 

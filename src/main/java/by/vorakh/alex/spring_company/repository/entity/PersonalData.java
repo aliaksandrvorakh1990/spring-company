@@ -4,8 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import by.vorakh.alex.spring_company.model.PersonalDataPayload;
-
 @Entity
 @Table(name = "personal_data")
 public class PersonalData {
@@ -27,45 +25,40 @@ public class PersonalData {
     
     public PersonalData() {}
     
-    public PersonalData(PersonalDataPayload personalDataPayload) {
-	this.firstName = personalDataPayload.getFirstName();
-        this.lastName = personalDataPayload.getLastName();
+    public PersonalData(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
-
+    
     public PersonalData(int id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
+    
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
     
-    public void setFirstAndLastName(PersonalDataPayload personalDataPayload) {
-	this.firstName = personalDataPayload.getFirstName();
-        this.lastName = personalDataPayload.getLastName();
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
+    public int getId() {
+        return id;
+    }
+    
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    }  
 
     @Override
     public String toString() {

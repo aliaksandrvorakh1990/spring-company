@@ -4,8 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import by.vorakh.alex.spring_company.model.JobTitlePayload;
-
 @Entity
 @Table(name = "job_title")
 public class JobTitle {
@@ -22,10 +20,10 @@ public class JobTitle {
 
     public JobTitle() {}
     
-    public JobTitle(JobTitlePayload jobTitlePayload) {
-	this.title = jobTitlePayload.getTitle();
+    public JobTitle(String title) {
+        this.title = title;
     }
-
+    
     public JobTitle(int id, String title) {
         this.id = id;
         this.title = title;
@@ -38,11 +36,7 @@ public class JobTitle {
     public void setTitle(String title) {
         this.title = title;
     }
-    
-    public void setTitle(JobTitlePayload jobTitlePayload) {
-        this.title = jobTitlePayload.getTitle();
-    }
-
+  
     public int getId() {
         return id;
     }

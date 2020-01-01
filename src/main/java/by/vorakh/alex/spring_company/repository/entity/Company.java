@@ -4,8 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import by.vorakh.alex.spring_company.model.CompanyPayload;
-
 @Entity
 @Table(name = "company")
 public class Company  {
@@ -22,30 +20,23 @@ public class Company  {
 
     public Company() {}
     
-    public Company(CompanyPayload companyPayload) {
-	this.name = companyPayload.getName();
+    public Company(String name) {
+        this.name = name;
     }
-
+    
     public Company(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Company setId(int id) {
+    public void setId(int id) {
         this.id = id;
-        return this;
     }
     
-    public Company setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
-    
-    public Company setName(CompanyPayload companyPayload) {
-        this.name = companyPayload.getName();
-        return this;
-    }
-    
+         
     public Integer getId() {
         return id;
     }

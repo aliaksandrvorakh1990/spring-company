@@ -4,8 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import by.vorakh.alex.spring_company.model.SkillPayload;
-
 @Entity
 @Table(name = "employee_skill")
 public class Skill {
@@ -21,11 +19,11 @@ public class Skill {
     private String skillName;
 
     public Skill() {}
-    
-    public Skill(SkillPayload skillPayload) {
-	this.skillName = skillPayload.getSkillName();
-    }
 
+    public Skill(String skillName) {
+        this.skillName = skillName;
+    }
+    
     public Skill(int id, String skillName) {
         this.id = id;
         this.skillName = skillName;
@@ -38,12 +36,7 @@ public class Skill {
     public void setSkillName(String skillName) {
         this.skillName = skillName;
     }
-    
-    public void setSkillName(SkillPayload skillPayload) {
-        this.skillName = skillPayload.getSkillName();
-    }
-
-
+   
     public int getId() {
         return id;
     }

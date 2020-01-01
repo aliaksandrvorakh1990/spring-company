@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import by.vorakh.alex.spring_company.model.EmployeePayload;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
+import by.vorakh.alex.spring_company.repository.JobTitleDAO;
+import by.vorakh.alex.spring_company.repository.PersonalDataDAO;
+import by.vorakh.alex.spring_company.repository.SkillDAO;
 import by.vorakh.alex.spring_company.repository.entity.Employee;
 
 @Service
@@ -16,6 +19,12 @@ public class EmployeeService implements ServiceInterface<Employee, EmployeePaylo
     
     @Autowired
     private EmployeeDAO employeeDAO;
+    @Autowired
+    private PersonalDataDAO personalDataDAO;
+    @Autowired
+    private SkillDAO skillDAO;
+    @Autowired
+    private JobTitleDAO jobTitleDAO;
 
     @Override
     public List<Employee> getAll() {
@@ -30,14 +39,16 @@ public class EmployeeService implements ServiceInterface<Employee, EmployeePaylo
     @Override
     @Transactional
     public void create(EmployeePayload newPayload) {
-	employeeDAO.create(new Employee(newPayload));
+	employeeDAO.create(new Employee()
+		.setPersonalData(personalDataDAO
+			.getById(newPayload.getPersonalDataId())));
     }
 
     @Override
     @Transactional
     public void update(int id, EmployeePayload editedPayload) {
 	Employee editedEmployee = employeeDAO.getById(id);
-	editedEmployee.set(editedPayload);
+	editedEmployee.setPersonalData(personalDataDAO.getById(editedPayload.getPersonalDataId()));
 	employeeDAO.update(editedEmployee);
     }
 

@@ -30,14 +30,15 @@ public class PersonalDataService implements ServiceInterface<PersonalData, Perso
     @Override
     @Transactional
     public void create(PersonalDataPayload newPayload) {
-	personalDataDAO.create(new PersonalData(newPayload));
+	personalDataDAO.create(new PersonalData(newPayload.getFirstName(), newPayload.getLastName()));
     }
     
     @Override
     @Transactional
     public void update(int id, PersonalDataPayload objectForEdit) {
 	PersonalData personalDataForEditing = personalDataDAO.getById(id);
-	personalDataForEditing.setFirstAndLastName(objectForEdit);
+	personalDataForEditing.setFirstName(objectForEdit.getFirstName());
+	personalDataForEditing.setLastName(objectForEdit.getLastName());
 	personalDataDAO.update(personalDataForEditing);
     }
 
