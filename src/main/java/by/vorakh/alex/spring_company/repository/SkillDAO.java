@@ -1,10 +1,13 @@
 package by.vorakh.alex.spring_company.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaQuery;
 
+import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 
 import by.vorakh.alex.spring_company.repository.entity.Skill;
@@ -19,6 +22,16 @@ public class SkillDAO implements DAO<Skill> {
     @Override
     public List<Skill> getAll() {
 	return (List<Skill>) entityManager.createQuery("select c from Skill c").getResultList();
+    }
+    
+    public List<Skill> getAll(List<Integer> skillIdList) {
+	List<Skill> list = new ArrayList<Skill>();
+	
+	for (Integer skillId : skillIdList) {
+	    list.add(entityManager.find(Skill.class, skillId));
+	}
+	
+	return list;
     }
 
     @Override

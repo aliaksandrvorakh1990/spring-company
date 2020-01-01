@@ -40,15 +40,18 @@ public class EmployeeService implements ServiceInterface<Employee, EmployeePaylo
     @Transactional
     public void create(EmployeePayload newPayload) {
 	employeeDAO.create(new Employee()
-		.setPersonalData(personalDataDAO
-			.getById(newPayload.getPersonalDataId())));
+		.setPersonalData(personalDataDAO.getById(newPayload.getPersonalDataId()))
+		.setJobTitle(jobTitleDAO.getById(newPayload.getJobTitleId()))
+		.setSkillList(skillDAO.getAll(newPayload.getSkillIdsList())));
     }
 
     @Override
     @Transactional
     public void update(int id, EmployeePayload editedPayload) {
 	Employee editedEmployee = employeeDAO.getById(id);
-	editedEmployee.setPersonalData(personalDataDAO.getById(editedPayload.getPersonalDataId()));
+	editedEmployee.setPersonalData(personalDataDAO.getById(editedPayload.getPersonalDataId()))
+	.setJobTitle(jobTitleDAO.getById(editedPayload.getJobTitleId()))
+	.setSkillList(skillDAO.getAll(editedPayload.getSkillIdsList()));
 	employeeDAO.update(editedEmployee);
     }
 
