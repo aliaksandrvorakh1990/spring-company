@@ -4,10 +4,12 @@ import by.vorakh.alex.spring_company.model.CompanyPayload;
 import by.vorakh.alex.spring_company.repository.CompanyDAO;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.entity.Company;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
 import java.util.List;
 
 @Service
@@ -32,6 +34,8 @@ public class CompanyService implements ServiceInterface<Company, CompanyPayload>
     @Override
     @Transactional
     public void create(CompanyPayload newPayload) {
+	System.out.println(newPayload.getEmployeeIdList());
+	System.out.println(employeeDAO.getAll(newPayload.getEmployeeIdList()));
 	companyDAO.create(new Company()
 		.setName(newPayload.getName())
 		.setEmployeeList(employeeDAO.getAll(newPayload.getEmployeeIdList())));
@@ -50,7 +54,11 @@ public class CompanyService implements ServiceInterface<Company, CompanyPayload>
     @Transactional
     public void delete(int id) {
         Company deletedCompany = companyDAO.getById(id);
-        //employeeDAO.delete(deletedCompany.getEmployeeList());
+        deletedCompany.getEmployeeList().forEach(emp -> {
+            emp.getSkillList().clear();
+            employeeDAO.delete(emp);
+        });
+      //  companyDAO.update(deletedCompany);
         companyDAO.delete(deletedCompany);
     }
 

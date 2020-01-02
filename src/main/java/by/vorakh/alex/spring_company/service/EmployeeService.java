@@ -38,7 +38,12 @@ public class EmployeeService implements ServiceInterface<Employee, EmployeePaylo
 
     @Override
     @Transactional
-    public void create(EmployeePayload newPayload) {	
+    public void create(EmployeePayload newPayload) {
+	//TODO problem with creating
+	System.out.println(new Employee(
+		personalDataDAO.getById(newPayload.getPersonalDataId()), 
+		jobTitleDAO.getById(newPayload.getJobTitleId()), 
+		skillDAO.getAll(newPayload.getSkillIdsList())));
 	employeeDAO.create(new Employee(
 		personalDataDAO.getById(newPayload.getPersonalDataId()), 
 		jobTitleDAO.getById(newPayload.getJobTitleId()), 
@@ -60,6 +65,8 @@ public class EmployeeService implements ServiceInterface<Employee, EmployeePaylo
     @Transactional
     public void delete(int id) {
 	Employee deletedEmployee = employeeDAO.getById(id);
+	deletedEmployee.getSkillList().clear();
+	employeeDAO.update(deletedEmployee);
 	employeeDAO.delete(deletedEmployee);
     }
 

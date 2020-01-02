@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import by.vorakh.alex.spring_company.model.PersonalDataPayload;
+import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.PersonalDataDAO;
 import by.vorakh.alex.spring_company.repository.entity.PersonalData;
 
@@ -16,6 +17,8 @@ public class PersonalDataService implements ServiceInterface<PersonalData, Perso
 
     @Autowired
     private PersonalDataDAO personalDataDAO;
+    @Autowired
+    private EmployeeDAO employeeDAO;
     
     @Override
     public List<PersonalData> getAll() {
@@ -46,6 +49,7 @@ public class PersonalDataService implements ServiceInterface<PersonalData, Perso
     @Transactional
     public void delete(int id) {
 	PersonalData deletedPersonalData = personalDataDAO.getById(id);
+	employeeDAO.delete(deletedPersonalData);
 	personalDataDAO.delete(deletedPersonalData);
     }
 

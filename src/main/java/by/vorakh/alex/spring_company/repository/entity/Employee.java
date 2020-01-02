@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "employee")
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
     private int id;
     
@@ -33,17 +33,15 @@ public class Employee {
     
     public Employee() {}
     
-    
-  
-    public Employee(@NotNull PersonalData personalData, @NotNull JobTitle jobTitle, @NotNull List<Skill> skillList) {
+    public Employee(@NotNull PersonalData personalData, @NotNull JobTitle jobTitle, 
+	    @NotNull List<Skill> skillList) {
 	this.personalData = personalData;
 	this.jobTitle = jobTitle;
 	this.skillList = skillList;
     }
 
-
-
-    public Employee(int id, @NotNull PersonalData personalData, @NotNull JobTitle jobTitle, List<Skill> skillList) {
+    public Employee(int id, @NotNull PersonalData personalData, @NotNull JobTitle jobTitle, 
+	    List<Skill> skillList) {
 	this.id = id;
 	this.personalData = personalData;
 	this.jobTitle = jobTitle;
@@ -91,6 +89,56 @@ public class Employee {
 	return "Employee [id=" + id + ", personalData=" + personalData + ", jobTitle=" + jobTitle + ", skillList="
 		+ skillList + "]";
     }
-    
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + id;
+	result = prime * result + ((personalData == null) ? 0 : personalData.hashCode());
+	result = prime * result + ((jobTitle == null) ? 0 : jobTitle.hashCode());
+	result = prime * result + ((skillList == null) ? 0 : skillList.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+	if (obj == null) {
+	    return false;
+	}
+	if (getClass() != obj.getClass()) {
+	    return false;
+	}
+	Employee other = (Employee) obj;
+	if (id != other.id) {
+	    return false;
+	}
+	if (personalData == null) {
+	    if (other.personalData != null) {
+		return false;
+	    }
+	} else if (!personalData.equals(other.personalData)) {
+	    return false;   
+	}
+	if (jobTitle == null) {
+	    if (other.jobTitle != null) {
+		return false;
+	    }
+	} else if (!jobTitle.equals(other.jobTitle)) {
+	    return false;
+	}
+	if (skillList == null) {
+	    if (other.skillList != null) {
+		return false;
+	    }
+	} else if (!skillList.equals(other.skillList)) {
+	    return false;
+	}
+	    
+	return true;
+    }
     
 }

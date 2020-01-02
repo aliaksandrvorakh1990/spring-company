@@ -25,28 +25,28 @@ public class EmployeeController {
     private EmployeeService employeeService;
     
     @GetMapping("/employees")
-    public List<Employee> getPersonalDatas() {
+    public List<Employee> getEmployees() {
         return employeeService.getAll();
     }
 
     @GetMapping(value = "/employees/{id}")
-    public Employee getPersonalData(@PathVariable("id") Integer id) {
+    public Employee getEmployee(@PathVariable("id") Integer id) {
         return employeeService.getById(id);
     }
 
     @PostMapping("/employees")
-    public void createPersonalData(@Valid @RequestBody EmployeePayload newEmployee) {
+    public void createEmployee(@Valid @RequestBody EmployeePayload newEmployee) {
 	employeeService.create(newEmployee);
     }
 
     @PutMapping(value = "/employees/{id}")
-    public void updatePersonalData(@PathVariable(value = "id") Integer id,
+    public void updateEmployee(@PathVariable(value = "id") Integer id,
                               @Valid @RequestBody EmployeePayload editedEmployee) {
 	employeeService.update(id ,editedEmployee);
     }
 
     @DeleteMapping(value = "/employees/{id}")
-    public void deletePersonalData(@PathVariable("id") Integer id) {
+    public void deleteEmployee(@PathVariable("id") Integer id) {
 	employeeService.delete(id);
     }
 }
