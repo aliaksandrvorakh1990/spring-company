@@ -20,13 +20,13 @@ public class Skill {
 
     public Skill() {}
 
-    public Skill(String skillName) {
-        this.skillName = skillName;
+    public Skill(@NotNull @Size(min = 2, max = 25) String skillName) {
+	this.skillName = skillName;
     }
-    
-    public Skill(int id, String skillName) {
-        this.id = id;
-        this.skillName = skillName;
+
+    public Skill(int id, @NotNull @Size(min = 2, max = 25) String skillName) {
+	this.id = id;
+	this.skillName = skillName;
     }
 
     public void setId(int id) {

@@ -5,9 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaQuery;
 
-import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 
 import by.vorakh.alex.spring_company.repository.entity.Skill;

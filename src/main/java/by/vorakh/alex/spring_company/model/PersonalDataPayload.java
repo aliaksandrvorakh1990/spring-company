@@ -13,12 +13,13 @@ public class PersonalDataPayload {
     private String lastName;
     
     public PersonalDataPayload() {}
-    
-    public PersonalDataPayload(String firstName, String lastName) {
+        
+    public PersonalDataPayload(@NotNull @Size(min = 2, max = 20) String firstName,
+	    @NotNull @Size(min = 2, max = 20) String lastName) {
 	this.firstName = firstName;
 	this.lastName = lastName;
     }
-    
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

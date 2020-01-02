@@ -11,7 +11,7 @@ public class JobTitlePayload {
 
     public JobTitlePayload() {}
     
-    public JobTitlePayload(String title) {
+    public JobTitlePayload(@NotNull @Size(min = 2, max = 20) String title) {
 	this.title = title;
     }
 

@@ -20,13 +20,13 @@ public class JobTitle {
 
     public JobTitle() {}
     
-    public JobTitle(String title) {
-        this.title = title;
+    public JobTitle(@NotNull @Size(min = 2, max = 20) String title) {
+	this.title = title;
     }
-    
-    public JobTitle(int id, String title) {
-        this.id = id;
-        this.title = title;
+
+    public JobTitle(int id, @NotNull @Size(min = 2, max = 20) String title) {
+	this.id = id;
+	this.title = title;
     }
 
     public void setId(int id) {

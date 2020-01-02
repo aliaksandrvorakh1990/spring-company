@@ -25,15 +25,17 @@ public class PersonalData {
     
     public PersonalData() {}
     
-    public PersonalData(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public PersonalData(@NotNull @Size(min = 2, max = 20) String firstName,
+	    @NotNull @Size(min = 2, max = 20) String lastName) {
+	this.firstName = firstName;
+	this.lastName = lastName;
     }
-    
-    public PersonalData(int id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+
+    public PersonalData(int id, @NotNull @Size(min = 2, max = 20) String firstName,
+	    @NotNull @Size(min = 2, max = 20) String lastName) {
+	this.id = id;
+	this.firstName = firstName;
+	this.lastName = lastName;
     }
 
     public void setId(int id) {

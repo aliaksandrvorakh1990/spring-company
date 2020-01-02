@@ -11,9 +11,11 @@ public class SkillPayload {
 
     public SkillPayload() {}
     
-    public SkillPayload(String skillName) {
+    public SkillPayload(@NotNull @Size(min = 2, max = 25) String skillName) {
 	this.skillName = skillName;
     }
+
+
 
     public void setSkillName(String skillName) {
         this.skillName = skillName;
