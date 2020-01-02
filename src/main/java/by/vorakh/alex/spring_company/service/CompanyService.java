@@ -16,6 +16,7 @@ public class CompanyService implements ServiceInterface<Company, CompanyPayload>
     @Autowired
     private CompanyDAO companyDAO;
     
+    @Autowired
     private EmployeeDAO employeeDAO;
 
     @Override
@@ -49,6 +50,7 @@ public class CompanyService implements ServiceInterface<Company, CompanyPayload>
     @Transactional
     public void delete(int id) {
         Company deletedCompany = companyDAO.getById(id);
+        //employeeDAO.delete(deletedCompany.getEmployeeList());
         companyDAO.delete(deletedCompany);
     }
 

@@ -24,14 +24,25 @@ public class Employee {
     @JoinColumn(name="title_id")
     private JobTitle jobTitle;
 
-    @ManyToMany
+    @NotNull
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "employee_to_skill", 
             joinColumns = { @JoinColumn(name = "employee_id") }, 
             inverseJoinColumns = { @JoinColumn(name = "skill_id") })
     private List<Skill> skillList = new ArrayList<Skill>();
     
     public Employee() {}
+    
+    
   
+    public Employee(@NotNull PersonalData personalData, @NotNull JobTitle jobTitle, @NotNull List<Skill> skillList) {
+	this.personalData = personalData;
+	this.jobTitle = jobTitle;
+	this.skillList = skillList;
+    }
+
+
+
     public Employee(int id, @NotNull PersonalData personalData, @NotNull JobTitle jobTitle, List<Skill> skillList) {
 	this.id = id;
 	this.personalData = personalData;
@@ -74,4 +85,12 @@ public class Employee {
     public List<Skill> getSkillList() {
         return skillList;
     }
+
+    @Override
+    public String toString() {
+	return "Employee [id=" + id + ", personalData=" + personalData + ", jobTitle=" + jobTitle + ", skillList="
+		+ skillList + "]";
+    }
+    
+    
 }

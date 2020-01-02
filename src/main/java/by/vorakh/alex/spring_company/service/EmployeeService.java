@@ -38,11 +38,12 @@ public class EmployeeService implements ServiceInterface<Employee, EmployeePaylo
 
     @Override
     @Transactional
-    public void create(EmployeePayload newPayload) {
-	employeeDAO.create(new Employee()
-		.setPersonalData(personalDataDAO.getById(newPayload.getPersonalDataId()))
-		.setJobTitle(jobTitleDAO.getById(newPayload.getJobTitleId()))
-		.setSkillList(skillDAO.getAll(newPayload.getSkillIdsList())));
+    public void create(EmployeePayload newPayload) {	
+	employeeDAO.create(new Employee(
+		personalDataDAO.getById(newPayload.getPersonalDataId()), 
+		jobTitleDAO.getById(newPayload.getJobTitleId()), 
+		skillDAO.getAll(newPayload.getSkillIdsList()))
+		);
     }
 
     @Override

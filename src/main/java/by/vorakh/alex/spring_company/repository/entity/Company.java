@@ -21,7 +21,7 @@ public class Company  {
     @Column(name = "name", length = 40, nullable = false, unique = true)
     private String name;
     
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "company_id")
     private List<Employee> employeeList = new ArrayList<Employee>();
 

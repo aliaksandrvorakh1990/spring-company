@@ -45,7 +45,7 @@ public class SkillService implements ServiceInterface<Skill, SkillPayload> {
     @Transactional
     public void delete(int id) {
 	Skill deletedSkill = skillDAO.getById(id);
-	skillDAO.create(deletedSkill);
+	skillDAO.delete(deletedSkill);
     }
 
 }
