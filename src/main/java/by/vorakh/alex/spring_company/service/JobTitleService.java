@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import by.vorakh.alex.spring_company.model.JobTitlePayload;
+import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.JobTitleDAO;
 import by.vorakh.alex.spring_company.repository.entity.JobTitle;
 
@@ -16,6 +17,9 @@ public class JobTitleService implements ServiceInterface<JobTitle, JobTitlePaylo
 
     @Autowired
     private JobTitleDAO jobTitleDAO;
+    
+    @Autowired
+    private EmployeeDAO employeeDAO;
         
     @Override
     public List<JobTitle> getAll() {
@@ -45,6 +49,7 @@ public class JobTitleService implements ServiceInterface<JobTitle, JobTitlePaylo
     @Transactional
     public void delete(int id) {
 	JobTitle deletedJobTitle = jobTitleDAO.getById(id);
+	employeeDAO.delete(deletedJobTitle);
 	jobTitleDAO.delete(deletedJobTitle);
     }
 

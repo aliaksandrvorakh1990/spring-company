@@ -5,14 +5,14 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.Root;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
 import by.vorakh.alex.spring_company.repository.entity.Employee;
+import by.vorakh.alex.spring_company.repository.entity.JobTitle;
 import by.vorakh.alex.spring_company.repository.entity.PersonalData;
+import by.vorakh.alex.spring_company.repository.entity.Skill;
 
 @Repository
 public class EmployeeDAO implements DAO<Employee> {
@@ -34,6 +34,13 @@ public class EmployeeDAO implements DAO<Employee> {
 	}
 	
 	return employeeList;
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<Employee> getAll(Skill skill) {
+	 Query query = entityManager.createQuery("select e from Employee e "
+	 	+ "WHERE :skill in elements(e.skillList)");
+	 return (List<Employee>) query.setParameter("skill", skill).getResultList();
     }
     
     @Override
@@ -58,11 +65,13 @@ public class EmployeeDAO implements DAO<Employee> {
     
 
     public void delete(PersonalData personalData) {
-	CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-	CriteriaDelete<Employee> delete = cb.createCriteriaDelete(Employee.class);
-	Root<Employee> e = delete.from(Employee.class);
-	delete.where(cb.equal(e.get("personalData"), personalData));
-	entityManager.createQuery(delete).executeUpdate();
+	Query query = entityManager.createQuery("DELETE FROM Employee e WHERE e.personalData = :p");
+	query.setParameter("p", personalData).executeUpdate();
     }
     
+    
+    public void delete(JobTitle jobTitle) {
+	Query query = entityManager.createQuery("DELETE FROM Employee e WHERE e.jobTitle = :j");
+	query.setParameter("j", jobTitle).executeUpdate();
+    }
 }

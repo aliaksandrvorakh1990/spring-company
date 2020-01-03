@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import by.vorakh.alex.spring_company.model.SkillPayload;
+import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.SkillDAO;
 import by.vorakh.alex.spring_company.repository.entity.Skill;
 
@@ -16,6 +17,9 @@ public class SkillService implements ServiceInterface<Skill, SkillPayload> {
 
     @Autowired
     private SkillDAO skillDAO;
+    
+    @Autowired
+    private EmployeeDAO employeeDAO;
     
     @Override
     public List<Skill> getAll() {
@@ -45,6 +49,10 @@ public class SkillService implements ServiceInterface<Skill, SkillPayload> {
     @Transactional
     public void delete(int id) {
 	Skill deletedSkill = skillDAO.getById(id);
+	employeeDAO.getAll(deletedSkill).forEach(emp -> {
+	    emp.getSkillList().remove(deletedSkill);
+	    employeeDAO.update(emp);
+	});
 	skillDAO.delete(deletedSkill);
     }
 

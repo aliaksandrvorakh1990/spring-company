@@ -1,6 +1,8 @@
 package by.vorakh.alex.spring_company.repository;
 
 import by.vorakh.alex.spring_company.repository.entity.Company;
+import by.vorakh.alex.spring_company.repository.entity.PersonalData;
+
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
