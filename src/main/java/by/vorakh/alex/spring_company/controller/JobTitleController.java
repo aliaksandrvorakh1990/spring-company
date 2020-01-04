@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import by.vorakh.alex.spring_company.model.JobTitlePayload;
+import by.vorakh.alex.spring_company.model.payload.JobTitlePayload;
 import by.vorakh.alex.spring_company.repository.entity.JobTitle;
 import by.vorakh.alex.spring_company.service.JobTitleService;
 

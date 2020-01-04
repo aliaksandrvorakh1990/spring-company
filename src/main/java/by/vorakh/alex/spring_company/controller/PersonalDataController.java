@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import by.vorakh.alex.spring_company.model.PersonalDataPayload;
+import by.vorakh.alex.spring_company.model.payload.PersonalDataPayload;
 import by.vorakh.alex.spring_company.repository.entity.PersonalData;
 import by.vorakh.alex.spring_company.service.PersonalDataService;
 

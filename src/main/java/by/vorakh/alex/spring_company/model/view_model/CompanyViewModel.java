@@ -1,4 +1,4 @@
-package by.vorakh.alex.spring_company.model;
+package by.vorakh.alex.spring_company.model.view_model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package by.vorakh.alex.spring_company.model;
+package by.vorakh.alex.spring_company.model.view_model;
 
 public class JobTitleViewModel {
     private int id;

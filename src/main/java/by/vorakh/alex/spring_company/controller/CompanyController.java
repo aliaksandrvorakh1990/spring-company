@@ -1,7 +1,7 @@
 package by.vorakh.alex.spring_company.controller;
 
-import by.vorakh.alex.spring_company.model.CompanyPayload;
-import by.vorakh.alex.spring_company.model.CompanyViewModel;
+import by.vorakh.alex.spring_company.model.payload.CompanyPayload;
+import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
 import by.vorakh.alex.spring_company.service.CompanyService;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package by.vorakh.alex.spring_company.model;
+package by.vorakh.alex.spring_company.converter;
 
 public interface Converter<E, VM> {
     

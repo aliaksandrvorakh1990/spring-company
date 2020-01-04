@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import by.vorakh.alex.spring_company.model.EmployeePayload;
+import by.vorakh.alex.spring_company.model.payload.EmployeePayload;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.JobTitleDAO;
 import by.vorakh.alex.spring_company.repository.PersonalDataDAO;

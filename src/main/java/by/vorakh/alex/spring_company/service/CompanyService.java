@@ -1,9 +1,8 @@
 package by.vorakh.alex.spring_company.service;
 
-import static by.vorakh.alex.spring_company.model.EntityToViewModelConverter.*;
-
-import by.vorakh.alex.spring_company.model.CompanyPayload;
-import by.vorakh.alex.spring_company.model.CompanyViewModel;
+import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
+import by.vorakh.alex.spring_company.model.payload.CompanyPayload;
+import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
 import by.vorakh.alex.spring_company.repository.CompanyDAO;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.entity.Company;
@@ -21,22 +20,23 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
     
     @Autowired
     private CompanyDAO companyDAO;
-    
     @Autowired
     private EmployeeDAO employeeDAO;
+    @Autowired
+    private EntityToViewModelConverter convertor;
     
     @Override
     public List<CompanyViewModel> getAll() {
 	List<CompanyViewModel> companyViewModelList = new ArrayList<CompanyViewModel>();
 	companyDAO.getAll().forEach(company -> 
-		companyViewModelList.add(converteEntity(company)));
+		companyViewModelList.add(convertor.converte(company)));
 	
         return companyViewModelList;
     }
 
     @Override
     public CompanyViewModel getById(int id) {
-        return converteEntity(companyDAO.getById(id));
+        return convertor.converte(companyDAO.getById(id));
     }
 
     @Override

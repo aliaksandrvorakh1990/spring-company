@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import by.vorakh.alex.spring_company.model.SkillPayload;
+import by.vorakh.alex.spring_company.model.payload.SkillPayload;
+import by.vorakh.alex.spring_company.model.view_model.SkillViewModel;
 import by.vorakh.alex.spring_company.repository.entity.Skill;
 import by.vorakh.alex.spring_company.service.SkillService;
 
@@ -26,12 +27,12 @@ public class SkillController {
     private SkillService skillService;
     
     @GetMapping("/skills")
-    public List<Skill> getSkills() {
+    public List<SkillViewModel> getSkills() {
         return skillService.getAll();
     }
 
     @GetMapping(value = "/skills/{id}")
-    public Skill getSkill(@PathVariable("id") Integer id) {
+    public SkillViewModel getSkill(@PathVariable("id") Integer id) {
         return skillService.getById(id);
     }
 

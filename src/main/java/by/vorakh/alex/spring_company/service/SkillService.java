@@ -1,5 +1,6 @@
 package by.vorakh.alex.spring_company.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,28 +8,36 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import by.vorakh.alex.spring_company.model.SkillPayload;
+import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
+import by.vorakh.alex.spring_company.model.payload.SkillPayload;
+import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
+import by.vorakh.alex.spring_company.model.view_model.SkillViewModel;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.SkillDAO;
 import by.vorakh.alex.spring_company.repository.entity.Skill;
 
 @Service
-public class SkillService implements ServiceInterface<Skill, SkillPayload> {
+public class SkillService implements ServiceInterface<SkillViewModel, SkillPayload> {
 
     @Autowired
     private SkillDAO skillDAO;
-    
     @Autowired
     private EmployeeDAO employeeDAO;
+    @Autowired
+    private EntityToViewModelConverter convertor;
     
     @Override
-    public List<Skill> getAll() {
-	return skillDAO.getAll();
+    public List<SkillViewModel> getAll() {
+	List<SkillViewModel> skillViewModelList = new ArrayList<SkillViewModel>();
+	skillDAO.getAll().forEach(skill -> {
+	    skillViewModelList.add(convertor.converte(skill));
+	});
+	return skillViewModelList;
     }
 
     @Override
-    public Skill getById(int id) {
-	return skillDAO.getById(id);
+    public SkillViewModel getById(int id) {
+	return convertor.converte(skillDAO.getById(id));
     }
 
     @Override
