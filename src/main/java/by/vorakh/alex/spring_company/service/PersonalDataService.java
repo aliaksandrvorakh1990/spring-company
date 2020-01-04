@@ -1,5 +1,6 @@
 package by.vorakh.alex.spring_company.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,27 +8,36 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.PersonalDataPayload;
+import by.vorakh.alex.spring_company.model.view_model.PersonalDataViewModel;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.PersonalDataDAO;
 import by.vorakh.alex.spring_company.repository.entity.PersonalData;
 
 @Service
-public class PersonalDataService implements ServiceInterface<PersonalData, PersonalDataPayload>{
+public class PersonalDataService implements ServiceInterface<PersonalDataViewModel, PersonalDataPayload>{
 
     @Autowired
     private PersonalDataDAO personalDataDAO;
     @Autowired
     private EmployeeDAO employeeDAO;
+    @Autowired
+    private EntityToViewModelConverter convertor;
     
     @Override
-    public List<PersonalData> getAll() {
-	return personalDataDAO.getAll();
+    public List<PersonalDataViewModel> getAll() {
+	List<PersonalDataViewModel> personalDataViewModellist = new ArrayList<PersonalDataViewModel>();
+	personalDataDAO.getAll().forEach(personalData -> {
+	    personalDataViewModellist.add(convertor.converte(personalData));
+	});
+	
+	return personalDataViewModellist;
     }
 
     @Override
-    public PersonalData getById(int id) {
-	return personalDataDAO.getById(id);
+    public PersonalDataViewModel getById(int id) {
+	return convertor.converte(personalDataDAO.getById(id));
     }
     
     @Override

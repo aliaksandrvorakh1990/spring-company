@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import by.vorakh.alex.spring_company.model.payload.JobTitlePayload;
-import by.vorakh.alex.spring_company.repository.entity.JobTitle;
+import by.vorakh.alex.spring_company.model.view_model.JobTitleViewModel;
 import by.vorakh.alex.spring_company.service.JobTitleService;
 
 @RestController
@@ -25,12 +25,12 @@ public class JobTitleController {
     private JobTitleService jobTitleService;
     
     @GetMapping("/jobs")
-    public List<JobTitle> getJobTitles() {
+    public List<JobTitleViewModel> getJobTitles() {
         return jobTitleService.getAll();
     }
 
     @GetMapping(value = "/jobs/{id}")
-    public JobTitle getJobTitle(@PathVariable("id") Integer id) {
+    public JobTitleViewModel getJobTitle(@PathVariable("id") Integer id) {
         return jobTitleService.getById(id);
     }
 

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import by.vorakh.alex.spring_company.model.payload.SkillPayload;
 import by.vorakh.alex.spring_company.model.view_model.SkillViewModel;
-import by.vorakh.alex.spring_company.repository.entity.Skill;
 import by.vorakh.alex.spring_company.service.SkillService;
 
 @RestController

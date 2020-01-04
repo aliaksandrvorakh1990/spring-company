@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.SkillPayload;
-import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
 import by.vorakh.alex.spring_company.model.view_model.SkillViewModel;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.SkillDAO;

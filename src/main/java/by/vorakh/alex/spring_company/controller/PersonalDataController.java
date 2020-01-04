@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import by.vorakh.alex.spring_company.model.payload.PersonalDataPayload;
-import by.vorakh.alex.spring_company.repository.entity.PersonalData;
+import by.vorakh.alex.spring_company.model.view_model.PersonalDataViewModel;
 import by.vorakh.alex.spring_company.service.PersonalDataService;
 
 @RestController
@@ -26,12 +26,12 @@ public class PersonalDataController {
     private PersonalDataService personalDataService;
     
     @GetMapping("/people")
-    public List<PersonalData> getPersonalDatas() {
+    public List<PersonalDataViewModel> getPersonalDatas() {
         return personalDataService.getAll();
     }
 
     @GetMapping(value = "/people/{id}")
-    public PersonalData getPersonalData(@PathVariable("id") Integer id) {
+    public PersonalDataViewModel getPersonalData(@PathVariable("id") Integer id) {
         return personalDataService.getById(id);
     }
 

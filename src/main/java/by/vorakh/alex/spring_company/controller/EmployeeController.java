@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import by.vorakh.alex.spring_company.model.payload.EmployeePayload;
-import by.vorakh.alex.spring_company.repository.entity.Employee;
+import by.vorakh.alex.spring_company.model.view_model.EmployeeViewModel;
 import by.vorakh.alex.spring_company.service.EmployeeService;
 
 @RestController
@@ -25,12 +25,12 @@ public class EmployeeController {
     private EmployeeService employeeService;
     
     @GetMapping("/employees")
-    public List<Employee> getEmployees() {
+    public List<EmployeeViewModel> getEmployees() {
         return employeeService.getAll();
     }
 
     @GetMapping(value = "/employees/{id}")
-    public Employee getEmployee(@PathVariable("id") Integer id) {
+    public EmployeeViewModel getEmployee(@PathVariable("id") Integer id) {
         return employeeService.getById(id);
     }
 

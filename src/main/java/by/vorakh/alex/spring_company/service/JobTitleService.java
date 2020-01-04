@@ -1,5 +1,6 @@
 package by.vorakh.alex.spring_company.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,28 +8,36 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.JobTitlePayload;
+import by.vorakh.alex.spring_company.model.view_model.JobTitleViewModel;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.JobTitleDAO;
 import by.vorakh.alex.spring_company.repository.entity.JobTitle;
 
 @Service
-public class JobTitleService implements ServiceInterface<JobTitle, JobTitlePayload> {
+public class JobTitleService implements ServiceInterface<JobTitleViewModel, JobTitlePayload> {
 
     @Autowired
     private JobTitleDAO jobTitleDAO;
-    
     @Autowired
     private EmployeeDAO employeeDAO;
+    @Autowired
+    private EntityToViewModelConverter convertor;
         
     @Override
-    public List<JobTitle> getAll() {
-	return jobTitleDAO.getAll();
+    public List<JobTitleViewModel> getAll() {
+	List<JobTitleViewModel> jobTitleViewModelList = new ArrayList<JobTitleViewModel>();
+	jobTitleDAO.getAll().forEach(jobTitle -> {
+	    jobTitleViewModelList.add(convertor.converte(jobTitle));
+	});
+	
+	return jobTitleViewModelList;
     }
 
     @Override
-    public JobTitle getById(int id) {
-	return jobTitleDAO.getById(id);
+    public JobTitleViewModel getById(int id) {
+	return convertor.converte(jobTitleDAO.getById(id));
     }
 
     @Override

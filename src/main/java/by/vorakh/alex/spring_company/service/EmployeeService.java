@@ -1,5 +1,6 @@
 package by.vorakh.alex.spring_company.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,7 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.EmployeePayload;
+import by.vorakh.alex.spring_company.model.view_model.EmployeeViewModel;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.JobTitleDAO;
 import by.vorakh.alex.spring_company.repository.PersonalDataDAO;
@@ -15,7 +18,7 @@ import by.vorakh.alex.spring_company.repository.SkillDAO;
 import by.vorakh.alex.spring_company.repository.entity.Employee;
 
 @Service
-public class EmployeeService implements ServiceInterface<Employee, EmployeePayload> {
+public class EmployeeService implements ServiceInterface<EmployeeViewModel, EmployeePayload> {
     
     @Autowired
     private EmployeeDAO employeeDAO;
@@ -25,25 +28,26 @@ public class EmployeeService implements ServiceInterface<Employee, EmployeePaylo
     private SkillDAO skillDAO;
     @Autowired
     private JobTitleDAO jobTitleDAO;
+    @Autowired
+    private EntityToViewModelConverter convertor;
 
     @Override
-    public List<Employee> getAll() {
-	return employeeDAO.getAll();
+    public List<EmployeeViewModel> getAll() {
+	List<EmployeeViewModel>  employeeViewModelList= new ArrayList<EmployeeViewModel>();
+	employeeDAO.getAll().forEach(employee -> {
+	    employeeViewModelList.add(convertor.converte(employee));
+	});
+	return employeeViewModelList;
     }
 
     @Override
-    public Employee getById(int id) {
-	return employeeDAO.getById(id);
+    public EmployeeViewModel getById(int id) {
+	return convertor.converte(employeeDAO.getById(id));
     }
 
     @Override
     @Transactional
     public void create(EmployeePayload newPayload) {
-	//TODO problem with creating
-	System.out.println(new Employee(
-		personalDataDAO.getById(newPayload.getPersonalDataId()), 
-		jobTitleDAO.getById(newPayload.getJobTitleId()), 
-		skillDAO.getAll(newPayload.getSkillIdsList())));
 	employeeDAO.create(new Employee(
 		personalDataDAO.getById(newPayload.getPersonalDataId()), 
 		jobTitleDAO.getById(newPayload.getJobTitleId()), 
