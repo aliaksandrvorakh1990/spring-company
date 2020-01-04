@@ -3,6 +3,8 @@ package by.vorakh.alex.spring_company.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
 import by.vorakh.alex.spring_company.model.view_model.EmployeeViewModel;
 import by.vorakh.alex.spring_company.model.view_model.JobTitleViewModel;
@@ -14,6 +16,7 @@ import by.vorakh.alex.spring_company.repository.entity.JobTitle;
 import by.vorakh.alex.spring_company.repository.entity.PersonalData;
 import by.vorakh.alex.spring_company.repository.entity.Skill;
 
+@Component
 public class EntityToViewModelConverter {
     
     private Converter<Employee, EmployeeViewModel> employeeConverter = (employee) -> {
