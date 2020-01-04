@@ -15,8 +15,6 @@ public class SkillPayload {
 	this.skillName = skillName;
     }
 
-
-
     public void setSkillName(String skillName) {
         this.skillName = skillName;
     }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompanyViewModel {
+    
     private Integer id;
     private String name;
     private List<EmployeeViewModel> employeeList = new ArrayList<EmployeeViewModel>();

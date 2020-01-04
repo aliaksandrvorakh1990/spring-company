@@ -21,6 +21,7 @@ import by.vorakh.alex.spring_company.service.JobTitleService;
 @RestController
 @RequestMapping("/project")
 public class JobTitleController {
+    
     @Autowired
     private JobTitleService jobTitleService;
     

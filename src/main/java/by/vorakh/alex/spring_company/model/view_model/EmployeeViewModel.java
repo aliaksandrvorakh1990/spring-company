@@ -19,23 +19,7 @@ public class EmployeeViewModel {
 	this.jobTitle = jobTitle;
 	this.skillList = skillList;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public PersonalDataViewModel getPersonalData() {
-        return personalData;
-    }
-
-    public JobTitleViewModel getJobTitle() {
-        return jobTitle;
-    }
-
-    public List<SkillViewModel> getSkillList() {
-        return skillList;
-    }
-
+    
     public EmployeeViewModel setId(int id) {
         this.id = id;
         return this;
@@ -54,6 +38,22 @@ public class EmployeeViewModel {
     public EmployeeViewModel setSkillList(List<SkillViewModel> skillList) {
         this.skillList = skillList;
         return this;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public PersonalDataViewModel getPersonalData() {
+        return personalData;
+    }
+
+    public JobTitleViewModel getJobTitle() {
+        return jobTitle;
+    }
+
+    public List<SkillViewModel> getSkillList() {
+        return skillList;
     }
        
 }

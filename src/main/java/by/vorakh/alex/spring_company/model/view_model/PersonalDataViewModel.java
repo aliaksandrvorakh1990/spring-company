@@ -1,6 +1,7 @@
 package by.vorakh.alex.spring_company.model.view_model;
 
 public class PersonalDataViewModel {
+    
     private int id;
     private String firstName;
     private String lastName;

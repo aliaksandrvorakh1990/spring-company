@@ -45,12 +45,5 @@ public class EmployeePayload {
     public List<Integer> getSkillIdsList() {
         return skillIdsList;
     }
-
-    @Override
-    public String toString() {
-	return "EmployeePayload [personalDataId=" + personalDataId + ", jobTitleId=" + jobTitleId + ", skillIdsList="
-		+ skillIdsList + "]";
-    }
-
-    
+ 
 }

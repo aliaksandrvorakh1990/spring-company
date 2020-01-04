@@ -21,6 +21,7 @@ import by.vorakh.alex.spring_company.service.EmployeeService;
 @RestController
 @RequestMapping("/project")
 public class EmployeeController {
+    
     @Autowired
     private EmployeeService employeeService;
     
@@ -49,4 +50,5 @@ public class EmployeeController {
     public void deleteEmployee(@PathVariable("id") Integer id) {
 	employeeService.delete(id);
     }
+    
 }

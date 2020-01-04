@@ -70,6 +70,4 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
         companyDAO.delete(deletedCompany);
     }
 
-    
-
 }

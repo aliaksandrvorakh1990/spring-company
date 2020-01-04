@@ -63,12 +63,10 @@ public class EmployeeDAO implements DAO<Employee> {
 	entityManager.remove(object);
     }
     
-
     public void delete(PersonalData personalData) {
 	Query query = entityManager.createQuery("DELETE FROM Employee e WHERE e.personalData = :p");
 	query.setParameter("p", personalData).executeUpdate();
     }
-    
     
     public void delete(JobTitle jobTitle) {
 	Query query = entityManager.createQuery("DELETE FROM Employee e WHERE e.jobTitle = :j");

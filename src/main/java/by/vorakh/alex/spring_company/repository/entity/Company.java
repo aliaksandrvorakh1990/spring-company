@@ -33,7 +33,6 @@ public class Company  {
 	this.employeeList = employeeList;
     }
     
-
     public Company setId(Integer id) {
         this.id = id;
         return this;
