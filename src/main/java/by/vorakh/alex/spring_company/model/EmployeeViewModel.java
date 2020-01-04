@@ -8,12 +8,12 @@ public class EmployeeViewModel {
     private int id;
     private PersonalDataViewModel personalData;
     private JobTitleViewModel jobTitle;
-    private List<EmployeeViewModel> skillList = new ArrayList<EmployeeViewModel>();
+    private List<SkillViewModel> skillList = new ArrayList<SkillViewModel>();
     
     public EmployeeViewModel() {}
     
     public EmployeeViewModel(int id, PersonalDataViewModel personalData, JobTitleViewModel jobTitle,
-	    List<EmployeeViewModel> skillList) {
+	    List<SkillViewModel> skillList) {
 	this.id = id;
 	this.personalData = personalData;
 	this.jobTitle = jobTitle;
@@ -32,7 +32,7 @@ public class EmployeeViewModel {
         return jobTitle;
     }
 
-    public List<EmployeeViewModel> getSkillList() {
+    public List<SkillViewModel> getSkillList() {
         return skillList;
     }
 
@@ -51,7 +51,7 @@ public class EmployeeViewModel {
         return this;
     }
 
-    public EmployeeViewModel setSkillList(List<EmployeeViewModel> skillList) {
+    public EmployeeViewModel setSkillList(List<SkillViewModel> skillList) {
         this.skillList = skillList;
         return this;
     }
