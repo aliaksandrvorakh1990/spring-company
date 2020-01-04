@@ -1,7 +1,7 @@
 package by.vorakh.alex.spring_company.controller;
 
 import by.vorakh.alex.spring_company.model.CompanyPayload;
-import by.vorakh.alex.spring_company.repository.entity.Company;
+import by.vorakh.alex.spring_company.model.CompanyViewModel;
 import by.vorakh.alex.spring_company.service.CompanyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,12 @@ public class CompanyController {
     private CompanyService companyService;
 
     @GetMapping("/companies")
-    public List<Company> getCompanies() {
+    public List<CompanyViewModel> getCompanies() {
         return companyService.getAll();
     }
 
     @GetMapping(value = "/companies/{id}")
-    public Company getCompany(@PathVariable("id") Integer id) {
+    public CompanyViewModel getCompany(@PathVariable("id") Integer id) {
         return companyService.getById(id);
     }
 

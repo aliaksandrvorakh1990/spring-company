@@ -1,6 +1,9 @@
 package by.vorakh.alex.spring_company.service;
 
+import static by.vorakh.alex.spring_company.model.EntityToViewModelConverter.*;
+
 import by.vorakh.alex.spring_company.model.CompanyPayload;
+import by.vorakh.alex.spring_company.model.CompanyViewModel;
 import by.vorakh.alex.spring_company.repository.CompanyDAO;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.entity.Company;
@@ -10,25 +13,30 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CompanyService implements ServiceInterface<Company, CompanyPayload> {
+public class CompanyService implements ServiceInterface<CompanyViewModel, CompanyPayload> {
     
     @Autowired
     private CompanyDAO companyDAO;
     
     @Autowired
     private EmployeeDAO employeeDAO;
-
+    
     @Override
-    public List<Company> getAll() {
-        return companyDAO.getAll();
+    public List<CompanyViewModel> getAll() {
+	List<CompanyViewModel> companyViewModelList = new ArrayList<CompanyViewModel>();
+	companyDAO.getAll().forEach(company -> 
+		companyViewModelList.add(converteEntity(company)));
+	
+        return companyViewModelList;
     }
 
     @Override
-    public Company getById(int id) {
-        return companyDAO.getById(id);
+    public CompanyViewModel getById(int id) {
+        return converteEntity(companyDAO.getById(id));
     }
 
     @Override
@@ -58,8 +66,10 @@ public class CompanyService implements ServiceInterface<Company, CompanyPayload>
             emp.getSkillList().clear();
             employeeDAO.delete(emp);
         });
-      //  companyDAO.update(deletedCompany);
+      
         companyDAO.delete(deletedCompany);
     }
+
+    
 
 }
