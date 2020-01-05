@@ -1,8 +1,14 @@
 package by.vorakh.alex.spring_company.model.view_model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "Details about the job title of an employee for view")
 public class JobTitleViewModel {
     
+    @ApiModelProperty(notes = "The job title ID in the database.")
     private int id;
+    @ApiModelProperty(notes = "The job title name.")
     private String title;
     
     public JobTitleViewModel() {}

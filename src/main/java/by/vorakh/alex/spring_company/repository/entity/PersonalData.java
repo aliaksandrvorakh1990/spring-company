@@ -1,23 +1,25 @@
 package by.vorakh.alex.spring_company.repository.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "personal_data")
-public class PersonalData {
+public class PersonalData implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "personal_data_id", unique = true, nullable = false)
     private int id;
-
     @NotNull
     @Size(min = 2, max = 20)
     @Column(name = "first_name", length = 20, nullable = false)
     private String firstName;
-
     @NotNull
     @Size(min = 2, max = 20)
     @Column(name = "last_name", length = 20, nullable = false)

@@ -1,5 +1,6 @@
 package by.vorakh.alex.spring_company.repository.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +10,14 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "company")
-public class Company  {
+public class Company implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "company_id", unique = true, nullable = false)
-    private Integer id;
+    private int id;
 
     @NotNull
     @Size(min = 2, max = 40)
@@ -27,13 +30,13 @@ public class Company  {
 
     public Company() {}
 
-    public Company(Integer id, @NotNull @Size(min = 2, max = 40) String name, List<Employee> employeeList) {
+    public Company(int id, @NotNull @Size(min = 2, max = 40) String name, List<Employee> employeeList) {
 	this.id = id;
 	this.name = name;
 	this.employeeList = employeeList;
     }
     
-    public Company setId(Integer id) {
+    public Company setId(int id) {
         this.id = id;
         return this;
     }
@@ -48,7 +51,7 @@ public class Company  {
         return this;
     }
     
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -69,7 +72,7 @@ public class Company  {
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((id == null) ? 0 : id.hashCode());
+	result = prime * result + id;
 	result = prime * result + ((name == null) ? 0 : name.hashCode());
 	result = prime * result + ((employeeList == null) ? 0 : employeeList.hashCode());
 	return result;
@@ -88,11 +91,7 @@ public class Company  {
 	}
 
 	Company other = (Company) obj;
-	if (id == null) {
-	    if (other.id != null) {
-		return false;
-	    }
-	} else if (!id.equals(other.id)) {
+	if (id != other.id) {
 	    return false;
 	}
 	if (name == null) {

@@ -9,21 +9,19 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "employee")
 public class Employee {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
     private int id;
-    
     @NotNull
     @OneToOne
     @JoinColumn(name="personal_data_id")
     private PersonalData personalData;
-    
     @NotNull
     @ManyToOne
     @JoinColumn(name="title_id")
     private JobTitle jobTitle;
-
     @NotNull
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "employee_to_skill", 

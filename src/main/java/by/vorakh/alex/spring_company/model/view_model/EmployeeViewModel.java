@@ -3,11 +3,17 @@ package by.vorakh.alex.spring_company.model.view_model;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "Details about the employee for view.")
 public class EmployeeViewModel {
     
+    @ApiModelProperty(notes = "The employee ID in the database.")
     private int id;
     private PersonalDataViewModel personalData;
     private JobTitleViewModel jobTitle;
+    @ApiModelProperty(notes = "The employee's skills list.")
     private List<SkillViewModel> skillList = new ArrayList<SkillViewModel>();
     
     public EmployeeViewModel() {}

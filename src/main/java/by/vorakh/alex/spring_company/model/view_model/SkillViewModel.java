@@ -1,8 +1,14 @@
 package by.vorakh.alex.spring_company.model.view_model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "Details about the skill for view")
 public class SkillViewModel {
     
+    @ApiModelProperty(notes = "The skill's ID in the database")
     private int id;
+    @ApiModelProperty(notes = "The skill name.")
     private String skillName;
     
     public SkillViewModel() {}

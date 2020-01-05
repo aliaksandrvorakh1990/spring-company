@@ -1,18 +1,21 @@
 package by.vorakh.alex.spring_company.repository.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "job_title")
-public class JobTitle {
+public class JobTitle implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "title_id", unique = true, nullable = false)
     private int id;
-
     @NotNull
     @Size(min = 2, max = 20)
     @Column(name = "title", length = 20, nullable = false)
