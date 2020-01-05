@@ -15,8 +15,9 @@ public class IdViewModel {
 	this.id = id;
     }
     
-    public void setId(int id) {
+    public IdViewModel setId(int id) {
         this.id = id;
+        return this;
     }
 
     public int getId() {

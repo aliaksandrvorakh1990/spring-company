@@ -27,8 +27,10 @@ public class PersonalDataDAO implements DAO<PersonalData> {
     }
 
     @Override
-    public void create(PersonalData object) {
+    public int create(PersonalData object) {
 	entityManager.persist(object);
+	entityManager.flush();
+	return object.getId();
     }
 
     @Override

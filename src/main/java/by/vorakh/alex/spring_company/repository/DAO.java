@@ -8,7 +8,7 @@ public interface DAO<V> {
 
     V getById(int id);
 
-    void create(V object);
+    int create(V object);
 
     void update(V object);
 

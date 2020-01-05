@@ -26,8 +26,10 @@ public class CompanyDAO implements DAO<Company> {
     }
 
     @Override
-    public void create(Company object) {
+    public int create(Company object) {
         entityManager.persist(object);
+        entityManager.flush();
+	return object.getId();
     }
 
     @Override

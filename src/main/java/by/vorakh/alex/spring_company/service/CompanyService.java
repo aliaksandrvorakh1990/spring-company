@@ -3,6 +3,7 @@ package by.vorakh.alex.spring_company.service;
 import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.CompanyPayload;
 import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
+import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.repository.CompanyDAO;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.entity.Company;
@@ -41,20 +42,20 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
 
     @Override
     @Transactional
-    public void create(CompanyPayload newPayload) {
-	System.out.println(newPayload.getEmployeeIdList());
-	System.out.println(employeeDAO.getAll(newPayload.getEmployeeIdList()));
-	companyDAO.create(new Company()
-		.setName(newPayload.getName())
-		.setEmployeeList(employeeDAO.getAll(newPayload.getEmployeeIdList())));
+    public IdViewModel create(CompanyPayload newPayload) {
+	return new IdViewModel()
+		.setId(companyDAO.create(new Company()
+			.setName(newPayload.getName())
+			.setEmployeeList(employeeDAO.getAll(newPayload.getEmployeeIdList()))));
     }
 
     @Override
     @Transactional
-    public void update(int id, CompanyPayload editedPayload) {
-	Company editedCompany = companyDAO.getById(id);
-	editedCompany.setName(editedPayload.getName())
-	.setEmployeeList(employeeDAO.getAll(editedPayload.getEmployeeIdList()));
+    public void update(CompanyPayload editedPayload) {
+	Company editedCompany = companyDAO.getById(editedPayload.getId());
+	editedCompany
+		.setName(editedPayload.getName())
+		.setEmployeeList(employeeDAO.getAll(editedPayload.getEmployeeIdList()));
 	companyDAO.update(editedCompany);
     }
 

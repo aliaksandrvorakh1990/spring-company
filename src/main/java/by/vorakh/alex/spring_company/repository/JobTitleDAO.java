@@ -27,8 +27,10 @@ public class JobTitleDAO implements DAO<JobTitle> {
     }
 
     @Override
-    public void create(JobTitle object) {
+    public int create(JobTitle object) {
 	entityManager.persist(object);
+	entityManager.flush();
+	return object.getId();
     }
 
     @Override

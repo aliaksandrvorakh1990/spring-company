@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.JobTitlePayload;
+import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.JobTitleViewModel;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.JobTitleDAO;
@@ -42,14 +43,15 @@ public class JobTitleService implements ServiceInterface<JobTitleViewModel, JobT
 
     @Override
     @Transactional
-    public void create(JobTitlePayload newPayload) {
-	jobTitleDAO.create(new JobTitle(newPayload.getTitle()));
+    public IdViewModel create(JobTitlePayload newPayload) {
+	return new IdViewModel()
+		.setId(jobTitleDAO.create(new JobTitle(newPayload.getTitle())));
     }
 
     @Override
     @Transactional
-    public void update(int id, JobTitlePayload editedPayload) {
-	JobTitle editedJobTitle = jobTitleDAO.getById(id);
+    public void update(JobTitlePayload editedPayload) {
+	JobTitle editedJobTitle = jobTitleDAO.getById(editedPayload.getId());
 	editedJobTitle.setTitle(editedPayload.getTitle());
 	jobTitleDAO.update(editedJobTitle);
     }

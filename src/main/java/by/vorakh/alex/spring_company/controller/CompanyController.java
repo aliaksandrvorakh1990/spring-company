@@ -2,6 +2,7 @@ package by.vorakh.alex.spring_company.controller;
 
 import by.vorakh.alex.spring_company.model.payload.CompanyPayload;
 import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
+import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.service.CompanyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +29,13 @@ public class CompanyController {
     }
 
     @PostMapping("/companies")
-    public void createCompany(@Valid @RequestBody CompanyPayload newCompany) {
-        companyService.create(newCompany);
+    public IdViewModel createCompany(@Valid @RequestBody CompanyPayload newCompany) {
+	return companyService.create(newCompany);
     }
 
     @PutMapping(value = "/companies/{id}")
-    public void updateCompany(@PathVariable(value = "id") Integer id,
-                              @Valid @RequestBody CompanyPayload editedCompany) {
-        companyService.update(id ,editedCompany);
+    public void updateCompany(@Valid @RequestBody CompanyPayload editedCompany) {
+        companyService.update(editedCompany);
     }
 
     @DeleteMapping(value = "/companies/{id}")

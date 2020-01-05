@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.SkillPayload;
+import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.SkillViewModel;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.SkillDAO;
@@ -41,14 +42,16 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
 
     @Override
     @Transactional
-    public void create(SkillPayload newPayload) {
-	skillDAO.create(new Skill(newPayload.getSkillName()));
+    public IdViewModel create(SkillPayload newPayload) {
+	return new IdViewModel()
+		.setId(skillDAO
+			.create(new Skill(newPayload.getSkillName())));
     }
 
     @Override
     @Transactional
-    public void update(int id, SkillPayload editedPayload) {
-	Skill editedSkill = skillDAO.getById(id);
+    public void update(SkillPayload editedPayload) {
+	Skill editedSkill = skillDAO.getById(editedPayload.getId());
 	editedSkill.setSkillName(editedPayload.getSkillName());
 	skillDAO.update(editedSkill);
     }

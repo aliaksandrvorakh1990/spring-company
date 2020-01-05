@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import by.vorakh.alex.spring_company.model.payload.EmployeePayload;
 import by.vorakh.alex.spring_company.model.view_model.EmployeeViewModel;
+import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.service.EmployeeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +26,7 @@ import io.swagger.annotations.ApiResponses;
 
 
 @Api(value="Employee Management System", 
-	description="Operations pertaining to employee in Employee Management System Management System")
+	description="Operations pertaining to employee in Employee Management System")
 @RestController
 @RequestMapping("/project")
 public class EmployeeController {
@@ -55,22 +56,17 @@ public class EmployeeController {
 	    
     @ApiOperation(value = "Add an employee")
     @PostMapping("/employees")
-    public void createEmployee(
+    public IdViewModel createEmployee(
 	    @ApiParam(value = "Employee object store in database table", required = true)
 	    @Valid @RequestBody EmployeePayload newEmployee) {
-	employeeService.create(newEmployee);
+	return employeeService.create(newEmployee);
     }
 
-    
-    
     @ApiOperation(value = "Update an employee")
     @PutMapping(value = "/employees/{id}")
-    public void updateEmployee(
-	    @ApiParam(value = "Employee Id to update employee object", required = true) 
-	    @PathVariable(value = "id") Integer id,
-	    @ApiParam(value = "Update employee object", required = true) 
+    public void updateEmployee(@ApiParam(value = "Update employee object", required = true) 
 	    @Valid @RequestBody EmployeePayload editedEmployee) {
-	employeeService.update(id ,editedEmployee);
+	employeeService.update(editedEmployee);
     }
     
     @ApiOperation(value = "Delete an employee")

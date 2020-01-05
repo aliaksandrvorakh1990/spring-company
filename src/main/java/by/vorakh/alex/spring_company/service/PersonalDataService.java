@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.PersonalDataPayload;
+import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.PersonalDataViewModel;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.PersonalDataDAO;
@@ -42,16 +43,19 @@ public class PersonalDataService implements ServiceInterface<PersonalDataViewMod
     
     @Override
     @Transactional
-    public void create(PersonalDataPayload newPayload) {
-	personalDataDAO.create(new PersonalData(newPayload.getFirstName(), newPayload.getLastName()));
+    public IdViewModel create(PersonalDataPayload newPayload) {
+	return new IdViewModel()
+		.setId(personalDataDAO
+			.create(new PersonalData(newPayload.getFirstName(), newPayload.getLastName())));
     }
     
     @Override
     @Transactional
-    public void update(int id, PersonalDataPayload objectForEdit) {
-	PersonalData personalDataForEditing = personalDataDAO.getById(id);
-	personalDataForEditing.setFirstName(objectForEdit.getFirstName());
-	personalDataForEditing.setLastName(objectForEdit.getLastName());
+    public void update(PersonalDataPayload editedPayload) {
+	PersonalData personalDataForEditing = personalDataDAO.getById(editedPayload.getId());
+	personalDataForEditing
+		.setFirstName(editedPayload.getFirstName())
+		.setLastName(editedPayload.getLastName());
 	personalDataDAO.update(personalDataForEditing);
     }
 

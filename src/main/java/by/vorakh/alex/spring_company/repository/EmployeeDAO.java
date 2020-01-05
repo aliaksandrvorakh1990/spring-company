@@ -49,8 +49,10 @@ public class EmployeeDAO implements DAO<Employee> {
     }
 
     @Override
-    public void create(Employee object) {
+    public int create(Employee object) {
 	entityManager.persist(object);
+	entityManager.flush();
+	return object.getId();
     }
 
     @Override

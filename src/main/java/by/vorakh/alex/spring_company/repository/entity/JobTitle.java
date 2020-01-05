@@ -18,7 +18,7 @@ public class JobTitle implements Serializable {
     private int id;
     @NotNull
     @Size(min = 2, max = 20)
-    @Column(name = "title", length = 20, nullable = false)
+    @Column(name = "title", length = 20, nullable = false, unique = true)
     private String title;
 
     public JobTitle() {}

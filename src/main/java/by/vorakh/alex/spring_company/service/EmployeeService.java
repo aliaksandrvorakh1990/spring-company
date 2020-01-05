@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.EmployeePayload;
 import by.vorakh.alex.spring_company.model.view_model.EmployeeViewModel;
+import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.JobTitleDAO;
 import by.vorakh.alex.spring_company.repository.PersonalDataDAO;
@@ -47,21 +48,23 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 
     @Override
     @Transactional
-    public void create(EmployeePayload newPayload) {
-	employeeDAO.create(new Employee(
-		personalDataDAO.getById(newPayload.getPersonalDataId()), 
-		jobTitleDAO.getById(newPayload.getJobTitleId()), 
-		skillDAO.getAll(newPayload.getSkillIdsList()))
-		);
+    public IdViewModel create(EmployeePayload newPayload) {
+	return new IdViewModel()
+		.setId(employeeDAO.create(new Employee(
+			personalDataDAO.getById(newPayload.getPersonalDataId()),
+			jobTitleDAO.getById(newPayload.getJobTitleId()), 
+			skillDAO.getAll(newPayload.getSkillIdsList()))
+			));
     }
 
     @Override
     @Transactional
-    public void update(int id, EmployeePayload editedPayload) {
-	Employee editedEmployee = employeeDAO.getById(id);
-	editedEmployee.setPersonalData(personalDataDAO.getById(editedPayload.getPersonalDataId()))
-	.setJobTitle(jobTitleDAO.getById(editedPayload.getJobTitleId()))
-	.setSkillList(skillDAO.getAll(editedPayload.getSkillIdsList()));
+    public void update(EmployeePayload editedPayload) {
+	Employee editedEmployee = employeeDAO.getById(editedPayload.getId());
+	editedEmployee
+		.setPersonalData(personalDataDAO.getById(editedPayload.getPersonalDataId()))
+		.setJobTitle(jobTitleDAO.getById(editedPayload.getJobTitleId()))
+		.setSkillList(skillDAO.getAll(editedPayload.getSkillIdsList()));
 	employeeDAO.update(editedEmployee);
     }
 

@@ -40,16 +40,19 @@ public class PersonalData implements Serializable {
 	this.lastName = lastName;
     }
 
-    public void setId(int id) {
+    public PersonalData setId(int id) {
         this.id = id;
+        return this;
     }
     
-    public void setFirstName(String firstName) {
+    public PersonalData setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
     
-    public void setLastName(String lastName) {
+    public PersonalData setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
     
     public int getId() {

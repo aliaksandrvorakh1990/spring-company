@@ -38,8 +38,10 @@ public class SkillDAO implements DAO<Skill> {
     }
 
     @Override
-    public void create(Skill object) {
+    public int create(Skill object) {
 	entityManager.persist(object);
+	entityManager.flush();
+	return object.getId();
     }
 
     @Override

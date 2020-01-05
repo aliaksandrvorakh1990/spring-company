@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import by.vorakh.alex.spring_company.model.payload.PersonalDataPayload;
+import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.PersonalDataViewModel;
 import by.vorakh.alex.spring_company.service.PersonalDataService;
 
@@ -36,14 +37,13 @@ public class PersonalDataController {
     }
 
     @PostMapping("/people")
-    public void createPersonalData(@Valid @RequestBody PersonalDataPayload newPersonalData) {
-	personalDataService.create(newPersonalData);
+    public IdViewModel createPersonalData(@Valid @RequestBody PersonalDataPayload newPersonalData) {
+	return personalDataService.create(newPersonalData);
     }
 
     @PutMapping(value = "/people/{id}")
-    public void updatePersonalData(@PathVariable(value = "id") Integer id,
-                              @Valid @RequestBody PersonalDataPayload editedPersonalData) {
-        personalDataService.update(id ,editedPersonalData);
+    public void updatePersonalData(@Valid @RequestBody PersonalDataPayload editedPersonalData) {
+        personalDataService.update(editedPersonalData);
     }
 
     @DeleteMapping(value = "/people/{id}")
