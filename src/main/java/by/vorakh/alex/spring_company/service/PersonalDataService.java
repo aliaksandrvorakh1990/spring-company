@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
+import by.vorakh.alex.spring_company.converter.PersonalDataToPersonalDataViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.PersonalDataPayload;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.PersonalDataViewModel;
@@ -24,13 +24,13 @@ public class PersonalDataService implements ServiceInterface<PersonalDataViewMod
     @Autowired
     private EmployeeDAO employeeDAO;
     @Autowired
-    private EntityToViewModelConverter convertor;
+    private PersonalDataToPersonalDataViewModelConverter convertor;
     
     @Override
     public List<PersonalDataViewModel> getAll() {
 	List<PersonalDataViewModel> personalDataViewModellist = new ArrayList<PersonalDataViewModel>();
 	personalDataDAO.getAll().forEach(personalData -> {
-	    personalDataViewModellist.add(convertor.converte(personalData));
+	    personalDataViewModellist.add(convertor.convert(personalData));
 	});
 	
 	return personalDataViewModellist;
@@ -38,7 +38,7 @@ public class PersonalDataService implements ServiceInterface<PersonalDataViewMod
 
     @Override
     public PersonalDataViewModel getById(int id) {
-	return convertor.converte(personalDataDAO.getById(id));
+	return convertor.convert(personalDataDAO.getById(id));
     }
     
     @Override

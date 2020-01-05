@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
+import by.vorakh.alex.spring_company.converter.EmployeeToEmployeeViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.EmployeePayload;
 import by.vorakh.alex.spring_company.model.view_model.EmployeeViewModel;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
@@ -30,20 +30,20 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
     @Autowired
     private JobTitleDAO jobTitleDAO;
     @Autowired
-    private EntityToViewModelConverter convertor;
+    private EmployeeToEmployeeViewModelConverter convertor;
 
     @Override
     public List<EmployeeViewModel> getAll() {
 	List<EmployeeViewModel>  employeeViewModelList= new ArrayList<EmployeeViewModel>();
 	employeeDAO.getAll().forEach(employee -> {
-	    employeeViewModelList.add(convertor.converte(employee));
+	    employeeViewModelList.add(convertor.convert(employee));
 	});
 	return employeeViewModelList;
     }
 
     @Override
     public EmployeeViewModel getById(int id) {
-	return convertor.converte(employeeDAO.getById(id));
+	return convertor.convert(employeeDAO.getById(id));
     }
 
     @Override

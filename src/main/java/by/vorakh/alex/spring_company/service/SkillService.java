@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import by.vorakh.alex.spring_company.converter.EntityToViewModelConverter;
+import by.vorakh.alex.spring_company.converter.SkillToSkillViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.SkillPayload;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.SkillViewModel;
@@ -24,20 +24,20 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
     @Autowired
     private EmployeeDAO employeeDAO;
     @Autowired
-    private EntityToViewModelConverter convertor;
+    private SkillToSkillViewModelConverter convertor;
     
     @Override
     public List<SkillViewModel> getAll() {
 	List<SkillViewModel> skillViewModelList = new ArrayList<SkillViewModel>();
 	skillDAO.getAll().forEach(skill -> {
-	    skillViewModelList.add(convertor.converte(skill));
+	    skillViewModelList.add(convertor.convert(skill));
 	});
 	return skillViewModelList;
     }
 
     @Override
     public SkillViewModel getById(int id) {
-	return convertor.converte(skillDAO.getById(id));
+	return convertor.convert(skillDAO.getById(id));
     }
 
     @Override
