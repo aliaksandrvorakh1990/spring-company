@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "The created object's ID.")
 public class IdViewModel {
     
-    @ApiModelProperty(notes = "The ID is an object that was created in the database.")
+    @ApiModelProperty(value = "The ID is an object that was created in the database.", example = "12")
     private int id;
     
     public IdViewModel() {}

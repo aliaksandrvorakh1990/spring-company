@@ -2,7 +2,8 @@ package by.vorakh.alex.spring_company.model.payload;
 
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,20 +11,25 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "The employee details for that creating and updating in the database.")
 public class EmployeePayload {
     
-    @ApiModelProperty(notes = "The employee ID in the database.")
+    @PositiveOrZero
+    @ApiModelProperty(value = "The employee ID should be unique and is required for updating in the database.",
+            example = "28")
     private int id;
-    @NotNull
-    @ApiModelProperty(notes = "The personal data ID of the employee in the database.")
+    @Positive(message = "The personal data Id has to be greater than zero.")
+    @ApiModelProperty(value = "The personal data ID of the employee from the database.",
+	    example = "2", required = true)
     private int personalDataId;
-    @NotNull
-    @ApiModelProperty(notes = "The job title ID of the employee in the database.")
+    @Positive(message = "The job title Id has to be greater than zero.")
+    @ApiModelProperty(value = "The job title ID of the employee from  the database.", 
+    	     example = "42", required = true)
     private int jobTitleId;
-    @ApiModelProperty(notes = "The skill IDs list of the employee in the database.")
+    @ApiModelProperty(value = "The unique skill IDs list of the employee from the database.", 
+    	    example="[1, 4, 10, 20]")
     private List<Integer> skillIdsList;
     
     public EmployeePayload() {}
 
-    public EmployeePayload(int id, @NotNull int personalDataId, @NotNull int jobTitleId, 
+    public EmployeePayload(@PositiveOrZero int id, @Positive int personalDataId, @Positive int jobTitleId, 
 	    List<Integer> skillIdsList) {
 	this.id = id;
 	this.personalDataId = personalDataId;

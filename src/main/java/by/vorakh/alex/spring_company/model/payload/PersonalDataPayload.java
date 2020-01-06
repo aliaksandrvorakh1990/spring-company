@@ -1,6 +1,9 @@
 package by.vorakh.alex.spring_company.model.payload;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModel;
@@ -8,21 +11,29 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "The personal data details for that creating and updating in the database.")
 public class PersonalDataPayload {
-    
-    @ApiModelProperty(notes = "The personal data ID in the database.")
+
+    @PositiveOrZero
+    @ApiModelProperty(value = "The personal data ID should be unique and is required for updating in the database", 
+    	    example = "25")
     private int id;
-    @NotNull
+    @NotNull(message = "The first name cannot be null")
+    @Min(value = 2, message = "The first name does not have to contain less than 2 letters.")
+    @Max(value = 20, message = "The first name does not have to contain be greater than 20 letters.")
     @Size(min = 2, max = 20)
-    @ApiModelProperty(notes = "The first name has to have a length between 2 and 20 letters.")
+    @ApiModelProperty(value = "The first name should be real and contain 2-20 letters.",  
+	    example = "John", required = true)
     private String firstName;
-    @NotNull
+    @NotNull(message = "The last name cannot be null")
+    @Min(value = 2, message = "The last name does not have to contain less than 2 letters.")
+    @Max(value = 20, message = "The last name does not have to contain be greater than 20 letters.")
     @Size(min = 2, max = 20)
-    @ApiModelProperty(notes = "The last name has to have a length between 2 and 20 letters.")
+    @ApiModelProperty(value = "The last name should be real and contain 2-20 letters.", 
+    	    required = true, example = "Smith")
     private String lastName;
     
     public PersonalDataPayload() {}
 
-    public PersonalDataPayload(int id, @NotNull @Size(min = 2, max = 20) String firstName,
+    public PersonalDataPayload(@PositiveOrZero int id, @NotNull @Size(min = 2, max = 20) String firstName,
 	    @NotNull @Size(min = 2, max = 20) String lastName) {
 	this.id = id;
 	this.firstName = firstName;

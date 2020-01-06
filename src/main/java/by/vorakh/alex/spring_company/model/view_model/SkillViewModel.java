@@ -6,9 +6,9 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "Details about the skill for view")
 public class SkillViewModel {
     
-    @ApiModelProperty(notes = "The skill's ID in the database")
+    @ApiModelProperty(value = "The skill's ID in the database", example = "9")
     private int id;
-    @ApiModelProperty(notes = "The skill name.")
+    @ApiModelProperty(value = "The skill name.", example = "Java EE")
     private String skillName;
     
     public SkillViewModel() {}

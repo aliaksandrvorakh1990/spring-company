@@ -6,9 +6,9 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "Details about the job title of an employee for view")
 public class JobTitleViewModel {
     
-    @ApiModelProperty(notes = "The job title ID in the database.")
+    @ApiModelProperty(value = "The job title ID in the database.", example = "7")
     private int id;
-    @ApiModelProperty(notes = "The job title name.")
+    @ApiModelProperty(value = "The job title name.", example = "Java Developer")
     private String title;
     
     public JobTitleViewModel() {}

@@ -9,11 +9,11 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "Details about the employee for view.")
 public class EmployeeViewModel {
     
-    @ApiModelProperty(notes = "The employee ID in the database.")
+    @ApiModelProperty(value = "The employee ID in the database.", example = "11")
     private int id;
     private PersonalDataViewModel personalData;
     private JobTitleViewModel jobTitle;
-    @ApiModelProperty(notes = "The employee's skills list.")
+    @ApiModelProperty(value = "The employee's skills list.")
     private List<SkillViewModel> skillList = new ArrayList<SkillViewModel>();
     
     public EmployeeViewModel() {}

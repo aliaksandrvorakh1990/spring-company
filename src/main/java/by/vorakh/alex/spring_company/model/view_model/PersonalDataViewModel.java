@@ -6,11 +6,11 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "Details about the personal data of an employee for view.")
 public class PersonalDataViewModel {
     
-    @ApiModelProperty(notes = "The personal data ID in the database.")
-    private int id;
-    @ApiModelProperty(notes = "The employee first name.")
+    @ApiModelProperty(value = "The personal data ID in the database.", example = "53")
+    private int id; 
+    @ApiModelProperty(value = "The employee first name.", example = "Nick")
     private String firstName;
-    @ApiModelProperty(notes = "The employee last name.")
+    @ApiModelProperty(value = "The employee last name.", example = "Hawk")
     private String lastName;
     
     public PersonalDataViewModel() {}
