@@ -18,7 +18,9 @@ import by.vorakh.alex.spring_company.model.payload.JobTitlePayload;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.JobTitleViewModel;
 import by.vorakh.alex.spring_company.service.JobTitleService;
+import io.swagger.annotations.Api;
 
+@Api(description="Operations pertaining to job title")
 @RestController
 @RequestMapping("/project")
 public class JobTitleController {

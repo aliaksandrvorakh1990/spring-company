@@ -33,14 +33,16 @@ public class SpringFoxConfig {
     private ApiInfo apiInfo() {
 	    return new ApiInfo(
 	      "Company REST API", 
-	      "Description of API.", 
+	      "Company is how you store information about human resources. "
+	      + "<br/>Use the Company API calls to manage information about companies "
+	      + "and their employees in your database.", 
 	      "1.0.0", 
-	      "", 
+	      "http://localhost:8080/terms_and_conditions", 
 	      new Contact("Alexander Vorakh", 
 		      "https://github.com/aliaksandrvorakh1990/spring-company", 
 		      "aliaksandrvorakh@gmail.com"), 
-	      "License of API",
-	      "API license URL",
+	      "The Open Software License 3.0 (OSL-3.0)",
+	      "https://opensource.org/licenses/OSL-3.0",
 	      Collections.emptyList());
     }
     

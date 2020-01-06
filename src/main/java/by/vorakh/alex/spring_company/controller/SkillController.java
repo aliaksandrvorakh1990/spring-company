@@ -18,7 +18,9 @@ import by.vorakh.alex.spring_company.model.payload.SkillPayload;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.SkillViewModel;
 import by.vorakh.alex.spring_company.service.SkillService;
+import io.swagger.annotations.Api;
 
+@Api(description="Operations pertaining to skill")
 @RestController
 @RequestMapping("/project")
 public class SkillController {

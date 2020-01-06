@@ -24,9 +24,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-
-@Api(value="Employee Management System", 
-	description="Operations pertaining to employee in Employee Management System")
+@Api(description="Operations pertaining to employee")
 @RestController
 @RequestMapping("/project")
 public class EmployeeController {
@@ -34,46 +32,67 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
     
-    @ApiOperation(value = "View a list of available employees", response = List.class)
+    @ApiOperation(value = "Get a list of existing employees from the database")
     @ApiResponses(value = {
-	    @ApiResponse(code = 200, message = "Successfully retrieved list"),
-	    @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-	    @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-	    @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+	    @ApiResponse(code = 200, message = "Successfully"),
+	    @ApiResponse(code = 500, message = "Problems with server"),
+	    @ApiResponse(code = 404, message = "The resource is not found")
 	})
     @GetMapping("/employees")
     public List<EmployeeViewModel> getEmployees() {
         return employeeService.getAll();
     }
 
-    @ApiOperation(value = "Get an employee by Id")
+    @ApiOperation(value = "Get an employee by Id from the database")
+    @ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successfully"),
+	    @ApiResponse(code = 500, message = "Problems with server"),
+	    @ApiResponse(code = 404, message = "The resource is not found")
+	})
     @GetMapping(value = "/employees/{id}")
     public EmployeeViewModel getEmployee(
-	    @ApiParam(value = "Employee id from which employee object will retrieve", required = true) 
+	    @ApiParam(value = "Employee will be gotten from the database by his ID", required = true) 
 	    @PathVariable("id") Integer id) {
         return employeeService.getById(id);
     }
 	    
-    @ApiOperation(value = "Add an employee")
+    @ApiOperation(value = "Create an employee in the database")
+    @ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successfully"),
+	    @ApiResponse(code = 500, message = "The employee was not created in the database"),
+	    @ApiResponse(code = 404, message = "The resource is not found")
+	})
     @PostMapping("/employees")
     public IdViewModel createEmployee(
-	    @ApiParam(value = "Employee object store in database table", required = true)
+	    @ApiParam(value = "Employee data for creating in the database.", required = true)
 	    @Valid @RequestBody EmployeePayload newEmployee) {
 	return employeeService.create(newEmployee);
     }
 
-    @ApiOperation(value = "Update an employee")
+    @ApiOperation(value = "Update an existing employee in the database.")
+    @ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successfully"),
+	    @ApiResponse(code = 500, message = "The employee was not updated in the database"),
+	    @ApiResponse(code = 404, message = "The resource is not found")
+	})
     @PutMapping(value = "/employees/{id}")
-    public void updateEmployee(@ApiParam(value = "Update employee object", required = true) 
+    public void updateEmployee(
+	    @ApiParam(value = "Employee data for updating in the database.", 
+	            required = true) 
 	    @Valid @RequestBody EmployeePayload editedEmployee) {
 	employeeService.update(editedEmployee);
     }
     
-    @ApiOperation(value = "Delete an employee")
+    @ApiOperation(value = "Delete an existing employee by Id from the database.")
+    @ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successfully"),
+	    @ApiResponse(code = 500, message = "The employee was not delated from the database"),
+	    @ApiResponse(code = 404, message = "The resource is not found")
+	})
     @DeleteMapping(value = "/employees/{id}")
     public void deleteEmployee(
-	    @ApiParam(value = "Employee Id from which employee object will delete from database table", 
-	    		required = true)
+	    @ApiParam(value = "Employee will be deleted from the database by his ID.", 
+	            required = true)
 	    @PathVariable("id") Integer id) {
 	employeeService.delete(id);
     }

@@ -4,6 +4,7 @@ import by.vorakh.alex.spring_company.model.payload.CompanyPayload;
 import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.service.CompanyService;
+import io.swagger.annotations.Api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@Api(description="Operations pertaining to company")
 @RestController
 @RequestMapping("/project")
 public class CompanyController {

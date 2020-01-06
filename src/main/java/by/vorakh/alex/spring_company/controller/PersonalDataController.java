@@ -18,7 +18,9 @@ import by.vorakh.alex.spring_company.model.payload.PersonalDataPayload;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.PersonalDataViewModel;
 import by.vorakh.alex.spring_company.service.PersonalDataService;
+import io.swagger.annotations.Api;
 
+@Api(description="Operations pertaining to personal data")
 @RestController
 @RequestMapping("/project")
 public class PersonalDataController {
