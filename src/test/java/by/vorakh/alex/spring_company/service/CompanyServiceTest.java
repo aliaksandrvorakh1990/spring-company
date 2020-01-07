@@ -2,7 +2,6 @@ package by.vorakh.alex.spring_company.service;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -15,10 +14,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import by.vorakh.alex.spring_company.converter.CompanyToCompanyViewModelConverter;
-import by.vorakh.alex.spring_company.converter.EmployeeToEmployeeViewModelConverter;
 import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
 import by.vorakh.alex.spring_company.repository.CompanyDAO;
-import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.entity.Company;
 import by.vorakh.alex.spring_company.repository.entity.Employee;
 import by.vorakh.alex.spring_company.repository.entity.JobTitle;
@@ -30,19 +27,16 @@ public class CompanyServiceTest {
     
     @Mock
     private CompanyDAO companyDAO;
-   // @Mock
-   // private EmployeeDAO employeeDAO;
-    
-    
+   
+    @Mock
+    private CompanyToCompanyViewModelConverter companyConvertor;
+ 
     @InjectMocks
     private CompanyService service;
     
     @Test
     public void testGetAll() {
-	CompanyToCompanyViewModelConverter companyConvertorSpy = 
-		spy(CompanyToCompanyViewModelConverter.class);
-	EmployeeToEmployeeViewModelConverter employeeConvertorSpy = 
-		spy(EmployeeToEmployeeViewModelConverter.class);
+	
 	PersonalData madMax = new PersonalData(1, "Mad", "Max");
 	JobTitle ceo = new JobTitle(1, "CEO");
 	
@@ -61,7 +55,7 @@ public class CompanyServiceTest {
 	List<Company> companyList = new ArrayList<Company>();
 	companyList.add(firstCompany);
 	
-	when(companyConvertorSpy.convert(firstCompany)).thenCallRealMethod();
+	when(companyConvertor.convert(firstCompany)).thenCallRealMethod();
 	when(companyDAO.getAll()).thenReturn(companyList);
 	
 	List<CompanyViewModel> resultList = service.getAll();
