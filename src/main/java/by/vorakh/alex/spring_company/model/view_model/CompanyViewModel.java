@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class CompanyViewModel {
     
     @ApiModelProperty(value = "The company ID in the database.", example = "4")
-    private Integer id;
+    private int id;
     @ApiModelProperty(value = "The company name.", example = "Evil-Corporation")
     private String name;
     @ApiModelProperty(value = "The employees list.")
@@ -18,13 +18,13 @@ public class CompanyViewModel {
     
     public CompanyViewModel() {}
     
-    public CompanyViewModel(Integer id, String name, List<EmployeeViewModel> employeeList) {
+    public CompanyViewModel(int id, String name, List<EmployeeViewModel> employeeList) {
 	this.id = id;
 	this.name = name;
 	this.employeeList = employeeList;
     }
     
-    public CompanyViewModel setId(Integer id) {
+    public CompanyViewModel setId(int id) {
         this.id = id;
         return this;
     }
@@ -39,7 +39,7 @@ public class CompanyViewModel {
         return this;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -49,6 +49,55 @@ public class CompanyViewModel {
 
     public List<EmployeeViewModel> getEmployeeList() {
         return employeeList;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+	return "CompanyViewModel [id=" + id + ", name=" + name + ", employeeList=" + employeeList + "]";
+    }
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + id; 
+	result = prime * result + ((name == null) ? 0 : name.hashCode());
+	result = prime * result + ((employeeList == null) ? 0 : employeeList.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+	if (obj == null) {
+	    return false;
+	}
+	if (getClass() != obj.getClass()) {
+	    return false;
+	}    
+	CompanyViewModel other = (CompanyViewModel) obj;
+	if (id != other.id) {
+	    return false;
+	} 
+	if (name == null) {
+	    if (other.name != null) {
+		return false;
+	    }
+	} else if (!name.equals(other.name)) {
+	    return false;
+	}  
+	if (employeeList == null) {
+	    if (other.employeeList != null) {
+		return false;
+	    }
+	} else if (!employeeList.equals(other.employeeList)) {
+	    return false;
+	}
+	return true;
     }
 
 }
