@@ -1,5 +1,12 @@
 package by.vorakh.alex.spring_company.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import by.vorakh.alex.spring_company.converter.CompanyToCompanyViewModelConverter;
 import by.vorakh.alex.spring_company.model.payload.CompanyPayload;
@@ -8,6 +15,8 @@ import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.repository.CompanyDAO;
 import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.entity.Company;
+import by.vorakh.alex.spring_company.repository.entity.Employee;
+
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,11 +25,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
-
-import static org.hamcrest.CoreMatchers.any;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
 
 public class CompanyServiceTest {
     
@@ -75,9 +79,27 @@ public class CompanyServiceTest {
     public void testCreate() {
          CompanyPayload testCompanyPayload = new CompanyPayload(3, "TestCompany", null);
          when(employeeDAO.getAll(testCompanyPayload.getEmployeeIdList())).thenReturn(null);
-         doReturn(3).when(companyDAO).create((Company)any(Company.class));
+         doReturn(3).when(companyDAO).create(any(Company.class));
          assertEquals(controlIdViewModel, service.create(testCompanyPayload));
     }
     
-
+    @Test
+    public void testUpdate() {
+	CompanyPayload testCompanyPayload = new CompanyPayload(3, "TestCompany", Lists.list(4));
+	Company company = new Company(3, "OldTestCompany", Lists.list(new Employee()));
+	when(companyDAO.getById(3)).thenReturn(company);
+	when(employeeDAO.getAll(any(List.class))).thenReturn(Lists.list(new Employee()));
+	service.update(testCompanyPayload);
+	verify(companyDAO, times(1)).update(company);
+    }
+    
+    @Test
+    public void testDelete() {
+	Company company = new Company(2, "TestCompany", Lists.list(new Employee()));
+	when(companyDAO.getById(2)).thenReturn(company);
+	service.delete(2);
+	verify(employeeDAO, atLeastOnce()).delete(any(Employee.class));
+	verify(companyDAO, times(1)).delete(company);
+    }
+    
 }
