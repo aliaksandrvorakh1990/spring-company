@@ -14,11 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import by.vorakh.alex.spring_company.model.payload.PersonalDataPayload;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.PersonalDataViewModel;
 import by.vorakh.alex.spring_company.service.PersonalDataService;
-import io.swagger.annotations.Api;
 
 @Api(description="Operations pertaining to personal data")
 @RestController
@@ -28,28 +33,65 @@ public class PersonalDataController {
     @Autowired
     private PersonalDataService personalDataService;
     
+    @ApiOperation(value = "Get a list of existing personal data from the database",
+	    response = PersonalDataViewModel.class,
+	    responseContainer = "List", code = 200)
+    @ApiResponses(value = {
+	    @ApiResponse(code = 500, message = "Problems with server")
+	})
     @GetMapping("/people")
     public List<PersonalDataViewModel> getPersonalDatas() {
         return personalDataService.getAll();
     }
 
+    @ApiOperation(value = "Get a personal data by Id from the database", 
+	    notes = "ID has to be greater than zero.", 
+	    response = PersonalDataViewModel.class , code = 200)
+    @ApiResponses(value = {
+	    @ApiResponse(code = 500, message = "The personal data does not exist or Problems with server")
+	})
     @GetMapping(value = "/people/{id}")
-    public PersonalDataViewModel getPersonalData(@PathVariable("id") Integer id) {
+    public PersonalDataViewModel getPersonalData(
+	    @ApiParam(value = "The personal data will be gotten from the database by his ID", required = true)
+	    @PathVariable("id") Integer id) {
         return personalDataService.getById(id);
     }
 
+    @ApiOperation(value = "Create a personal data in the database",
+	    response = IdViewModel.class, code = 200)
+    @ApiResponses(value = {
+	    @ApiResponse(code = 500, 
+		    message = "The personal data was not created in the database or Problems with server"),
+	})
     @PostMapping("/people")
-    public IdViewModel createPersonalData(@Valid @RequestBody PersonalDataPayload newPersonalData) {
+    public IdViewModel createPersonalData(
+	    @ApiParam(value = "The personal data data for creating in the database.", required = true)
+	    @Valid @RequestBody PersonalDataPayload newPersonalData) {
 	return personalDataService.create(newPersonalData);
     }
 
+    @ApiOperation(value = "Update an existing personal data in the database.", code = 200)
+    @ApiResponses(value = {
+	    @ApiResponse(code = 500, 
+		    message = "The personal data was not updated in the database or Problems with server")
+	})
     @PutMapping(value = "/people/{id}")
-    public void updatePersonalData(@Valid @RequestBody PersonalDataPayload editedPersonalData) {
+    public void updatePersonalData(
+	    @ApiParam(value = "The personal data data for updating in the database.", required = true)
+	    @Valid @RequestBody PersonalDataPayload editedPersonalData) {
         personalDataService.update(editedPersonalData);
     }
 
+    @ApiOperation(value = "Delete an existing personal data  by Id from the database.", 
+	    notes = "ID has to be greater than zero.", code = 200)
+    @ApiResponses(value = {
+	    @ApiResponse(code = 500, 
+		    message = "The personal data was not delated from the database or Problems with server")
+	})
     @DeleteMapping(value = "/people/{id}")
-    public void deletePersonalData(@PathVariable("id") Integer id) {
+    public void deletePersonalData(
+	    @ApiParam(value = "The personal data will be deleted from the database by his ID.", required = true)
+	    @PathVariable("id") Integer id) {
 	personalDataService.delete(id);
     }
 }
