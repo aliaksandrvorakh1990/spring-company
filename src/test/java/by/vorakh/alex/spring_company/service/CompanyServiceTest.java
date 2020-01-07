@@ -14,6 +14,10 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import by.vorakh.alex.spring_company.converter.CompanyToCompanyViewModelConverter;
+import by.vorakh.alex.spring_company.converter.EmployeeToEmployeeViewModelConverter;
+import by.vorakh.alex.spring_company.converter.JobTitleToJobTitleViewModelConverter;
+import by.vorakh.alex.spring_company.converter.PersonalDataToPersonalDataViewModelConverter;
+import by.vorakh.alex.spring_company.converter.SkillToSkillViewModelConverter;
 import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
 import by.vorakh.alex.spring_company.repository.CompanyDAO;
 import by.vorakh.alex.spring_company.repository.entity.Company;
@@ -25,18 +29,24 @@ import by.vorakh.alex.spring_company.repository.entity.Skill;
 @RunWith(MockitoJUnitRunner.class)
 public class CompanyServiceTest {
     
-    @Mock
-    private CompanyDAO companyDAO;
    
     @Mock
+    private SkillToSkillViewModelConverter skillConverter;
+    @Mock
+    private JobTitleToJobTitleViewModelConverter jobTitleConverter;
+    @Mock
+    private PersonalDataToPersonalDataViewModelConverter personalDataConverter; 
+    @Mock
+    private EmployeeToEmployeeViewModelConverter employeeConverter;
+    @Mock
     private CompanyToCompanyViewModelConverter companyConvertor;
- 
+    @Mock
+    private CompanyDAO companyDAO;
     @InjectMocks
     private CompanyService service;
     
     @Test
     public void testGetAll() {
-	
 	PersonalData madMax = new PersonalData(1, "Mad", "Max");
 	JobTitle ceo = new JobTitle(1, "CEO");
 	
@@ -55,7 +65,12 @@ public class CompanyServiceTest {
 	List<Company> companyList = new ArrayList<Company>();
 	companyList.add(firstCompany);
 	
+	when(jobTitleConverter.convert(ceo)).thenCallRealMethod();
+	when(skillConverter.convert(java)).thenCallRealMethod();
+	when(personalDataConverter.convert(madMax)).thenCallRealMethod();
+	when(employeeConverter.convert(madMaxEmp)).thenCallRealMethod();
 	when(companyConvertor.convert(firstCompany)).thenCallRealMethod();
+	
 	when(companyDAO.getAll()).thenReturn(companyList);
 	
 	List<CompanyViewModel> resultList = service.getAll();
