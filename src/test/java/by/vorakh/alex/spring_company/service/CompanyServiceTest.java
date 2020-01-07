@@ -17,7 +17,9 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.any;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 public class CompanyServiceTest {
@@ -25,7 +27,7 @@ public class CompanyServiceTest {
     private static final List<CompanyViewModel> controlList = Lists
 	    .list(new CompanyViewModel(1, "FirstCompany", null));
     private static final CompanyViewModel controlResult = new CompanyViewModel(2, "TestCompany", null);
-    private static final IdViewModel controlIdViewModel = new IdViewModel(3);
+    private static IdViewModel controlIdViewModel = new IdViewModel(3);
 
     @Mock
     private CompanyToCompanyViewModelConverter companyConverter;
@@ -68,17 +70,14 @@ public class CompanyServiceTest {
 	 
 	 assertEquals(controlResult,service.getById(2));
     }
-    
+     
     @Test
     public void testCreate() {
-	Company testCompany = new Company(3, "TestCompany", null);
-	CompanyPayload testCompanyPayload = new CompanyPayload(3, "TestCompany", null);
-	when(employeeDAO.getAll(testCompanyPayload.getEmployeeIdList())).thenReturn(null);
-	when(companyDAO.create(testCompany)).thenReturn(3);
-	
-	System.out.println(service.create(testCompanyPayload));
-	assertEquals(controlIdViewModel, service.create(testCompanyPayload));
-    
+         CompanyPayload testCompanyPayload = new CompanyPayload(3, "TestCompany", null);
+         when(employeeDAO.getAll(testCompanyPayload.getEmployeeIdList())).thenReturn(null);
+         doReturn(3).when(companyDAO).create((Company)any(Company.class));
+         assertEquals(controlIdViewModel, service.create(testCompanyPayload));
     }
+    
 
 }
