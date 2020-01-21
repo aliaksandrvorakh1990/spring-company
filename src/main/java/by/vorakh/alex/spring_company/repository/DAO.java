@@ -14,4 +14,8 @@ public interface DAO<V> {
 
     void delete(V object);
     
+    boolean isContained(V object);
+    
+    V createAndGet(V object);
+    
 }
