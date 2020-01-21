@@ -74,4 +74,23 @@ public class EmployeeDAO implements DAO<Employee> {
 	Query query = entityManager.createQuery("DELETE FROM Employee e WHERE e.jobTitle = :j");
 	query.setParameter("j", jobTitle).executeUpdate();
     }
+
+    @Override
+    public boolean isContained(Employee object) {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    public Employee createAndGet(Employee object) {
+	entityManager.persist(object);
+	entityManager.flush();
+	return object;
+    }
+
+    @Override
+    public Employee findExisted(Employee object) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +29,6 @@ public class SkillDAO implements DAO<Skill> {
 	for (Integer skillId : skillIdList) {
 	    list.add(entityManager.find(Skill.class, skillId));
 	}
-	
 	return list;
     }
 
@@ -41,6 +41,7 @@ public class SkillDAO implements DAO<Skill> {
     public int create(Skill object) {
 	entityManager.persist(object);
 	entityManager.flush();
+	
 	return object.getId();
     }
 
@@ -52,6 +53,36 @@ public class SkillDAO implements DAO<Skill> {
     @Override
     public void delete(Skill object) {
 	entityManager.remove(object);
+    }
+
+    @Override
+    public boolean isContained(Skill object) {
+	if (findExisted(object) == null) {
+	    return false;
+	}
+	return true;
+    }
+    
+
+    @Override
+    public Skill createAndGet(Skill object) {
+	entityManager.persist(object);
+	entityManager.flush();
+	return object;
+    }
+
+    @SuppressWarnings("finally")
+    @Override
+    public Skill findExisted(Skill object) {
+	Skill foundSkill = null;
+	
+	try { 
+	    Query query = entityManager.createQuery("select s from Skill s "
+		 	+ "WHERE s.skillName = :p");
+	    foundSkill = (Skill) query.setParameter("p", object.getSkillName()).getSingleResult();
+	} finally {
+	    return foundSkill;
+	} 
     }
 
 }

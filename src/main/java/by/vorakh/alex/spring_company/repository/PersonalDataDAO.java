@@ -43,4 +43,21 @@ public class PersonalDataDAO implements DAO<PersonalData> {
 	entityManager.remove(object);
     }
 
+    @Override
+    public boolean isContained(PersonalData object) {
+	return false;
+    }
+
+    @Override
+    public PersonalData createAndGet(PersonalData object) {
+	entityManager.persist(object);
+	entityManager.flush();
+	return object;
+    }
+
+    @Override
+    public PersonalData findExisted(PersonalData object) {
+	return null;
+    }
+
 }

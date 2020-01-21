@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -41,6 +42,35 @@ public class JobTitleDAO implements DAO<JobTitle> {
     @Override
     public void delete(JobTitle object) {
 	entityManager.remove(object);
+    }
+
+    @Override
+    public boolean isContained(JobTitle object) {
+	if (findExisted(object) == null) {
+	    return false;
+	}
+	return true;
+    }
+
+    @Override
+    public JobTitle createAndGet(JobTitle object) {
+	entityManager.persist(object);
+	entityManager.flush();
+	return object;
+    }
+
+    @SuppressWarnings("finally")
+    @Override
+    public JobTitle findExisted(JobTitle object) {
+	JobTitle foundJobTitle = null;
+	
+	try { 
+	    Query query = entityManager.createQuery("select j from JobTitle j "
+		 	+ "WHERE j.title = :p");
+	    foundJobTitle = (JobTitle) query.setParameter("p", object.getTitle()).getSingleResult();
+	} finally {
+	    return foundJobTitle;
+	} 
     }
 
 }

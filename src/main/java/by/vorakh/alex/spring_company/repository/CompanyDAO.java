@@ -42,4 +42,23 @@ public class CompanyDAO implements DAO<Company> {
         entityManager.remove(object);
     }
 
+    @Override
+    public boolean isContained(Company object) {
+	// TODO Auto-generated method stub
+	return false;
+    }
+
+    @Override
+    public Company createAndGet(Company object) {
+	entityManager.persist(object);
+	entityManager.flush();
+	return object;
+    }
+
+    @Override
+    public Company findExisted(Company object) {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
 }

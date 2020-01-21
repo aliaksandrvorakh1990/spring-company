@@ -16,6 +16,8 @@ public interface DAO<V> {
     
     boolean isContained(V object);
     
+    V findExisted(V object);
+    
     V createAndGet(V object);
     
 }
