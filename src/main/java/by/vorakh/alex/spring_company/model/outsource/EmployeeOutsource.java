@@ -1,58 +1,58 @@
-package by.vorakh.alex.spring_company.model.outsourse;
+package by.vorakh.alex.spring_company.model.outsource;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class EmployeeOutsourse implements  Serializable {
+public class EmployeeOutsource implements  Serializable {
 
-    private PersonalDataOutsourse personalData;
-    private JobTitleOutsourse jobTitle;
+    private PersonalDataOutsource personalData;
+    private JobTitleOutsource jobTitle;
    
-    private List<SkillOutsourse> skillList = new ArrayList<SkillOutsourse>();
+    private List<SkillOutsource> skillList = new ArrayList<SkillOutsource>();
     
-    public EmployeeOutsourse() {}
+    public EmployeeOutsource() {}
     
-    public EmployeeOutsourse(PersonalDataOutsourse personalData, JobTitleOutsourse jobTitle,
-	    List<SkillOutsourse> skillList) {
+    public EmployeeOutsource(PersonalDataOutsource personalData, JobTitleOutsource jobTitle,
+	    List<SkillOutsource> skillList) {
 	this.personalData = personalData;
 	this.jobTitle = jobTitle;
 	this.skillList = skillList;
     }
     
 
-    public EmployeeOutsourse setPersonalData(PersonalDataOutsourse personalData) {
+    public EmployeeOutsource setPersonalData(PersonalDataOutsource personalData) {
         this.personalData = personalData;
         return this;
     }
 
-    public EmployeeOutsourse setJobTitle(JobTitleOutsourse jobTitle) {
+    public EmployeeOutsource setJobTitle(JobTitleOutsource jobTitle) {
         this.jobTitle = jobTitle;
         return this;
     }
 
-    public EmployeeOutsourse setSkillList(List<SkillOutsourse> skillList) {
+    public EmployeeOutsource setSkillList(List<SkillOutsource> skillList) {
         this.skillList = skillList;
         return this;
     }
 
  
-    public PersonalDataOutsourse getPersonalData() {
+    public PersonalDataOutsource getPersonalData() {
         return personalData;
     }
 
-    public JobTitleOutsourse getJobTitle() {
+    public JobTitleOutsource getJobTitle() {
         return jobTitle;
     }
 
-    public List<SkillOutsourse> getSkillList() {
+    public List<SkillOutsource> getSkillList() {
         return skillList;
     }
     
     @Override
     public String toString() {
-	return "EmployeeOutsourse[personalData=" + personalData + ", jobTitle=" + jobTitle
+	return "EmployeeOutsource[personalData=" + personalData + ", jobTitle=" + jobTitle
 		+ ", skillList=" + skillList + "]";
     }
 
@@ -77,7 +77,7 @@ public class EmployeeOutsourse implements  Serializable {
 	if (getClass() != obj.getClass()) {
 	    return false;
 	}
-	EmployeeOutsourse other = (EmployeeOutsourse) obj;
+	EmployeeOutsource other = (EmployeeOutsource) obj;
 	
 	if (jobTitle == null) {
 	    if (other.jobTitle != null) {

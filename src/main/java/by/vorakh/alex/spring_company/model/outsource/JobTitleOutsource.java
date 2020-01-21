@@ -1,18 +1,18 @@
-package by.vorakh.alex.spring_company.model.outsourse;
+package by.vorakh.alex.spring_company.model.outsource;
 
 import java.io.Serializable;
 
-public class JobTitleOutsourse implements  Serializable {
+public class JobTitleOutsource implements  Serializable {
 
     private String title;
     
-    public JobTitleOutsourse() {}
+    public JobTitleOutsource() {}
     
-    public JobTitleOutsourse(String title) {
+    public JobTitleOutsource(String title) {
 	this.title = title;
     }
     
-    public JobTitleOutsourse setTitle(String title) {
+    public JobTitleOutsource setTitle(String title) {
         this.title = title;
         return this;
     }
@@ -23,7 +23,7 @@ public class JobTitleOutsourse implements  Serializable {
 
     @Override
     public String toString() {
-	return "JobTitleOutsourse[title=" + title + "]";
+	return "JobTitleOutsource[title=" + title + "]";
     }
 
     @Override
@@ -45,7 +45,7 @@ public class JobTitleOutsourse implements  Serializable {
 	if (getClass() != obj.getClass()) {
 	    return false;
 	}
-	JobTitleOutsourse other = (JobTitleOutsourse) obj;
+	JobTitleOutsource other = (JobTitleOutsource) obj;
 	if (title == null) {
 	    if (other.title != null) {
 		return false;

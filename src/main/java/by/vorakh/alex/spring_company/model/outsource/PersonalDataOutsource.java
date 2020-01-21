@@ -1,26 +1,26 @@
-package by.vorakh.alex.spring_company.model.outsourse;
+package by.vorakh.alex.spring_company.model.outsource;
 
 import java.io.Serializable;
 
-public class PersonalDataOutsourse implements  Serializable {
+public class PersonalDataOutsource implements  Serializable {
     
     private String firstName;
     private String lastName;
     
-    public PersonalDataOutsourse() {}
+    public PersonalDataOutsource() {}
     
-    public PersonalDataOutsourse(String firstName, String lastName) {
+    public PersonalDataOutsource(String firstName, String lastName) {
 	this.firstName = firstName;
 	this.lastName = lastName;
     }
 
 
-    public PersonalDataOutsourse setFirstName(String firstName) {
+    public PersonalDataOutsource setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
 
-    public PersonalDataOutsourse setLastName(String lastName) {
+    public PersonalDataOutsource setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -35,7 +35,7 @@ public class PersonalDataOutsourse implements  Serializable {
 
     @Override
     public String toString() {
-	return "PersonalDataOutsourse [firstName=" + firstName + ", lastName=" + lastName + "]";
+	return "PersonalDataOutsource[firstName=" + firstName + ", lastName=" + lastName + "]";
     }
 
     @Override
@@ -58,7 +58,7 @@ public class PersonalDataOutsourse implements  Serializable {
 	if (getClass() != obj.getClass()) {
 	    return false;
 	}
-	PersonalDataOutsourse other = (PersonalDataOutsourse) obj;
+	PersonalDataOutsource other = (PersonalDataOutsource) obj;
 	if (firstName == null) {
 	    if (other.firstName != null) {
 		return false;

@@ -1,19 +1,19 @@
-package by.vorakh.alex.spring_company.model.outsourse;
+package by.vorakh.alex.spring_company.model.outsource;
 
 import java.io.Serializable;
 
-public class SkillOutsourse implements  Serializable {
+public class SkillOutsource implements  Serializable {
     
     private String skillName;
     
-    public SkillOutsourse() {}
+    public SkillOutsource() {}
     
-    public SkillOutsourse(String skillName) {
+    public SkillOutsource(String skillName) {
 	
 	this.skillName = skillName;
     }
 
-    public SkillOutsourse setSkillName(String skillName) {
+    public SkillOutsource setSkillName(String skillName) {
         this.skillName = skillName;
         return this;
     }
@@ -24,7 +24,7 @@ public class SkillOutsourse implements  Serializable {
 
     @Override
     public String toString() {
-	return "SkillOutsourse[skillName=" + skillName + "]";
+	return "SkillOutsource[skillName=" + skillName + "]";
     }
 
     @Override
@@ -46,7 +46,7 @@ public class SkillOutsourse implements  Serializable {
 	if (getClass() != obj.getClass()) {
 	    return false;
 	}   
-	SkillOutsourse other = (SkillOutsourse) obj;
+	SkillOutsource other = (SkillOutsource) obj;
 	if (skillName == null) {
 	    if (other.skillName != null) {
 		return false;
