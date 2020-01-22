@@ -6,7 +6,9 @@ import java.util.List;
 
 
 public class EmployeeOutsource implements  Serializable {
-
+   
+    private static final long serialVersionUID = 1L;
+    
     private PersonalDataOutsource personalData;
     private JobTitleOutsource jobTitle;
    
