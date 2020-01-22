@@ -77,8 +77,10 @@ public class EmployeeDAO implements DAO<Employee> {
 
     @Override
     public boolean isContained(Employee object) {
-	// TODO Auto-generated method stub
-	return false;
+	if (findExisted(object) == null) {
+	    return false;
+	}
+	return true;
     }
 
     @Override
@@ -88,9 +90,12 @@ public class EmployeeDAO implements DAO<Employee> {
 	return object;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Employee findExisted(Employee object) {
-	// TODO Auto-generated method stub
-	return null;
+	Query query = entityManager.createQuery("select e from Employee e "
+	 	+ "WHERE e.personalData = :p");
+	query.setParameter("p", object.getPersonalData());
+	return (Employee) query.getResultList().stream().findFirst().orElse(null);
     }
 }
