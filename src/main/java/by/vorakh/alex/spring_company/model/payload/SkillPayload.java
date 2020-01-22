@@ -1,5 +1,7 @@
 package by.vorakh.alex.spring_company.model.payload;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
@@ -8,7 +10,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "The skill details for that creating and updating in the database.")
-public class SkillPayload {
+public class SkillPayload implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
    
     @PositiveOrZero
     @ApiModelProperty(value = "The skill's ID should be unique and is required for updating in the database", 

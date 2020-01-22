@@ -1,5 +1,6 @@
 package by.vorakh.alex.spring_company.model.payload;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -10,7 +11,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "The company details for that creating and updating in the database.")
-public class CompanyPayload {
+public class CompanyPayload implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     @PositiveOrZero
     @ApiModelProperty(value = "The company ID should be unique and is required for updating in the database.",
