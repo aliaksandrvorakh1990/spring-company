@@ -3,6 +3,7 @@ package by.vorakh.alex.spring_company.controller;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -55,7 +56,7 @@ public class JobTitleController {
     @GetMapping(value = "/jobs/{id}")
     public JobTitleViewModel getJobTitle(
 	    @ApiParam(value = "The job title will be gotten from the database by his ID", required = true)
-	    @PathVariable("id") Integer id) {
+	    @PathVariable("id") @Positive int id) {
         return jobTitleService.getById(id);
     }
 
@@ -93,7 +94,7 @@ public class JobTitleController {
     @DeleteMapping(value = "/jobs/{id}")
     public void deleteJobTitle(
 	    @ApiParam(value = "The job title will be deleted from the database by his ID.", required = true)
-	    @PathVariable("id") Integer id) {
+	    @PathVariable("id") @Positive int id) {
 	jobTitleService.delete(id);
     }
 

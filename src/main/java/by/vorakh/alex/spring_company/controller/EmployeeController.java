@@ -3,6 +3,7 @@ package by.vorakh.alex.spring_company.controller;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -56,7 +57,7 @@ public class EmployeeController {
     @GetMapping(value = "/employees/{id}")
     public EmployeeViewModel getEmployee(
 	    @ApiParam(value = "Employee will be gotten from the database by his ID", required = true) 
-	    @PathVariable("id") Integer id) {
+	    @PathVariable("id") @Positive int id) {
         return employeeService.getById(id);
     }
 	    
@@ -94,7 +95,7 @@ public class EmployeeController {
     @DeleteMapping(value = "/employees/{id}")
     public void deleteEmployee(
 	    @ApiParam(value = "The employee will be deleted from the database by his ID.", required = true)
-	    @PathVariable("id") Integer id) {
+	    @PathVariable("id") @Positive int id) {
 	employeeService.delete(id);
     }
     

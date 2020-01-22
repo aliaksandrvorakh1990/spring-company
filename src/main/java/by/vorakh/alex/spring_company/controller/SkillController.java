@@ -3,6 +3,7 @@ package by.vorakh.alex.spring_company.controller;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -55,7 +56,7 @@ public class SkillController {
     @GetMapping(value = "/skills/{id}")
     public SkillViewModel getSkill(
 	    @ApiParam(value = "The skill will be gotten from the database by his ID", required = true)
-	    @PathVariable("id") Integer id) {
+	    @PathVariable("id") @Positive int id) {
         return skillService.getById(id);
     }
 
@@ -93,7 +94,7 @@ public class SkillController {
     @DeleteMapping(value = "/skills/{id}")
     public void deleteSkill(
 	    @ApiParam(value = "The skill will be deleted from the database by his ID.", required = true)
-	    @PathVariable("id") Integer id) {
+	    @PathVariable("id") @Positive int id) {
 	skillService.delete(id);
     }
 
