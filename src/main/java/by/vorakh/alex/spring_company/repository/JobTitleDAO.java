@@ -59,18 +59,13 @@ public class JobTitleDAO implements DAO<JobTitle> {
 	return object;
     }
 
-    @SuppressWarnings("finally")
+    @SuppressWarnings("unchecked")
     @Override
     public JobTitle findExisted(JobTitle object) {
-	JobTitle foundJobTitle = null;
-	
-	try { 
-	    Query query = entityManager.createQuery("select j from JobTitle j "
-		 	+ "WHERE j.title = :p");
-	    foundJobTitle = (JobTitle) query.setParameter("p", object.getTitle()).getSingleResult();
-	} finally {
-	    return foundJobTitle;
-	} 
+	Query query = entityManager.createQuery("select j from JobTitle j "
+	 	+ "WHERE j.title = :p");
+	query.setParameter("p", object.getTitle());
+	return (JobTitle) query.getResultList().stream().findFirst().orElse(null);
     }
 
 }
