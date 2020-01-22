@@ -62,7 +62,6 @@ public class SkillDAO implements DAO<Skill> {
 	}
 	return true;
     }
-    
 
     @Override
     public Skill createAndGet(Skill object) {
@@ -71,18 +70,14 @@ public class SkillDAO implements DAO<Skill> {
 	return object;
     }
 
-    @SuppressWarnings("finally")
+    @SuppressWarnings("unchecked")
     @Override
     public Skill findExisted(Skill object) {
-	Skill foundSkill = null;
+	Query query = entityManager.createQuery("select s from Skill s "
+	 	+ "WHERE s.skillName = :p");
+	query.setParameter("p", object.getSkillName());
+	return (Skill) query.getResultList().stream().findFirst().orElse(null);
 	
-	try { 
-	    Query query = entityManager.createQuery("select s from Skill s "
-		 	+ "WHERE s.skillName = :p");
-	    foundSkill = (Skill) query.setParameter("p", object.getSkillName()).getSingleResult();
-	} finally {
-	    return foundSkill;
-	} 
     }
 
 }
