@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import java.util.List;
 
 @Repository
@@ -44,8 +46,10 @@ public class CompanyDAO implements DAO<Company> {
 
     @Override
     public boolean isContained(Company object) {
-	// TODO Auto-generated method stub
-	return false;
+	if (findExisted(object) == null) {
+	    return false;
+	}
+	return true;
     }
 
     @Override
@@ -55,10 +59,13 @@ public class CompanyDAO implements DAO<Company> {
 	return object;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Company findExisted(Company object) {
-	// TODO Auto-generated method stub
-	return null;
+	Query query = entityManager.createQuery("select c from Company c "
+	 	+ "WHERE c.name = :p");
+	query.setParameter("p", object.getName());
+	return (Company) query.getResultList().stream().findFirst().orElse(null);
     }
 
 }
