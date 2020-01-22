@@ -1,5 +1,6 @@
 package by.vorakh.alex.spring_company.model.view_model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Details about the employee for view.")
-public class EmployeeViewModel {
+public class EmployeeViewModel implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The employee ID in the database.", example = "11")
     private int id;

@@ -1,10 +1,14 @@
 package by.vorakh.alex.spring_company.model.view_model;
 
+import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Details about the personal data of an employee for view.")
-public class PersonalDataViewModel {
+public class PersonalDataViewModel implements Serializable  {
+    
+    private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The personal data ID in the database.", example = "53")
     private int id; 

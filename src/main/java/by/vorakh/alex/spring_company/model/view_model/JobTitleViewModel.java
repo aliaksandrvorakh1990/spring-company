@@ -1,10 +1,14 @@
 package by.vorakh.alex.spring_company.model.view_model;
 
+import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Details about the job title of an employee for view")
-public class JobTitleViewModel {
+public class JobTitleViewModel implements Serializable  {
+    
+    private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The job title ID in the database.", example = "7")
     private int id;

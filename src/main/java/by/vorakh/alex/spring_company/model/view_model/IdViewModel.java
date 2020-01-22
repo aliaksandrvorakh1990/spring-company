@@ -1,10 +1,14 @@
 package by.vorakh.alex.spring_company.model.view_model;
 
+import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "The created object's ID.")
-public class IdViewModel {
+public class IdViewModel implements Serializable  {
+    
+    private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The ID is an object that was created in the database.", example = "12")
     private int id;

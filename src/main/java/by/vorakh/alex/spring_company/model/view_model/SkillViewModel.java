@@ -1,10 +1,14 @@
 package by.vorakh.alex.spring_company.model.view_model;
 
+import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Details about the skill for view")
-public class SkillViewModel {
+public class SkillViewModel implements Serializable  {
+    
+    private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The skill's ID in the database", example = "9")
     private int id;
