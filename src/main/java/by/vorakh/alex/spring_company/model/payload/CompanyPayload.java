@@ -2,8 +2,6 @@ package by.vorakh.alex.spring_company.model.payload;
 
 import java.util.List;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
@@ -19,9 +17,7 @@ public class CompanyPayload {
             example = "4")
     private int id;
     @NotNull(message = "The company name cannot be null")
-    @Min(value = 2, message = "The company name does not have to contain less than 2 letters.")
-    @Max(value = 40, message = "The company name does not have to contain be greater than 40 letters.")
-    @Size(min = 2, max = 40)
+    @Size(min = 2, max = 40, message = "The company name should be unique and contain 2-20 letters.")
     @ApiModelProperty(value = "The company name should be unique and contain 2-20 letters.", 
     	    required = true, example = "EvilSolutions")
     private String name;

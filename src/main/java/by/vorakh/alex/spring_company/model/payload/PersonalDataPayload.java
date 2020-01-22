@@ -1,7 +1,5 @@
 package by.vorakh.alex.spring_company.model.payload;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
@@ -17,16 +15,12 @@ public class PersonalDataPayload {
     	    example = "25")
     private int id;
     @NotNull(message = "The first name cannot be null")
-    @Min(value = 2, message = "The first name does not have to contain less than 2 letters.")
-    @Max(value = 20, message = "The first name does not have to contain be greater than 20 letters.")
-    @Size(min = 2, max = 20)
+    @Size(min = 2, max = 20, message = "The first name should be real and contain 2-20 letters.")
     @ApiModelProperty(value = "The first name should be real and contain 2-20 letters.",  
 	    example = "John", required = true)
     private String firstName;
     @NotNull(message = "The last name cannot be null")
-    @Min(value = 2, message = "The last name does not have to contain less than 2 letters.")
-    @Max(value = 20, message = "The last name does not have to contain be greater than 20 letters.")
-    @Size(min = 2, max = 20)
+    @Size(min = 2, max = 20, message = "The last name should be real and contain 2-20 letters.")
     @ApiModelProperty(value = "The last name should be real and contain 2-20 letters.", 
     	    required = true, example = "Smith")
     private String lastName;
