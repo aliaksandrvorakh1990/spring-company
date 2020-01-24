@@ -20,7 +20,7 @@ public class SkillDAO implements DAO<Skill> {
     @SuppressWarnings("unchecked")
     @Override
     public List<Skill> getAll() {
-	return (List<Skill>) entityManager.createQuery("select c from Skill c").getResultList();
+	return (List<Skill>) entityManager.createQuery("select s from Skill s").getResultList();
     }
     
     public List<Skill> getAll(List<Integer> skillIdList) {

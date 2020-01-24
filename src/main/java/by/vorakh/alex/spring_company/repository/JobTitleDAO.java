@@ -19,7 +19,7 @@ public class JobTitleDAO implements DAO<JobTitle> {
     @SuppressWarnings("unchecked")
     @Override
     public List<JobTitle> getAll() {
-	return (List<JobTitle>) entityManager.createQuery("select c from JobTitle c").getResultList();
+	return (List<JobTitle>) entityManager.createQuery("select j from JobTitle j").getResultList();
     }
 
     @Override

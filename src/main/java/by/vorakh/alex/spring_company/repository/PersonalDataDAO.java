@@ -18,7 +18,7 @@ public class PersonalDataDAO implements DAO<PersonalData> {
     @SuppressWarnings("unchecked")
     @Override
     public List<PersonalData> getAll() {
-	return (List<PersonalData>) entityManager.createQuery("select c from PersonalData c").getResultList();
+	return (List<PersonalData>) entityManager.createQuery("select p from PersonalData p").getResultList();
     }
 
     @Override
