@@ -11,7 +11,7 @@ public class SkillViewModel implements Serializable  {
     private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The skill's ID in the database", example = "9")
-    private int id;
+    private Integer id;
     @ApiModelProperty(value = "The skill name.", example = "Java EE")
     private String skillName;
     

@@ -13,7 +13,7 @@ public class EmployeeViewModel implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The employee ID in the database.", example = "11")
-    private int id;
+    private Integer id;
     private PersonalDataViewModel personalData;
     private JobTitleViewModel jobTitle;
     @ApiModelProperty(value = "The employee's skills list.")
@@ -21,7 +21,7 @@ public class EmployeeViewModel implements Serializable {
     
     public EmployeeViewModel() {}
     
-    public EmployeeViewModel(int id, PersonalDataViewModel personalData, JobTitleViewModel jobTitle,
+    public EmployeeViewModel(Integer id, PersonalDataViewModel personalData, JobTitleViewModel jobTitle,
 	    List<SkillViewModel> skillList) {
 	this.id = id;
 	this.personalData = personalData;
@@ -29,7 +29,7 @@ public class EmployeeViewModel implements Serializable {
 	this.skillList = skillList;
     }
     
-    public EmployeeViewModel setId(int id) {
+    public EmployeeViewModel setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -49,7 +49,7 @@ public class EmployeeViewModel implements Serializable {
         return this;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

@@ -11,7 +11,7 @@ public class PersonalDataViewModel implements Serializable  {
     private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The personal data ID in the database.", example = "53")
-    private int id; 
+    private Integer id; 
     @ApiModelProperty(value = "The employee first name.", example = "Nick")
     private String firstName;
     @ApiModelProperty(value = "The employee last name.", example = "Hawk")
@@ -19,13 +19,13 @@ public class PersonalDataViewModel implements Serializable  {
     
     public PersonalDataViewModel() {}
     
-    public PersonalDataViewModel(int id, String firstName, String lastName) {
+    public PersonalDataViewModel(Integer id, String firstName, String lastName) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
     }
 
-    public PersonalDataViewModel setId(int id) {
+    public PersonalDataViewModel setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -40,7 +40,7 @@ public class PersonalDataViewModel implements Serializable  {
         return this;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

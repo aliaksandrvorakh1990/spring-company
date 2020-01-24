@@ -11,18 +11,18 @@ public class JobTitleViewModel implements Serializable  {
     private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The job title ID in the database.", example = "7")
-    private int id;
+    private Integer id;
     @ApiModelProperty(value = "The job title name.", example = "Java Developer")
     private String title;
     
     public JobTitleViewModel() {}
     
-    public JobTitleViewModel(int id, String title) {
+    public JobTitleViewModel(Integer id, String title) {
 	this.id = id;
 	this.title = title;
     }
     
-    public JobTitleViewModel setId(int id) {
+    public JobTitleViewModel setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -32,7 +32,7 @@ public class JobTitleViewModel implements Serializable  {
         return this;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

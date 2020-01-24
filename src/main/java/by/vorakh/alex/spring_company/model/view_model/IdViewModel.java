@@ -11,20 +11,20 @@ public class IdViewModel implements Serializable  {
     private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The ID is an object that was created in the database.", example = "12")
-    private int id;
+    private Integer id;
     
     public IdViewModel() {}
 
-    public IdViewModel(int id) {
+    public IdViewModel(Integer id) {
 	this.id = id;
     }
     
-    public IdViewModel setId(int id) {
+    public IdViewModel setId(Integer id) {
         this.id = id;
         return this;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     

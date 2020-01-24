@@ -13,7 +13,7 @@ public class CompanyViewModel implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The company ID in the database.", example = "4")
-    private int id;
+    private Integer id;
     @ApiModelProperty(value = "The company name.", example = "Evil-Corporation")
     private String name;
     @ApiModelProperty(value = "The employees list.")
@@ -21,13 +21,13 @@ public class CompanyViewModel implements Serializable {
     
     public CompanyViewModel() {}
     
-    public CompanyViewModel(int id, String name, List<EmployeeViewModel> employeeList) {
+    public CompanyViewModel(Integer id, String name, List<EmployeeViewModel> employeeList) {
 	this.id = id;
 	this.name = name;
 	this.employeeList = employeeList;
     }
     
-    public CompanyViewModel setId(int id) {
+    public CompanyViewModel setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -42,7 +42,7 @@ public class CompanyViewModel implements Serializable {
         return this;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
