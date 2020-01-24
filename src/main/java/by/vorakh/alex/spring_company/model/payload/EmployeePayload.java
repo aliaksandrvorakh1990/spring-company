@@ -17,22 +17,22 @@ public class EmployeePayload implements Serializable {
     @PositiveOrZero
     @ApiModelProperty(value = "The employee ID should be unique and is required for updating in the database.",
             example = "28")
-    private int id;
+    private Integer id;
     @Positive(message = "The personal data Id has to be greater than zero.")
     @ApiModelProperty(value = "The personal data ID of the employee from the database.",
 	    example = "2", required = true)
-    private int personalDataId;
+    private Integer personalDataId;
     @Positive(message = "The job title Id has to be greater than zero.")
     @ApiModelProperty(value = "The job title ID of the employee from  the database.", 
     	     example = "42", required = true)
-    private int jobTitleId;
+    private Integer jobTitleId;
     @ApiModelProperty(value = "The unique skill IDs list of the employee from the database.", 
     	    example="[1, 4, 10, 20]")
     private List<Integer> skillIdsList;
     
     public EmployeePayload() {}
 
-    public EmployeePayload(@PositiveOrZero int id, @Positive int personalDataId, @Positive int jobTitleId, 
+    public EmployeePayload(@PositiveOrZero Integer id, @Positive Integer personalDataId, @Positive Integer jobTitleId, 
 	    List<Integer> skillIdsList) {
 	this.id = id;
 	this.personalDataId = personalDataId;
@@ -40,15 +40,15 @@ public class EmployeePayload implements Serializable {
 	this.skillIdsList = skillIdsList;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     
-    public void setPersonalDataId(int personalDataId) {
+    public void setPersonalDataId(Integer personalDataId) {
         this.personalDataId = personalDataId;
     }
 
-    public void setJobTitleId(int jobTitleId) {
+    public void setJobTitleId(Integer jobTitleId) {
         this.jobTitleId = jobTitleId;
     }
 
@@ -56,15 +56,15 @@ public class EmployeePayload implements Serializable {
         this.skillIdsList = skillIdsList;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     
-    public int getPersonalDataId() {
+    public Integer getPersonalDataId() {
         return personalDataId;
     }
 
-    public int getJobTitleId() {
+    public Integer getJobTitleId() {
         return jobTitleId;
     }
     

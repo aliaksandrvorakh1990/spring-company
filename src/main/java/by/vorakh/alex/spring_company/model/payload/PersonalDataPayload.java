@@ -17,7 +17,7 @@ public class PersonalDataPayload implements Serializable {
     @PositiveOrZero
     @ApiModelProperty(value = "The personal data ID should be unique and is required for updating in the database", 
     	    example = "25")
-    private int id;
+    private Integer id;
     @NotNull(message = "The first name cannot be null")
     @Size(min = 2, max = 20, message = "The first name should be real and contain 2-20 letters.")
     @ApiModelProperty(value = "The first name should be real and contain 2-20 letters.",  
@@ -31,14 +31,14 @@ public class PersonalDataPayload implements Serializable {
     
     public PersonalDataPayload() {}
 
-    public PersonalDataPayload(@PositiveOrZero int id, @NotNull @Size(min = 2, max = 20) String firstName,
+    public PersonalDataPayload(@PositiveOrZero Integer id, @NotNull @Size(min = 2, max = 20) String firstName,
 	    @NotNull @Size(min = 2, max = 20) String lastName) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
     }
 
-   public void setId(int id) {
+   public void setId(Integer id) {
         this.id = id;
     }
 
@@ -50,7 +50,7 @@ public class PersonalDataPayload implements Serializable {
         this.lastName = lastName;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     public String getFirstName() {

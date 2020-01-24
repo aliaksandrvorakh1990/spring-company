@@ -17,7 +17,7 @@ public class SkillPayload implements Serializable {
     @PositiveOrZero
     @ApiModelProperty(value = "The skill's ID should be unique and is required for updating in the database", 
     	    example = "15")
-    private int id;
+    private Integer id;
     @NotNull(message = "Skill name cannot be null")
     @Size(min = 2, max = 25, message = "The skill name should be unique and contain 2-25 letters.")
     @ApiModelProperty(value = "The skill name should be unique and contain 2-25 letters.", 
@@ -26,12 +26,12 @@ public class SkillPayload implements Serializable {
 
     public SkillPayload() {}
 
-    public SkillPayload(@PositiveOrZero int id, @NotNull @Size(min = 2, max = 25) String skillName) {
+    public SkillPayload(@PositiveOrZero Integer id, @NotNull @Size(min = 2, max = 25) String skillName) {
 	this.id = id;
 	this.skillName = skillName;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -39,7 +39,7 @@ public class SkillPayload implements Serializable {
         this.skillName = skillName;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

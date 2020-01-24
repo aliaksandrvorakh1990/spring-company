@@ -18,7 +18,7 @@ public class CompanyPayload implements Serializable {
     @PositiveOrZero
     @ApiModelProperty(value = "The company ID should be unique and is required for updating in the database.",
             example = "4")
-    private int id;
+    private Integer id;
     @NotNull(message = "The company name cannot be null")
     @Size(min = 2, max = 40, message = "The company name should be unique and contain 2-20 letters.")
     @ApiModelProperty(value = "The company name should be unique and contain 2-20 letters.", 
@@ -30,14 +30,14 @@ public class CompanyPayload implements Serializable {
     
     public CompanyPayload() {}
    
-    public CompanyPayload(@PositiveOrZero int id, @NotNull @Size(min = 2, max = 40) String name, 
+    public CompanyPayload(@PositiveOrZero Integer id, @NotNull @Size(min = 2, max = 40) String name, 
 	    List<Integer> employeeIdList) {
 	this.id = id;
 	this.name = name;
 	this.employeeIdList = employeeIdList;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -49,7 +49,7 @@ public class CompanyPayload implements Serializable {
         this.employeeIdList = employeeIdList;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     

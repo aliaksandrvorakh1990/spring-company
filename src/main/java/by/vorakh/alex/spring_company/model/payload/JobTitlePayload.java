@@ -17,7 +17,7 @@ public class JobTitlePayload implements Serializable {
     @PositiveOrZero
     @ApiModelProperty(value = "The job title ID should be unique and is required for updating in the database.",  
     	    example = "32")
-    private int id;
+    private Integer id;
     @NotNull(message = "The job title cannot be null")
     @Size(min = 2, max = 20, message = "The job title should be unique and contain 2-20 letters.")
     @ApiModelProperty(value = "The job title should be unique and contain 2-20 letters.", 
@@ -26,12 +26,12 @@ public class JobTitlePayload implements Serializable {
 
     public JobTitlePayload() {}
 
-    public JobTitlePayload(@PositiveOrZero int id, @NotNull @Size(min = 2, max = 20) String title) {
+    public JobTitlePayload(@PositiveOrZero Integer id, @NotNull @Size(min = 2, max = 20) String title) {
 	this.id = id;
 	this.title = title;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     
@@ -39,7 +39,7 @@ public class JobTitlePayload implements Serializable {
         this.title = title;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
