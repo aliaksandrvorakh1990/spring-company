@@ -15,7 +15,7 @@ public class PersonalData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "personal_data_id", unique = true, nullable = false)
-    private int id;
+    private Integer id;
     @NotNull
     @Size(min = 2, max = 20)
     @Column(name = "first_name", length = 20, nullable = false)
@@ -33,14 +33,14 @@ public class PersonalData implements Serializable {
 	this.lastName = lastName;
     }
 
-    public PersonalData(int id, @NotNull @Size(min = 2, max = 20) String firstName,
+    public PersonalData(Integer id, @NotNull @Size(min = 2, max = 20) String firstName,
 	    @NotNull @Size(min = 2, max = 20) String lastName) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
     }
 
-    public PersonalData setId(int id) {
+    public PersonalData setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -55,7 +55,7 @@ public class PersonalData implements Serializable {
         return this;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     

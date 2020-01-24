@@ -15,7 +15,7 @@ public class Skill implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "skill_id", unique = true, nullable = false)
-    private int id;
+    private Integer id;
     @NotNull
     @Size(min = 2, max = 25)
     @Column(name = "skill", length = 25, nullable = false, unique = true)
@@ -27,12 +27,12 @@ public class Skill implements Serializable {
 	this.skillName = skillName;
     }
 
-    public Skill(int id, @NotNull @Size(min = 2, max = 25) String skillName) {
+    public Skill(Integer id, @NotNull @Size(min = 2, max = 25) String skillName) {
 	this.id = id;
 	this.skillName = skillName;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     
@@ -40,7 +40,7 @@ public class Skill implements Serializable {
         this.skillName = skillName;
     }
    
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

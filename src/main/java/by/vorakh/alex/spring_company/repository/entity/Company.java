@@ -17,7 +17,7 @@ public class Company implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "company_id", unique = true, nullable = false)
-    private int id;
+    private Integer id;
 
     @NotNull
     @Size(min = 2, max = 40)
@@ -30,13 +30,13 @@ public class Company implements Serializable {
 
     public Company() {}
 
-    public Company(int id, @NotNull @Size(min = 2, max = 40) String name, List<Employee> employeeList) {
+    public Company(Integer id, @NotNull @Size(min = 2, max = 40) String name, List<Employee> employeeList) {
 	this.id = id;
 	this.name = name;
 	this.employeeList = employeeList;
     }
     
-    public Company setId(int id) {
+    public Company setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -51,7 +51,7 @@ public class Company implements Serializable {
         return this;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

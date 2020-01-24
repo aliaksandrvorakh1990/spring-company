@@ -16,7 +16,7 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
-    private int id;
+    private Integer id;
     @NotNull
     @OneToOne
     @JoinColumn(name="personal_data_id")
@@ -41,7 +41,7 @@ public class Employee implements Serializable {
 	this.skillList = skillList;
     }
 
-    public Employee(int id, @NotNull PersonalData personalData, @NotNull JobTitle jobTitle, 
+    public Employee(Integer id, @NotNull PersonalData personalData, @NotNull JobTitle jobTitle, 
 	    List<Skill> skillList) {
 	this.id = id;
 	this.personalData = personalData;
@@ -49,7 +49,7 @@ public class Employee implements Serializable {
 	this.skillList = skillList;
     }
 
-    public Employee setId(int id) {
+    public Employee setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -69,7 +69,7 @@ public class Employee implements Serializable {
         return this;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

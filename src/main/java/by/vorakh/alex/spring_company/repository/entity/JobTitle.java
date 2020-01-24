@@ -15,7 +15,7 @@ public class JobTitle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "title_id", unique = true, nullable = false)
-    private int id;
+    private Integer id;
     @NotNull
     @Size(min = 2, max = 20)
     @Column(name = "title", length = 20, nullable = false, unique = true)
@@ -27,12 +27,12 @@ public class JobTitle implements Serializable {
 	this.title = title;
     }
 
-    public JobTitle(int id, @NotNull @Size(min = 2, max = 20) String title) {
+    public JobTitle(Integer id, @NotNull @Size(min = 2, max = 20) String title) {
 	this.id = id;
 	this.title = title;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,7 +40,7 @@ public class JobTitle implements Serializable {
         this.title = title;
     }
   
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
