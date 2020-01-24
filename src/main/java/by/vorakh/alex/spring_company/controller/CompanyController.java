@@ -1,6 +1,7 @@
 package by.vorakh.alex.spring_company.controller;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class CompanyController {
     @GetMapping(value = "/companies/{id}")
     public CompanyViewModel getCompany(
 	    @ApiParam(value = "The company will be gotten from the database by his ID", required = true) 
-	    @PathVariable("id") @Positive int id) {
+	    @PathVariable("id") @Positive @NotNull Integer id) {
         return companyService.getById(id);
     }
 
@@ -94,7 +95,7 @@ public class CompanyController {
     @DeleteMapping(value = "/companies/{id}")
     public void deleteCompany(
 	    @ApiParam(value = "The company will be deleted from the database by his ID.", required = true)
-	    @PathVariable("id") @Positive int id) {
+	    @PathVariable("id") @Positive @NotNull Integer id) {
         companyService.delete(id);
     }
 

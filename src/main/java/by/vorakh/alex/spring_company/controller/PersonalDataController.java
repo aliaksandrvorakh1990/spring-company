@@ -3,6 +3,7 @@ package by.vorakh.alex.spring_company.controller;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,7 @@ public class PersonalDataController {
     @GetMapping(value = "/people/{id}")
     public PersonalDataViewModel getPersonalData(
 	    @ApiParam(value = "The personal data will be gotten from the database by his ID", required = true)
-	    @PathVariable("id") @Positive int id) {
+	    @PathVariable("id") @Positive @NotNull Integer id) {
         return personalDataService.getById(id);
     }
 
@@ -94,7 +95,7 @@ public class PersonalDataController {
     @DeleteMapping(value = "/people/{id}")
     public void deletePersonalData(
 	    @ApiParam(value = "The personal data will be deleted from the database by his ID.", required = true)
-	    @PathVariable("id") @Positive int id) {
+	    @PathVariable("id") @Positive @NotNull Integer id) {
 	personalDataService.delete(id);
     }
 }
