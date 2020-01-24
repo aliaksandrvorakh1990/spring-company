@@ -41,7 +41,6 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
 
     @Override
     public SkillViewModel getById(int id) {
-	//TODO 404 if return null
 	return convertor.convert(skillDAO.getById(id));
     }
 
@@ -49,7 +48,6 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
     @Transactional
     public IdViewModel create(SkillPayload newPayload) {
 	Skill createdSkill = new Skill(newPayload.getSkillName());
-	//TODO 201 if isContained - true
 	int id = skillDAO.create(createdSkill);
 	return new IdViewModel(id);
     }
@@ -57,10 +55,21 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
     @Override
     @Transactional
     public void update(SkillPayload editedPayload) {
+	if (skillDAO.isContained(editedPayload.getSkillName())) {
+	    throw new ServiceException("The \"" + editedPayload.getSkillName() + 
+		    "\" cannot be updated, because to exist in database");
+	}
+	
 	Skill editedSkill = skillDAO.getById(editedPayload.getId());
-	//TODO 404 if return null
+	
+	if (editedSkill == null) {
+	    throw new ServiceException("The \"" + editedPayload.getSkillName() + 
+		    "\" cannot be updated, because the skill with \'" + editedPayload.getId() 
+		    + "\' ID does not exist in database");
+	}
+	
 	editedSkill.setSkillName(editedPayload.getSkillName());
-	//TODO 201 if isContained - true (checking if skill exist in DB)
+	
 	skillDAO.update(editedSkill);
     }
 
@@ -68,7 +77,10 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
     @Transactional
     public void delete(int id) {
 	Skill deletedSkill = skillDAO.getById(id);
-	//TODO HOW IMPROVE maybe need to do native SQL query?
+	if (deletedSkill == null) {
+	    throw new ServiceException("The skill with \'" + id  + 
+		    "\' ID cannot be deleted, because to no exist in database");
+	}
 	employeeDAO.getAll(deletedSkill).forEach(emp -> {
 	    emp.getSkillList().remove(deletedSkill);
 	    employeeDAO.update(emp);
@@ -78,15 +90,14 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
     
     @Transactional
     public Skill createAndGet(SkillOutsource extemalSource) {
-	Skill newSkill =extermalSourceConvertor.convert(extemalSource);
+	Skill newSkill = extermalSourceConvertor.convert(extemalSource);
 	return createAndGet(newSkill);
     }
     
     @Transactional
     public Skill createAndGet(Skill newSkill) {
-	//TODO Chech _- IS THERE A GOOD SOLUTION?
 	if (skillDAO.isContained(newSkill)) {
-	    return   skillDAO.findExisted(newSkill);
+	    return skillDAO.findExisted(newSkill);
 	} else {
 	    return skillDAO.createAndGet(newSkill);
 	}
