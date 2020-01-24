@@ -79,7 +79,7 @@ public class JobTitleController {
 	    @ApiResponse(code = 500, 
 		    message = "The job title was not updated in the database or Problems with server")
 	})
-    @PutMapping(value = "/jobs/{id}")
+    @PutMapping(value = "/jobs/")
     public void updateJobTitle(
 	    @ApiParam(value = "The job title data for updating in the database.", required = true)
 	    @Valid @RequestBody JobTitlePayload editedJobTitle) {

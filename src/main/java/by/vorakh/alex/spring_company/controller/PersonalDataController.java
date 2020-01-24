@@ -79,7 +79,7 @@ public class PersonalDataController {
 	    @ApiResponse(code = 500, 
 		    message = "The personal data was not updated in the database or Problems with server")
 	})
-    @PutMapping(value = "/people/{id}")
+    @PutMapping(value = "/people/")
     public void updatePersonalData(
 	    @ApiParam(value = "The personal data data for updating in the database.", required = true)
 	    @Valid @RequestBody PersonalDataPayload editedPersonalData) {

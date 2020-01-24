@@ -79,7 +79,7 @@ public class CompanyController {
 	    @ApiResponse(code = 500, 
 		    message = "The company was not updated in the database or Problems with server")
 	})
-    @PutMapping(value = "/companies/{id}")
+    @PutMapping(value = "/companies/")
     public void updateCompany(
 	    @ApiParam(value = "The company data for updating in the database.", required = true)
 	    @Valid @RequestBody CompanyPayload editedCompany) {

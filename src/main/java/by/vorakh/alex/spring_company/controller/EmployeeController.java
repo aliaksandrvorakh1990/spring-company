@@ -80,7 +80,7 @@ public class EmployeeController {
 	    @ApiResponse(code = 500, 
 		    message = "The employee was not updated in the database or Problems with server")
 	})
-    @PutMapping(value = "/employees/{id}")
+    @PutMapping(value = "/employees/")
     public void updateEmployee(
 	    @ApiParam(value = "The employee data for updating in the database.", required = true) 
 	    @Valid @RequestBody EmployeePayload editedEmployee) {

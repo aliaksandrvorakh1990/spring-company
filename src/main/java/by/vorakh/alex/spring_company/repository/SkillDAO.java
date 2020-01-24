@@ -80,7 +80,7 @@ public class SkillDAO implements DAO<Skill> {
     @Override
     public void delete(Skill object) {
 	try {
-	entityManager.remove(object);
+	    entityManager.remove(object);
 	} catch (IllegalArgumentException ex) {
 	    throw new DAOException("The SKILL cannot be deleted, because " + 
 		    	object.toString() +  " is not a Skill object.", ex);
@@ -111,9 +111,9 @@ public class SkillDAO implements DAO<Skill> {
     public Skill createAndGet(Skill object) {
 	Skill newSkill = null;
 	try {
-	entityManager.persist(object);
-	entityManager.flush();
-	newSkill = object;
+    	    entityManager.persist(object);
+    	    entityManager.flush();
+    	    newSkill = object;
 	} catch (EntityExistsException e) {
 	    throw new DAOException("The \"" + object.getSkillName() + 
 		    "\" cannot be created, because to exist in database.", e);
