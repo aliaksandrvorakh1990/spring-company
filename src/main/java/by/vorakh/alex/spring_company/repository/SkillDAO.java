@@ -3,7 +3,6 @@ package by.vorakh.alex.spring_company.repository;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -38,56 +37,21 @@ public class SkillDAO implements DAO<Skill> {
 	return entityManager.find(Skill.class, id);
     }
 
-    @SuppressWarnings("finally")
     @Override
     public int create(Skill object) {
-	int createdID = -1;
-	try {
-	    entityManager.persist(object);
-	    entityManager.flush();
-	    createdID = object.getId();
-	} catch (EntityExistsException e) {
-	    throw new DAOException("The \"" + object.getSkillName() + 
-		    "\" cannot be created, because to exist in database.", e);
-	} catch (IllegalArgumentException ex) {
-	    throw new DAOException("The SKILL cannot be created, because " + 
-		    object.toString() +  " is not a Skill object.", ex);
-	}  catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new DAOException("The \"" + object.getSkillName() + 
-		    "\" cannot be created, NO Transaction.", exc);
-	} catch (javax.persistence.PersistenceException ex1) { 
-	    throw new DAOException("The \"" + object.getSkillName() + 
-		    "\" cannot be created, the database is not updated.", ex1);
-	} finally {
-	    return createdID;
-	}
-	
+	entityManager.persist(object);
+	entityManager.flush();
+	return object.getId();
     }
 
     @Override
     public void update(Skill object) {
-	try {
-	    entityManager.merge(object);
-	} catch (IllegalArgumentException ex) {
-	    throw new DAOException("The SKILL cannot be updated, because " + 
-		    	object.toString() +  " is not a Skill object.", ex);
-	}  catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new DAOException("The \"" + object.getSkillName() + 
-		    "\" cannot be updated, NO Transaction.", exc);
-	}
+	entityManager.merge(object);
     }
 
     @Override
     public void delete(Skill object) {
-	try {
-	    entityManager.remove(object);
-	} catch (IllegalArgumentException ex) {
-	    throw new DAOException("The SKILL cannot be deleted, because " + 
-		    	object.toString() +  " is not a Skill object.", ex);
-	}  catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new DAOException("The \"" + object.getSkillName() + 
-		    "\" cannot be deleted, NO Transaction.", exc);
-	}
+	entityManager.remove(object);
     }
 
     @Override
@@ -106,30 +70,11 @@ public class SkillDAO implements DAO<Skill> {
 	return true;
     }
 
-    @SuppressWarnings("finally")
     @Override
     public Skill createAndGet(Skill object) {
-	Skill newSkill = null;
-	try {
-    	    entityManager.persist(object);
-    	    entityManager.flush();
-    	    newSkill = object;
-	} catch (EntityExistsException e) {
-	    throw new DAOException("The \"" + object.getSkillName() + 
-		    "\" cannot be created, because to exist in database.", e);
-	} catch (IllegalArgumentException ex) {
-	    throw new DAOException("The SKILL cannot be created, because " + 
-		    object.toString() +  " is not a Skill object.", ex);
-	}  catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new DAOException("The \"" + object.getSkillName() + 
-		    "\" cannot be created, NO Transaction.", exc);
-	} catch (javax.persistence.PersistenceException ex1) { 
-	    throw new DAOException("The \"" + object.getSkillName() + 
-		    "\" cannot be created, the database is not updated.", ex1);
-	} finally {
-	    return newSkill;
-	}
-	
+	entityManager.persist(object);
+	entityManager.flush();
+	return object;
     }
 
     @SuppressWarnings("unchecked")
