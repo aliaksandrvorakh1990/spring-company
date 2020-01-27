@@ -22,7 +22,6 @@ public class EmployeeOutsource implements  Serializable {
 	this.jobTitle = jobTitle;
 	this.skillList = skillList;
     }
-    
 
     public EmployeeOutsource setPersonalData(PersonalDataOutsource personalData) {
         this.personalData = personalData;
