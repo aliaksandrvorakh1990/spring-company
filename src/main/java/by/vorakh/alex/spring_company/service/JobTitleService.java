@@ -43,7 +43,11 @@ public class JobTitleService implements ServiceInterface<JobTitleViewModel, JobT
 
     @Override
     public JobTitleViewModel getById(int id) {
-	return convertor.convert(jobTitleDAO.getById(id));
+	return convertor.convert(findById(id));
+    }
+    
+    public JobTitle findById(int id) {
+	return jobTitleDAO.getById(id);
     }
 
     @SuppressWarnings("finally")
@@ -78,11 +82,16 @@ public class JobTitleService implements ServiceInterface<JobTitleViewModel, JobT
 	return getOrCreateAndGet(newJobTitle);
     }
 
-    @SuppressWarnings("finally")
     @Transactional
     public JobTitleViewModel getOrCreateAndGet(JobTitle newJobTitle) {
+	return convertor.convert(getOrCreateAndGetWithId(newJobTitle));
+    }
+    
+    @SuppressWarnings("finally")
+    @Transactional
+    public JobTitle getOrCreateAndGetWithId(JobTitle newJobTitle) {
 	if (jobTitleDAO.isContained(newJobTitle)) {
-	    return convertor.convert(jobTitleDAO.findExisted(newJobTitle));
+	    return jobTitleDAO.findExisted(newJobTitle);
 	} else {
 	    JobTitle returnedJobTitle = null;
 	    try { 
@@ -100,7 +109,7 @@ public class JobTitleService implements ServiceInterface<JobTitleViewModel, JobT
 		throw new ServiceException("The \"" + newJobTitle.getTitle() + 
 			"\" cannot be created, the database is not updated.", ex1);
 	    } finally {
-		return convertor.convert(returnedJobTitle);
+		return returnedJobTitle;
 	    }
 	}
     }

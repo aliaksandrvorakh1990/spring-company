@@ -15,7 +15,6 @@ import by.vorakh.alex.spring_company.model.outsource.PersonalDataOutsource;
 import by.vorakh.alex.spring_company.model.payload.PersonalDataPayload;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.PersonalDataViewModel;
-import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.PersonalDataDAO;
 import by.vorakh.alex.spring_company.repository.entity.PersonalData;
 
@@ -25,7 +24,7 @@ public class PersonalDataService implements ServiceInterface<PersonalDataViewMod
     @Autowired
     private PersonalDataDAO personalDataDAO;
     @Autowired
-    private EmployeeDAO employeeDAO;
+    private EmployeeService employeeService;
     @Autowired
     private PersonalDataToPersonalDataViewModelConverter convertor;
     @Autowired
@@ -43,7 +42,11 @@ public class PersonalDataService implements ServiceInterface<PersonalDataViewMod
 
     @Override
     public PersonalDataViewModel getById(int id) {
-	return convertor.convert(personalDataDAO.getById(id));
+	return convertor.convert(findById(id));
+    }
+    
+    public PersonalData findById(int id) {
+	return personalDataDAO.getById(id);
     }
     
     @SuppressWarnings("finally")
@@ -53,10 +56,9 @@ public class PersonalDataService implements ServiceInterface<PersonalDataViewMod
 	int createdID = -1;
 	
 	PersonalData newPersonalData = new PersonalData(newPayload.getFirstName(), newPayload.getLastName());
+	
 	try {
-	    
-	    createdID= personalDataDAO
-			.create(newPersonalData);
+	    createdID= personalDataDAO.create(newPersonalData);
 	} catch (EntityExistsException e) {
 	    throw new ServiceException("The \"" + newPersonalData.getFirstName() + 
     		    " " + newPersonalData.getLastName() +  
@@ -83,9 +85,14 @@ public class PersonalDataService implements ServiceInterface<PersonalDataViewMod
 	return createAndGet(newPersonalData);
     }
 
-    @SuppressWarnings("finally")
     @Transactional
     public PersonalDataViewModel createAndGet(PersonalData newPersonalData) {
+	return convertor.convert(createAndGetWithId(newPersonalData));
+    }
+    
+    @SuppressWarnings("finally")
+    @Transactional
+    public PersonalData createAndGetWithId(PersonalData newPersonalData) {
 	PersonalData returnedPersonalData = null;
     	try { 
     	    returnedPersonalData = personalDataDAO.createAndGet(newPersonalData);
@@ -105,7 +112,7 @@ public class PersonalDataService implements ServiceInterface<PersonalDataViewMod
     		    " " + newPersonalData.getLastName() +  
     		    "\" cannot be created, the database is not updated.", ex1);
     	} finally {
-    	    return convertor.convert(returnedPersonalData);
+    	    return returnedPersonalData;
     	}
     }
     
@@ -120,7 +127,7 @@ public class PersonalDataService implements ServiceInterface<PersonalDataViewMod
 	    personalDataDAO.update(personalDataForEditing);
 	} catch (IllegalArgumentException ex) {
 	    throw new ServiceException("The PERSONAL_DATA cannot be updated, because " + 
-		    personalDataForEditing.toString() +  " is not a Skill object.", ex);
+		    personalDataForEditing.toString() +  " is not a PERSONAL_DATA object.", ex);
 	} catch (javax.persistence.TransactionRequiredException exc) { 
 	    throw new ServiceException("The \"" + personalDataForEditing.getFirstName() + 
     		    " " + personalDataForEditing.getLastName() +  
@@ -136,12 +143,12 @@ public class PersonalDataService implements ServiceInterface<PersonalDataViewMod
 	    throw new ServiceException("The PERSONAL_DATA with \'" + id + 
 		    "\' ID cannot be deleted, because to no exist in database");
 	}
-	employeeDAO.delete(deletedPersonalData);
+	employeeService.delete(deletedPersonalData);
 	try {
 	    personalDataDAO.delete(deletedPersonalData);
 	} catch (IllegalArgumentException ex) {
 	    throw new ServiceException("The PERSONAL_DATA cannot be deleted, because " + 
-		    deletedPersonalData.toString() +  " is not a Skill object.", ex);
+		    deletedPersonalData.toString() +  " is not a PERSONAL_DATA object.", ex);
 	} catch (javax.persistence.TransactionRequiredException exc) { 
 	    throw new ServiceException("The \"" + deletedPersonalData.getFirstName() + 
     		    " " + deletedPersonalData.getLastName() +  
