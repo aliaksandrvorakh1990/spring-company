@@ -64,6 +64,7 @@ public class PersonalDataController {
     @ApiOperation(value = "Create a personal data in the database",
 	    response = IdViewModel.class, code = 200)
     @ApiResponses(value = {
+	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The personal data was not created in the database or Problems with server"),
 	})
@@ -76,6 +77,7 @@ public class PersonalDataController {
 
     @ApiOperation(value = "Update an existing personal data in the database.", code = 200)
     @ApiResponses(value = {
+	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The personal data was not updated in the database or Problems with server")
 	})

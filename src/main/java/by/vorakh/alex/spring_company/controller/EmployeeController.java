@@ -65,6 +65,7 @@ public class EmployeeController {
     @ApiOperation(value = "Create an employee in the database",
 	    response = IdViewModel.class, code = 200)
     @ApiResponses(value = {
+	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The employee was not created in the database or Problems with server"),
 	})
@@ -77,6 +78,7 @@ public class EmployeeController {
 
     @ApiOperation(value = "Update an existing employee in the database.", code = 200)
     @ApiResponses(value = {
+	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The employee was not updated in the database or Problems with server")
 	})

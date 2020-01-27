@@ -64,6 +64,7 @@ public class JobTitleController {
     @ApiOperation(value = "Create a job title in the database",
 	    response = IdViewModel.class, code = 200)
     @ApiResponses(value = {
+	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The job title was not created in the database or Problems with server"),
 	})
@@ -76,6 +77,7 @@ public class JobTitleController {
 
     @ApiOperation(value = "Update an existing job title in the database.", code = 200)
     @ApiResponses(value = {
+	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The job title was not updated in the database or Problems with server")
 	})

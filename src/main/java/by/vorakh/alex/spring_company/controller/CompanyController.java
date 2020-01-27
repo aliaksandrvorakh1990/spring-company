@@ -64,6 +64,7 @@ public class CompanyController {
     @ApiOperation(value = "Create an company in the database",
 	    response = IdViewModel.class, code = 200)
     @ApiResponses(value = {
+	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The company was not created in the database or Problems with server"),
 	})
@@ -76,6 +77,7 @@ public class CompanyController {
 
     @ApiOperation(value = "Update an existing company in the database.", code = 200)
     @ApiResponses(value = {
+	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The company was not updated in the database or Problems with server")
 	})
