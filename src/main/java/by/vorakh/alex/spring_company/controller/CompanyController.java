@@ -25,6 +25,7 @@ import io.swagger.annotations.ApiResponses;
 
 import by.vorakh.alex.spring_company.model.payload.CompanyPayload;
 import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
+import by.vorakh.alex.spring_company.model.view_model.EmployeeViewModel;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.service.CompanyService;
 
@@ -99,6 +100,18 @@ public class CompanyController {
 	    @ApiParam(value = "The company will be deleted from the database by his ID.", required = true)
 	    @PathVariable("id") @Positive @NotNull Integer id) {
         companyService.delete(id);
+    }
+    
+    @ApiOperation(value = "create and read a random employee from external source.", 
+	    notes = "ID has to be greater than zero.", 
+	    response = EmployeeViewModel.class , code = 200)
+    @ApiResponses(value = {
+	    @ApiResponse(code = 500, message = "The company does not exist or Problems with server")
+	})
+    @GetMapping(value = "/companies/{id}/random-employee")
+    public EmployeeViewModel getRandomEmployee(@ApiParam(value = "descr.", required = true)
+    @PathVariable("id") @Positive @NotNull Integer id) {
+	return companyService.randomEmployee(id);
     }
 
 }
