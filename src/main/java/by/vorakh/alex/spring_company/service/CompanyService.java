@@ -1,8 +1,12 @@
 package by.vorakh.alex.spring_company.service;
 
+import by.vorakh.alex.spring_company.client.CompanyClient;
 import by.vorakh.alex.spring_company.converter.CompanyToCompanyViewModelConverter;
+import by.vorakh.alex.spring_company.converter.EmployeeToEmployeeViewModelConverter;
+import by.vorakh.alex.spring_company.model.outsource.EmployeeOutsource;
 import by.vorakh.alex.spring_company.model.payload.CompanyPayload;
 import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
+import by.vorakh.alex.spring_company.model.view_model.EmployeeViewModel;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.repository.CompanyDAO;
 import by.vorakh.alex.spring_company.repository.entity.Company;
@@ -26,7 +30,10 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
     private EmployeeService employeeService;
     @Autowired
     private CompanyToCompanyViewModelConverter convertor;
-    
+    @Autowired
+    private EmployeeToEmployeeViewModelConverter employeeConvertor;
+    @Autowired
+    private CompanyClient companyClient;
     @Override
     public List<CompanyViewModel> getAll() {
 	List<CompanyViewModel> companyViewModelList = new ArrayList<CompanyViewModel>();
@@ -92,6 +99,12 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
 	editedCompany
 		.setName(name)
 		.setEmployeeList(employeeList);
+	update(editedCompany);
+	
+    }
+    
+    @Transactional
+    public void update(Company editedCompany) {
 	try {
 	    companyDAO.update(editedCompany);
 	} catch (IllegalArgumentException ex) {
@@ -101,14 +114,16 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
 	    throw new ServiceException("The \"" + editedCompany.toString() +  
 		    "\" cannot be updated, NO Transaction.", exc);
 	}
-	
     }
     
     @Override
     @Transactional
     public void delete(int id) {
         Company deletedCompany = companyDAO.getById(id);
-        
+        if (deletedCompany == null) {
+	    throw new ServiceException("The Company cannot be updated, because the Company with \'" + 
+		    id +"\' ID does not exist in database.");
+	}
         deletedCompany.getEmployeeList().forEach(emp -> {
             employeeService.delete(emp);
         });
@@ -123,6 +138,27 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
 		    "\" cannot be deleted, NO Transaction.", exc);
 	}
        
+    }
+    
+    @Transactional
+    public EmployeeViewModel randomEmployee(int id) {
+	Company company = companyDAO.getById(id);
+        if (company == null) {
+	    throw new ServiceException("The Company cannot be updated, because the Company with \'" + 
+		    id +"\' ID does not exist in database.");
+	}
+	String jobTitle = "Dev";
+	
+	EmployeeOutsource randomEmployeefromExternalSource = companyClient.getRandomEmployee(jobTitle);
+	
+	Employee randomEmployee = employeeService.getOrCreateAndGet(randomEmployeefromExternalSource);
+	
+	company.getEmployeeList().add(randomEmployee);
+	
+	update(company);
+	
+
+	return employeeConvertor.convert(randomEmployee);
     }
     
 }
