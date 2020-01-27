@@ -106,7 +106,7 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 
     } 
     
-    public EmployeeViewModel getOrCreateAndGet(EmployeeOutsource externalSource) {
+    public Employee getOrCreateAndGet(EmployeeOutsource externalSource) {
 	Employee newEmployee = extermalSourceConvertor.convert(externalSource);
 	
 	PersonalData personalData = personalDataService.createAndGetWithId(newEmployee.getPersonalData());
@@ -142,7 +142,7 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 		    "\" cannot be created, the database is not updated.", ex1);
 	} 
 	
-	return convertor.convert(newEmployee);
+	return newEmployee;
     }
 
     @Override
