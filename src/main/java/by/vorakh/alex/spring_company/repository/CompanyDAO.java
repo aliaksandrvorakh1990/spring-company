@@ -51,6 +51,13 @@ public class CompanyDAO implements DAO<Company> {
 	}
 	return true;
     }
+    
+    public boolean isContained(String companyName) {
+	if (findExisted(companyName) == null) {
+	    return false;
+	}
+	return true;
+    }
 
     @Override
     public Company createAndGet(Company object) {
@@ -65,6 +72,14 @@ public class CompanyDAO implements DAO<Company> {
 	Query query = entityManager.createQuery("select c from Company c "
 	 	+ "WHERE c.name = :p");
 	query.setParameter("p", object.getName());
+	return (Company) query.getResultList().stream().findFirst().orElse(null);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public Company findExisted(String companyName) {
+	Query query = entityManager.createQuery("select c from Company c "
+	 	+ "WHERE c.name = :p");
+	query.setParameter("p", companyName);
 	return (Company) query.getResultList().stream().findFirst().orElse(null);
     }
 
