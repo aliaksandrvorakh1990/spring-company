@@ -94,6 +94,14 @@
 		    <version>3.14.0</version>
 		    <scope>test</scope>
 		</dependency>
+	
+		<dependency>
+		    <groupId>io.reactivex</groupId>
+		    <artifactId>rxnetty-common</artifactId>
+		    <version>0.5.3</version>
+		    <scope>runtime</scope>
+		</dependency>
+		
 		
     </dependencies>
 
