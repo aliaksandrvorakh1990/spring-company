@@ -122,6 +122,7 @@ public class JobTitleService implements ServiceInterface<JobTitleViewModel, JobT
 	}
 	
 	editedJobTitle.setTitle(editedPayload.getTitle());
+	
 	try {
 	    jobTitleDAO.update(editedJobTitle);
 	} catch (IllegalArgumentException ex) {
