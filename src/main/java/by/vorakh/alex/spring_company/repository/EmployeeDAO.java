@@ -82,6 +82,13 @@ public class EmployeeDAO implements DAO<Employee> {
 	}
 	return true;
     }
+    
+    public boolean isContained(PersonalData personalData) {
+   	if (findExisted(personalData) == null) {
+   	    return false;
+   	}
+   	return true;
+       }
 
     @Override
     public Employee createAndGet(Employee object) {
@@ -96,6 +103,14 @@ public class EmployeeDAO implements DAO<Employee> {
 	Query query = entityManager.createQuery("select e from Employee e "
 	 	+ "WHERE e.personalData = :p");
 	query.setParameter("p", object.getPersonalData());
+	return (Employee) query.getResultList().stream().findFirst().orElse(null);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public Employee findExisted(PersonalData personalData) {
+	Query query = entityManager.createQuery("select e from Employee e "
+	 	+ "WHERE e.personalData = :p");
+	query.setParameter("p", personalData);
 	return (Employee) query.getResultList().stream().findFirst().orElse(null);
     }
 }
