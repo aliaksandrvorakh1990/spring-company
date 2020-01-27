@@ -59,6 +59,10 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
     @Transactional
     public IdViewModel create(SkillPayload newPayload) {
 	int createdID = -1;
+	if (skillDAO.isContained(newPayload.getSkillName())) {
+	    throw new ServiceException("The \"" + newPayload.getSkillName() + 
+		    "\" cannot be created, because to exist in database.");
+	}
 	Skill createdSkill = new Skill(newPayload.getSkillName());
 	
 	try {
