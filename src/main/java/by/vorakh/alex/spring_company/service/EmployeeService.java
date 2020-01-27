@@ -160,10 +160,7 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 	    throw new ServiceException("The employee cannot be updated, because the personal data with \'"+ 
 		    editedPayload.getPersonalDataId() +"\' ID does not exist in database.");
 	}
-	if (employeeDAO.isContained(personalDataById)) {
-	    throw new ServiceException("The employee cannot be updated, because the employee with \'"+ 
-		    editedPayload.getPersonalDataId() +"\' ID of the personal data exists in database.");
-	}
+
 	
 	JobTitle jobTitleById = jobTitleService.findById(editedPayload.getJobTitleId());
 	
