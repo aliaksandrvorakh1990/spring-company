@@ -51,8 +51,14 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 	return convertor.convert(employeeDAO.getById(id));
     }
     
+    public List<Employee> findListByIDs(List<Integer> employeeIDList) {
+	List<Employee> list = new ArrayList<Employee>();
+	for (Integer employeeId : employeeIDList) {
+	    list.add(employeeDAO.getById(employeeId)) ;
+	}
+	return list;
+    }
     
-
     @SuppressWarnings("finally")
     @Override
     @Transactional
@@ -214,6 +220,11 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 		    id +"\' ID does not exist in database.");
 	}
 	
+	delete(deletedEmployee);
+    }
+    
+    @Transactional
+    public void delete(Employee deletedEmployee) {
 	deletedEmployee.getSkillList().clear();
 	
 	update(deletedEmployee);
@@ -228,6 +239,7 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 		    "\" cannot be deleted, NO Transaction.", exc);
 	}
     }
+    
     
     public void delete(PersonalData personalData) {
 	try {
