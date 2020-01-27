@@ -26,7 +26,7 @@ public class Employee implements Serializable {
     @JoinColumn(name="title_id")
     private JobTitle jobTitle;
     @NotNull
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "employee_to_skill", 
             joinColumns = { @JoinColumn(name = "employee_id") }, 
             inverseJoinColumns = { @JoinColumn(name = "skill_id") })

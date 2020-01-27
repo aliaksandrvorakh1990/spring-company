@@ -24,7 +24,7 @@ public class Company implements Serializable {
     @Column(name = "name", length = 40, nullable = false, unique = true)
     private String name;
     
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private List<Employee> employeeList = new ArrayList<Employee>();
 
