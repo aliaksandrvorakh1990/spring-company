@@ -1,24 +1,17 @@
 package by.vorakh.alex.spring_company.service;
 
 import by.vorakh.alex.spring_company.converter.CompanyToCompanyViewModelConverter;
-import by.vorakh.alex.spring_company.converter.EmployeeOutsourceToEmployeeConverter;
-import by.vorakh.alex.spring_company.model.outsource.EmployeeOutsource;
 import by.vorakh.alex.spring_company.model.payload.CompanyPayload;
 import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.repository.CompanyDAO;
-import by.vorakh.alex.spring_company.repository.EmployeeDAO;
-import by.vorakh.alex.spring_company.repository.JobTitleDAO;
-import by.vorakh.alex.spring_company.repository.PersonalDataDAO;
-import by.vorakh.alex.spring_company.repository.SkillDAO;
 import by.vorakh.alex.spring_company.repository.entity.Company;
 import by.vorakh.alex.spring_company.repository.entity.Employee;
-import by.vorakh.alex.spring_company.repository.entity.PersonalData;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.EntityExistsException;
 import javax.transaction.Transactional;
 
 import java.util.ArrayList;
@@ -30,17 +23,9 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
     @Autowired
     private CompanyDAO companyDAO;
     @Autowired
-    private EmployeeDAO employeeDAO;
-    @Autowired
-    private PersonalDataDAO personalDataDAO;
-    @Autowired
-    private SkillDAO skillDAO;
-    @Autowired
-    private JobTitleDAO jobTitleDAO;
+    private EmployeeService employeeService;
     @Autowired
     private CompanyToCompanyViewModelConverter convertor;
-    @Autowired
-    private EmployeeOutsourceToEmployeeConverter employeeOutsourceToEmployeeConverter;
     
     @Override
     public List<CompanyViewModel> getAll() {
@@ -56,56 +41,88 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
         return convertor.convert(companyDAO.getById(id));
     }
 
+    @SuppressWarnings("finally")
     @Override
     @Transactional
     public IdViewModel create(CompanyPayload newPayload) {
-	return new IdViewModel()
-		.setId(companyDAO.create(new Company()
-			.setName(newPayload.getName())
-			.setEmployeeList(employeeDAO.getAll(newPayload.getEmployeeIdList()))));
+	int createdID = -1;
+	String name = newPayload.getName();
+	if (companyDAO.isContained(name)) {
+	    throw new ServiceException("The \"" + name + 
+		    "\" company cannot be created, because to exist in database.");
+	}
+	
+	List<Employee> employeeList = employeeService.findListByIDs(newPayload.getEmployeeIdList());
+	
+	Company newCompany =  new Company(name, employeeList);
+	
+	try {
+	    createdID = companyDAO.create(newCompany);
+	} catch (EntityExistsException e) {
+	    throw new ServiceException("The \"" + newCompany.toString() +  
+		    "\" cannot be created, because to exist in database.", e);
+	} catch (IllegalArgumentException ex) {
+	    throw new ServiceException("The COMPANY cannot be created, because " + 
+		    newCompany.toString() +  " is not a COMPANY object.", ex);
+	} catch (javax.persistence.TransactionRequiredException exc) { 
+	    throw new ServiceException("The \"" + newCompany.toString() +  
+		    "\" cannot be created, NO Transaction.", exc);
+	} catch (javax.persistence.PersistenceException ex1) { 
+	    throw new ServiceException("The \"" + newCompany.toString() +  
+		    "\" cannot be created, the database is not updated.", ex1);
+	} finally {
+	    return new IdViewModel(createdID);
+	}	
     }
 
     @Override
     @Transactional
     public void update(CompanyPayload editedPayload) {
+	String name = editedPayload.getName();
+	if (companyDAO.isContained(name)) {
+	    throw new ServiceException("The \"" + name + 
+		    "\" company cannot be updated, because to exist in database.");
+	}
 	Company editedCompany = companyDAO.getById(editedPayload.getId());
+	if (editedCompany == null) {
+	    throw new ServiceException("The Company cannot be updated, because the Company with \'"+ 
+		    editedPayload.getId() +"\' ID does not exist in database.");
+	}
+	List<Employee> employeeList = employeeService.findListByIDs(editedPayload.getEmployeeIdList());
 	editedCompany
-		.setName(editedPayload.getName())
-		.setEmployeeList(employeeDAO.getAll(editedPayload.getEmployeeIdList()));
-	companyDAO.update(editedCompany);
+		.setName(name)
+		.setEmployeeList(employeeList);
+	try {
+	    companyDAO.update(editedCompany);
+	} catch (IllegalArgumentException ex) {
+	    throw new ServiceException("The Company cannot be updated, because " + 
+		    editedCompany.toString() +  " is not a Company object.", ex);
+	} catch (javax.persistence.TransactionRequiredException exc) { 
+	    throw new ServiceException("The \"" + editedCompany.toString() +  
+		    "\" cannot be updated, NO Transaction.", exc);
+	}
+	
     }
-
+    
     @Override
     @Transactional
     public void delete(int id) {
         Company deletedCompany = companyDAO.getById(id);
+        
         deletedCompany.getEmployeeList().forEach(emp -> {
-            emp.getSkillList().clear();
-            employeeDAO.delete(emp);
+            employeeService.delete(emp);
         });
-      
-        companyDAO.delete(deletedCompany);
-    }
-    
-    @Transactional
-    public Company randomEmployee(int companyId,String jobTiTleName) {
-	RestTemplate client = new RestTemplate();
-	String randomEmployeeURL = "http://localhost:8082/random-employee/"+ jobTiTleName;
-	EmployeeOutsource outsourceEmployee = client.getForObject(randomEmployeeURL, EmployeeOutsource.class);
-	if (outsourceEmployee == null) {
-	    // TODO throw Service exception
-	    System.out.println("ERROR No data for an external resource");
+        
+        try {
+            companyDAO.delete(deletedCompany);
+        } catch (IllegalArgumentException ex) {
+	    throw new ServiceException("The Company cannot be deleted, because " + 
+		    deletedCompany.toString() +  " is not a Company object.", ex);
+	} catch (javax.persistence.TransactionRequiredException exc) { 
+	    throw new ServiceException("The \"" + deletedCompany.toString() +  
+		    "\" cannot be deleted, NO Transaction.", exc);
 	}
-	Employee randomEmp = employeeOutsourceToEmployeeConverter.convert(outsourceEmployee);
-	
-	PersonalData randomPD = randomEmp.getPersonalData();
-	
-	
-	return null;
+       
     }
     
-    private Employee AddAndGetToDAO(Employee someEmployee) {
-	return null;
-    }
-
 }
