@@ -72,16 +72,16 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
     }
     
     @Transactional
-    public Skill getOrCreateAndGet(SkillOutsource extemalSource) {
+    public SkillViewModel getOrCreateAndGet(SkillOutsource extemalSource) {
 	Skill newSkill = extermalSourceConvertor.convert(extemalSource);
 	return getOrCreateAndGet(newSkill);
     }
     
     @SuppressWarnings("finally")
     @Transactional
-    public Skill getOrCreateAndGet(Skill newSkill) {
+    public SkillViewModel getOrCreateAndGet(Skill newSkill) {
 	if (skillDAO.isContained(newSkill)) {
-	    return skillDAO.findExisted(newSkill);
+	    return convertor.convert(skillDAO.findExisted(newSkill));
 	} else {
 	    Skill returnedSkill = null;
 	    try {
@@ -99,7 +99,7 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
 		throw new ServiceException("The \"" + newSkill.getSkillName() + 
 			"\" cannot be created, the database is not updated.", ex1);
 	    } finally {
-		return returnedSkill;
+		return convertor.convert(returnedSkill);
 	    }
 	}
     }
@@ -142,6 +142,7 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
 	    throw new ServiceException("The skill with \'" + id  + 
 		    "\' ID cannot be deleted, because to no exist in database");
 	}
+	
 	employeeDAO.getAll(deletedSkill).forEach(emp -> {
 	    emp.getSkillList().remove(deletedSkill);
 	    employeeDAO.update(emp);

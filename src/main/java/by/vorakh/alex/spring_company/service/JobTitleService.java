@@ -73,20 +73,20 @@ public class JobTitleService implements ServiceInterface<JobTitleViewModel, JobT
     }
     
     @Transactional
-    public JobTitle getOrCreateAndGet(JobTitleOutsource extemalSource) {
+    public JobTitleViewModel getOrCreateAndGet(JobTitleOutsource extemalSource) {
 	JobTitle newJobTitle = extermalSourceConvertor.convert(extemalSource);
 	return getOrCreateAndGet(newJobTitle);
     }
 
     @SuppressWarnings("finally")
     @Transactional
-    public JobTitle getOrCreateAndGet(JobTitle newJobTitle) {
+    public JobTitleViewModel getOrCreateAndGet(JobTitle newJobTitle) {
 	if (jobTitleDAO.isContained(newJobTitle)) {
-	    return jobTitleDAO.findExisted(newJobTitle);
+	    return convertor.convert(jobTitleDAO.findExisted(newJobTitle));
 	} else {
 	    JobTitle returnedJobTitle = null;
 	    try { 
-		
+		returnedJobTitle = jobTitleDAO.createAndGet(newJobTitle);
 	    } catch (EntityExistsException e) {
 		throw new ServiceException("The \"" + newJobTitle.getTitle() + 
 			"\" cannot be created, because to exist in database.", e);
@@ -100,7 +100,7 @@ public class JobTitleService implements ServiceInterface<JobTitleViewModel, JobT
 		throw new ServiceException("The \"" + newJobTitle.getTitle() + 
 			"\" cannot be created, the database is not updated.", ex1);
 	    } finally {
-		return returnedJobTitle;
+		return convertor.convert(returnedJobTitle);
 	    }
 	}
     }
