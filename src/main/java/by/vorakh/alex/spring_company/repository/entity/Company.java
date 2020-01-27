@@ -30,6 +30,13 @@ public class Company implements Serializable {
 
     public Company() {}
 
+    public Company(@NotNull @Size(min = 2, max = 40) String name, List<Employee> employeeList) {
+	this.name = name;
+	this.employeeList = employeeList;
+    }
+
+
+
     public Company(Integer id, @NotNull @Size(min = 2, max = 40) String name, List<Employee> employeeList) {
 	this.id = id;
 	this.name = name;
