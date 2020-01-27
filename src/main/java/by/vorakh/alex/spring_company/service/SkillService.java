@@ -15,7 +15,6 @@ import by.vorakh.alex.spring_company.model.outsource.SkillOutsource;
 import by.vorakh.alex.spring_company.model.payload.SkillPayload;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.SkillViewModel;
-import by.vorakh.alex.spring_company.repository.EmployeeDAO;
 import by.vorakh.alex.spring_company.repository.SkillDAO;
 import by.vorakh.alex.spring_company.repository.entity.Skill;
 
@@ -25,7 +24,7 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
     @Autowired
     private SkillDAO skillDAO;
     @Autowired
-    private EmployeeDAO employeeDAO;
+    private EmployeeService employeeService;
     @Autowired
     private SkillToSkillViewModelConverter convertor;
     @Autowired
@@ -44,6 +43,16 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
     public SkillViewModel getById(int id) {
 	return convertor.convert(skillDAO.getById(id));
     }
+    
+    
+    public List<Skill> getListBy(List<Integer> skillIdList) {
+	List<Skill> list = new ArrayList<Skill>();
+	for (Integer skillId : skillIdList) {
+	    list.add(skillDAO.getById(skillId)) ;
+	}
+	return list;
+    }
+    
 
     @SuppressWarnings("finally")
     @Override
@@ -77,11 +86,17 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
 	return getOrCreateAndGet(newSkill);
     }
     
-    @SuppressWarnings("finally")
+    
     @Transactional
     public SkillViewModel getOrCreateAndGet(Skill newSkill) {
+	return convertor.convert(getOrCreateAndGetWithId(newSkill));
+    }
+    
+    @SuppressWarnings("finally")
+    @Transactional
+    public Skill getOrCreateAndGetWithId(Skill newSkill) {
 	if (skillDAO.isContained(newSkill)) {
-	    return convertor.convert(skillDAO.findExisted(newSkill));
+	    return skillDAO.findExisted(newSkill);
 	} else {
 	    Skill returnedSkill = null;
 	    try {
@@ -99,10 +114,11 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
 		throw new ServiceException("The \"" + newSkill.getSkillName() + 
 			"\" cannot be created, the database is not updated.", ex1);
 	    } finally {
-		return convertor.convert(returnedSkill);
+		return returnedSkill;
 	    }
 	}
     }
+    
 
     @Override
     @Transactional
@@ -143,10 +159,8 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
 		    "\' ID cannot be deleted, because to no exist in database");
 	}
 	
-	employeeDAO.getAll(deletedSkill).forEach(emp -> {
-	    emp.getSkillList().remove(deletedSkill);
-	    employeeDAO.update(emp);
-	});
+	employeeService.removeDeletedSkillfromSkillLists(deletedSkill);
+	
 	try {
 	skillDAO.delete(deletedSkill);
 	} catch (IllegalArgumentException ex) {

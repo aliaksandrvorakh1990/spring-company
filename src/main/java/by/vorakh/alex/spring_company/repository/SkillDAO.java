@@ -1,6 +1,5 @@
 package by.vorakh.alex.spring_company.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -23,15 +22,6 @@ public class SkillDAO implements DAO<Skill> {
 	return (List<Skill>) entityManager.createQuery("select s from Skill s").getResultList();
     }
     
-    public List<Skill> getAll(List<Integer> skillIdList) {
-	List<Skill> list = new ArrayList<Skill>();
-	
-	for (Integer skillId : skillIdList) {
-	    list.add(entityManager.find(Skill.class, skillId));
-	}
-	return list;
-    }
-
     @Override
     public Skill getById(int id) {
 	return entityManager.find(Skill.class, id);
