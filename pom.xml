@@ -11,8 +11,28 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.2.RELEASE</version>
+        <version>2.2.4.RELEASE</version>
     </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+        
+        <springframework.version>5.2.3.RELEASE</springframework.version>
+        <hibernate.version>5.4.10.Final</hibernate.version>
+        <mysql-connector.version>8.0.19</mysql-connector.version>
+        <tomcat-dbcp.version>9.0.30</tomcat-dbcp.version>
+        
+        <springfox.version>2.9.2</springfox.version>
+        
+        <rx.rxnetty.version>0.5.3</rx.rxnetty.version>
+        <rx.java.version>1.3.8</rx.java.version>
+        <rx.java2.version>2.2.17</rx.java2.version>
+        
+        <junit.version>4.13</junit.version> 
+        <mockito.version>3.2.4</mockito.version>  
+        <assertj.version>3.8.0</assertj.version>
+        <awaitility.version>1.7.0</awaitility.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -28,86 +48,112 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.4.10.Final</version>
+            <version>${hibernate.version}</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>5.2.2.RELEASE</version>
+            <version>${springframework.version}</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.18</version>
+            <version>${mysql-connector.version}</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
 
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-dbcp</artifactId>
-            <version>9.0.30</version>
+            <version>${tomcat-dbcp.version}</version>
         </dependency>
-        
+      
         <dependency>
 		    <groupId>io.springfox</groupId>
 		    <artifactId>springfox-swagger2</artifactId>
-		    <version>2.9.2</version>
+		    <version>${springfox.version}</version>
 		</dependency>
 		
 		<dependency>
 		    <groupId>io.springfox</groupId>
 		    <artifactId>springfox-swagger-ui</artifactId>
-		    <version>2.9.2</version>
+		    <version>${springfox.version}</version>
 		</dependency>
 		
 		<dependency>
 		    <groupId>io.springfox</groupId>
 		    <artifactId>springfox-bean-validators</artifactId>
-		    <version>2.9.2</version>
+		    <version>${springfox.version}</version>
 		</dependency>
-		
+	
 		<dependency>
 		    <groupId>junit</groupId>
 		    <artifactId>junit</artifactId>
-		    <version>4.13</version>
+		    <version>${junit.version}</version><!--$NO-MVN-MAN-VER$-->
 		    <scope>test</scope>
         </dependency>
-	
+  	
 		<dependency>
 		    <groupId>org.mockito</groupId>
 		    <artifactId>mockito-core</artifactId>
-		    <version>3.2.4</version>
+		    <version>${mockito.version}</version><!--$NO-MVN-MAN-VER$-->
 		    <scope>test</scope>
 		</dependency>
 		
 		<dependency>
 		    <groupId>org.mockito</groupId>
 		    <artifactId>mockito-inline</artifactId>
-		    <version>3.2.4</version>
+		    <version>${mockito.version}</version><!--$NO-MVN-MAN-VER$-->
 		    <scope>test</scope>
 		</dependency>
 		
-		<dependency>
-		    <groupId>org.assertj</groupId>
-		    <artifactId>assertj-core</artifactId>
-		    <version>3.14.0</version>
-		    <scope>test</scope>
-		</dependency>
-	
 		<dependency>
 		    <groupId>io.reactivex</groupId>
 		    <artifactId>rxnetty-common</artifactId>
-		    <version>0.5.3</version>
-		    <scope>runtime</scope>
+		    <version>${rx.rxnetty.version}</version>
 		</dependency>
 		
+		<dependency>
+		    <groupId>io.reactivex</groupId>
+		    <artifactId>rxnetty-http</artifactId>
+		    <version>${rx.rxnetty.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>io.reactivex</groupId>
+		    <artifactId>rxnetty-spectator-http</artifactId>
+		    <version>${rx.rxnetty.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>io.reactivex</groupId>
+		    <artifactId>rxnetty-spectator-tcp</artifactId>
+		    <version>${rx.rxnetty.version}</version>
+		</dependency>
+				
+		 <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>${rx.java.version}</version><!--$NO-MVN-MAN-VER$-->
+        </dependency>
+        <dependency>
+            <groupId>io.reactivex.rxjava2</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>${rx.java2.version}</version><!--$NO-MVN-MAN-VER$-->
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version><!--$NO-MVN-MAN-VER$-->
+        </dependency>
 		
     </dependencies>
-
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
 
     <build>
         <plugins>
