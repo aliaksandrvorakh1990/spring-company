@@ -28,8 +28,8 @@ import java.util.List;
 
 public class CompanyServiceTest {
     
-    private static final List<CompanyViewModel> controlList = Lists
-	    .list(new CompanyViewModel(1, "FirstCompany", null));
+    
+    private static final List<CompanyViewModel> controlList = Lists.newArrayList(new CompanyViewModel(1, "FirstCompany", null));
     private static final CompanyViewModel controlResult = new CompanyViewModel(2, "TestCompany", null);
     private static IdViewModel controlIdViewModel = new IdViewModel(3);
 
@@ -53,7 +53,7 @@ public class CompanyServiceTest {
         Company firstCompany = new Company(1, "FirstCompany", null);
         CompanyViewModel companyViewModel = new CompanyViewModel(1, "FirstCompany", null);
 
-        List<Company> companyList = Lists.list(firstCompany);
+        List<Company> companyList = Lists.newArrayList(firstCompany);
         
         when(companyConverter.convert(firstCompany)).thenReturn(companyViewModel);
         when(companyDAO.getAll()).thenReturn(companyList);
@@ -85,17 +85,17 @@ public class CompanyServiceTest {
     
     @Test
     public void testUpdate() {
-	CompanyPayload testCompanyPayload = new CompanyPayload(3, "TestCompany", Lists.list(4));
-	Company company = new Company(3, "OldTestCompany", Lists.list(new Employee()));
+	CompanyPayload testCompanyPayload = new CompanyPayload(3, "TestCompany", Lists.newArrayList(4));
+	Company company = new Company(3, "OldTestCompany", Lists.newArrayList(new Employee()));
 	when(companyDAO.getById(3)).thenReturn(company);
-	when(employeeDAO.getAll(any(List.class))).thenReturn(Lists.list(new Employee()));
+	when(employeeDAO.getAll(any(List.class))).thenReturn(Lists.newArrayList(new Employee()));
 	service.update(testCompanyPayload);
 	verify(companyDAO, times(1)).update(company);
     }
     
     @Test
     public void testDelete() {
-	Company company = new Company(2, "TestCompany", Lists.list(new Employee()));
+	Company company = new Company(2, "TestCompany", Lists.newArrayList(new Employee()));
 	when(companyDAO.getById(2)).thenReturn(company);
 	service.delete(2);
 	verify(employeeDAO, atLeastOnce()).delete(any(Employee.class));
