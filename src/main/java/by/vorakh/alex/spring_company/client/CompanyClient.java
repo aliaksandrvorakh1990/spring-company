@@ -53,8 +53,10 @@ public class CompanyClient {
     public static void makeEmployeeRequest(Callback<EmployeeOutsource> callback) {
         new Thread(() -> {
             sleep(6000);
+            RestTemplate restTemplate = new RestTemplate();
             System.out.println("Employee request finished!");
-            callback.sendResponse(new EmployeeOutsource());
+            callback.sendResponse(restTemplate.getForObject(URL_EMPLOYEES + "JOB_Maste", 
+    		EmployeeOutsource.class));
         }).start();
     }
 
@@ -62,8 +64,10 @@ public class CompanyClient {
     public static void makeJobTitleRequest(Callback<JobTitleOutsource> callback) {
         new Thread(() -> {
             sleep(1000);
+            RestTemplate restTemplate = new RestTemplate();
             System.out.println("JobTitle request finished!");
-            callback.sendResponse(new JobTitleOutsource());
+            
+            callback.sendResponse(restTemplate.getForObject(URL_JOB_TITLE, JobTitleOutsource.class));
         }).start();
     }
 
