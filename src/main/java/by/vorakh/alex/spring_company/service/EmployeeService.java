@@ -106,6 +106,7 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 
     } 
     
+    @Transactional
     public Employee getOrCreateAndGet(EmployeeOutsource externalSource) {
 	Employee newEmployee = extermalSourceConvertor.convert(externalSource);
 	
@@ -237,7 +238,7 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 	}
     }
     
-    
+    @Transactional
     public void delete(PersonalData personalData) {
 	try {
 	    employeeDAO.delete(personalData);

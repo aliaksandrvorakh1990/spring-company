@@ -99,8 +99,8 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
     @SuppressWarnings("finally")
     @Transactional
     public Skill getOrCreateAndGetWithId(Skill newSkill) {
-	if (skillDAO.isContained(newSkill)) {
-	    return skillDAO.findExisted(newSkill);
+	if (skillDAO.isContained(newSkill.getSkillName())) {
+	    return skillDAO.findExisted(newSkill.getSkillName());
 	} else {
 	    Skill returnedSkill = null;
 	    try {

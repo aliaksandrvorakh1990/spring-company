@@ -109,9 +109,9 @@ public class CompanyController {
 	    @ApiResponse(code = 500, message = "The company does not exist or Problems with server")
 	})
     @GetMapping(value = "/companies/{id}/random-employee")
-    public EmployeeViewModel getRandomEmployee(@ApiParam(value = "descr.", required = true)
+    public EmployeeViewModel getRandomEmployee(@ApiParam(value = "company id", required = true)
     @PathVariable("id") @Positive @NotNull Integer id) {
 	return companyService.randomEmployee(id);
     }
-
+   
 }
