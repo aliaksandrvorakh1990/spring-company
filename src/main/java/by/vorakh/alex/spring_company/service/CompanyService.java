@@ -157,7 +157,8 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
 	try {
 	    Employee randomEmployee;
 	    
-	    randomEmployeefromExternalSource = companyClient.findRandomEmployee();
+	    randomEmployeefromExternalSource = companyClient.findRandomEmployee().getValue();
+	    System.out.println(randomEmployeefromExternalSource);
 	    randomEmployee = employeeService.getOrCreateAndGet(randomEmployeefromExternalSource);
 	    company.getEmployeeList().add(randomEmployee);
 		

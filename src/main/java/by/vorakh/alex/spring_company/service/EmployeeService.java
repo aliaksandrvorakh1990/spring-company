@@ -124,7 +124,9 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 	newEmployee.setJobTitle(jobTitle);
 	
 	newEmployee.getSkillList().forEach(skill -> {
-	    skillService.getOrCreateAndGetWithId(skill);
+	    int id = skillService.getOrCreateAndGetWithId(skill).getId();
+	    skill.setId(id);
+	    
 	});
 	
 	try {

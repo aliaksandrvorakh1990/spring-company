@@ -46,9 +46,6 @@ public class RandomEntityClient {
 		, err -> {
 		    throw new ClientException("Client problem (Random JobTitle)", err);
 		});
-	while (!jobSubject.hasValue()) {
-	    Thread.sleep(100);
-	}
 	
 	return jobSubject;
     }
@@ -73,14 +70,10 @@ public class RandomEntityClient {
 		    throw new ClientException("Client problem (Random Employee)", err);
 		});
 	
-	while (!empSubject.hasValue()) {
-	    Thread.sleep(100);
-	}
-	
 	return empSubject;
     }
     
-    public EmployeeOutsource findRandomEmployee() throws InterruptedException {
+    public SingleSubject<EmployeeOutsource> findRandomEmployee() throws InterruptedException {
 	SingleSubject<EmployeeOutsource> empWithJobSubject = SingleSubject.<EmployeeOutsource>create();
 	
 	SingleSubject.zip(getRandomEmployeeSubject(), getRandomJobTitleSubject(), (employee, jotTitle)->{
@@ -97,7 +90,7 @@ public class RandomEntityClient {
 	    Thread.sleep(100);
 	}
 	
-	return empWithJobSubject.getValue();
+	return empWithJobSubject;
     }
 
 }
