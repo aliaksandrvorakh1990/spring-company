@@ -179,6 +179,11 @@
             <version>${rx.java2.version}</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
         
+        <dependency>
+            <groupId>io.reactivex</groupId>
+            <artifactId>rxjava-reactive-streams</artifactId>
+        </dependency>
+        
         
         
         
