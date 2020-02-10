@@ -17,34 +17,36 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 @Import(BeanValidatorPluginsConfiguration.class)
-public class SpringFoxConfig { 
-                                  
+public class SpringFoxConfig {
+    private static final String DESCRIPTION = "Company is how you store" +
+            " information about human resources. <br/>" +
+            "Use the Company API calls to manage information about companies " +
+            "and their employees in your database.";
+    
     @Bean
-    public Docket api() { 
-        return new Docket(DocumentationType.SWAGGER_2)  
-          .select()                                 
-          .apis(RequestHandlerSelectors.basePackage("by.vorakh.alex.spring_company"))
-          .paths(PathSelectors.regex("/.*"))                                     
-          .build()
-          .apiInfo(apiInfo())
-          .useDefaultResponseMessages(false)
-          .groupName("Developers");                                           
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors
+                        .basePackage("by.vorakh.alex.spring_company"))
+                .paths(PathSelectors.regex("/.*"))
+                .build()
+                .apiInfo(apiInfo())
+                .useDefaultResponseMessages(false)
+                .groupName("Developers");
     }
-    
+
     private ApiInfo apiInfo() {
-	return new ApiInfoBuilder()
-		.title("Company REST API")
-		.description("Company is how you store information about human resources. " + 
-			"<br/>Use the Company API calls to manage information about companies " + 
-			"and their employees in your database.")
-		.version("1.0.0")
-		.termsOfServiceUrl("http://localhost:8080/terms_and_conditions")
-		.contact(new Contact("Alexander Vorakh", 
-			"https://github.com/aliaksandrvorakh1990/spring-company", 
-			"aliaksandrvorakh@gmail.com"))
-		.license("The Open Software License 3.0 (OSL-3.0)")
-		.licenseUrl("https://opensource.org/licenses/OSL-3.0")
-		.build();
+        return new ApiInfoBuilder()
+                .title("Company REST API")
+                .description(DESCRIPTION)
+                .version("1.0.0")
+                .termsOfServiceUrl("http://localhost:8080/terms_and_conditions")
+                .contact(new Contact("Alexander Vorakh",
+                        "https://github.com/aliaksandrvorakh1990/spring-company",
+                        "aliaksandrvorakh@gmail.com"))
+                .license("The Open Software License 3.0 (OSL-3.0)")
+                .licenseUrl("https://opensource.org/licenses/OSL-3.0")
+                .build();
     }
-    
 }

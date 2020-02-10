@@ -7,11 +7,12 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableAsync
-@ImportResource({"/applicationContext.xml"})
+@ImportResource({
+    "/applicationContext.xml"
+})
 public class CompanyApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CompanyApplication.class, args);
     }
-
 }
