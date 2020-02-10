@@ -1,6 +1,5 @@
 package by.vorakh.alex.spring_company.controller;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
