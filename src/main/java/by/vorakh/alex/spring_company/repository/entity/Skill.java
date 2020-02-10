@@ -9,7 +9,6 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "employee_skill")
 public class Skill implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -19,73 +18,67 @@ public class Skill implements Serializable {
     @NotNull
     @Size(min = 2, max = 25)
     @Column(name = "skill", length = 25, nullable = false, unique = true)
-    private String skillName;
+    private String name;
 
     public Skill() {}
 
-    public Skill(@NotNull @Size(min = 2, max = 25) String skillName) {
-	this.skillName = skillName;
+    public Skill(@NotNull @Size(min = 2, max = 25) String name) {
+        this.name = name;
     }
 
-    public Skill(Integer id, @NotNull @Size(min = 2, max = 25) String skillName) {
-	this.id = id;
-	this.skillName = skillName;
+    public Skill(Integer id, @NotNull @Size(min = 2, max = 25) String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
-    
-    public void setSkillName(String skillName) {
-        this.skillName = skillName;
+
+    public void setName(String name) {
+        this.name = name;
     }
-   
+
     public Integer getId() {
         return id;
     }
-
-    public String getSkillName() {
-        return skillName;
-    }
     
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
-	return "Skill [id=" + id + ", skillName=" + skillName + "]";
+        return "Skill [id=" + id + ", name=" + name + "]";
     }
 
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + id;
-	result = prime * result + ((skillName == null) ? 0 : skillName.hashCode());
-	return result;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return prime * result + ((name == null) ? 0 : name.hashCode());
     }
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj) {
-	    return true;
-	}
-	   
-	if (obj == null) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
-	    return false;
-	}
-	Skill other = (Skill) obj;
-	if (id != other.id) {
-	    return false;
-	}
-	if (skillName == null) {
-	    if (other.skillName != null) {
-		return false;
-	    }	
-	} else if (!skillName.equals(other.skillName)) {
-	    return false;
-	}
-	return true;
+        if (this == obj) {
+            return true;
+        }
+        if ((obj == null) || (getClass() != obj.getClass())) {
+            return false;
+        }
+        Skill other = (Skill) obj;
+        if (id != other.id) {
+            return false;
+        }
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        } else if (!name.equals(other.name)) {
+            return false;
+        }
+        return true;
     }
-
 }
