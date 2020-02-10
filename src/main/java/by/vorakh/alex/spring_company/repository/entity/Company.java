@@ -24,7 +24,7 @@ public class Company implements Serializable {
     @Column(name = "name", length = 40, nullable = false, unique = true)
     private String name;
     
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     private List<Employee> employeeList = new ArrayList<Employee>();
 
@@ -34,8 +34,6 @@ public class Company implements Serializable {
 	this.name = name;
 	this.employeeList = employeeList;
     }
-
-
 
     public Company(Integer id, @NotNull @Size(min = 2, max = 40) String name, List<Employee> employeeList) {
 	this.id = id;

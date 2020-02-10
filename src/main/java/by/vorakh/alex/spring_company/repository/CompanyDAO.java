@@ -36,7 +36,7 @@ public class CompanyDAO implements DAO<Company> {
 
     @Override
     public void update(Company object) {
-        entityManager.merge(object);
+	entityManager.merge(object);
     }
 
     @Override

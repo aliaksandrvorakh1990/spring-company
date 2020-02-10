@@ -1,5 +1,6 @@
 package by.vorakh.alex.spring_company.controller;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
@@ -105,22 +107,21 @@ public class CompanyController {
     
     @ApiOperation(value = "create and read a random employee from external source.", 
 	    notes = "ID has to be greater than zero.", 
-	   // response = EmployeeViewModel.class , 
+	    response = EmployeeViewModel.class , 
 	    code = 200)
     @ApiResponses(value = {
 	    @ApiResponse(code = 500, message = "The company does not exist or Problems with server")
 	})
     @GetMapping(value = "/companies/{id}/random-employee")
-    public EmployeeViewModel getRandomEmployee(@ApiParam(value = "company id", required = true)
+    @Transactional
+    public @ResponseBody  DeferredResult<EmployeeViewModel> getRandomEmployee(@ApiParam(value = "company id", required = true)
     @PathVariable("id") @Positive @NotNull Integer id) {
 	Observable<EmployeeViewModel> employeeObservable = companyService.randomEmployee(id);
-	DeferredResult<EmployeeViewModel> deffered = new DeferredResult<EmployeeViewModel>();
+	DeferredResult<EmployeeViewModel> deferredResult = new DeferredResult<EmployeeViewModel>();
 	
-	employeeObservable.subscribe(m -> { 
-	    deffered.setResult(m); 
-	}, e -> deffered.setErrorResult(e));
+	   employeeObservable.subscribe(deferredResult::setResult, deferredResult::setErrorResult);
 	
-	return (EmployeeViewModel) deffered.getResult();
+	return deferredResult;
     }
    
 }

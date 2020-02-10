@@ -144,44 +144,31 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
     
     public Observable<EmployeeViewModel> randomEmployee(int id)  {
 	return companyClient.findRandomEmployee().map(exteranalEmployee -> {
-	    System.out.println("Service!!! " +exteranalEmployee);
-	    
-	    EmployeeViewModel emp =createRandomEmployee(id, exteranalEmployee);
-	    
-	    System.out.println("AFTER DAO " +emp);
-	    return emp;
+	    return createRandomEmployee(id, exteranalEmployee);
 	}).toObservable();
     }
     
-    @SuppressWarnings("finally")
+
     @Transactional
-    private EmployeeViewModel createRandomEmployee(int id, EmployeeOutsource externalEmployee) {
-	
-	EmployeeViewModel employeeView = null;
-	Company company;
-	company = companyDAO.getById(id);
+    public EmployeeViewModel createRandomEmployee(int id, EmployeeOutsource externalEmployee) {
+	Employee randomEmployee =  null;
+	Company company = companyDAO.getById(id);
 	 if (company == null) {
-		    throw new ServiceException("The Company cannot be updated, because the Company with \'" + 
-			    id +"\' ID does not exist in database.");
-		}
-     
-	
-	try {
-	    Employee randomEmployee;
-	
+	    throw new ServiceException("The Company cannot be updated, because the Company with \'" + 
+		    id +"\' ID does not exist in database.");
+	}
+	try {	
 	    randomEmployee = employeeService.getOrCreateAndGet(externalEmployee);
-	    // BAG
 	    company.getEmployeeList().add(randomEmployee);
+            companyDAO.update(company);
+            return employeeConvertor.convert(randomEmployee);
 	    
-	    companyDAO.update(company);
-	    employeeView = employeeConvertor.convert(randomEmployee);
-	    System.out.println(employeeView);
 	} catch (ClientException clEx) {
+	    System.out.println(clEx);
 	    throw new ServiceException("Problem with the working of the client", clEx);
 	} catch (ServiceException serEx) {
+	    System.out.println(serEx);
 	    throw new ServiceException("A random employee does not create in the DB", serEx);
-	}finally {
-	    return employeeView;
-	}
+	} 
     }
 }
