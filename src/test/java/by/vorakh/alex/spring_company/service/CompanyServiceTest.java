@@ -24,6 +24,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.google.common.collect.Sets;
+
 import java.util.List;
 
 public class CompanyServiceTest {
@@ -86,16 +88,16 @@ public class CompanyServiceTest {
     @Test
     public void testUpdate() {
 	CompanyPayload testCompanyPayload = new CompanyPayload(3, "TestCompany", Lists.newArrayList(4));
-	Company company = new Company(3, "OldTestCompany", Lists.newArrayList(new Employee()));
+	Company company = new Company(3, "OldTestCompany",  Sets.newHashSet(new Employee()));
 	when(companyDAO.getById(3)).thenReturn(company);
-	when(employeeDAO.getAll(any(List.class))).thenReturn(Lists.newArrayList(new Employee()));
+	//when(employeeDAO.getAll(any(Set.class))).thenReturn(Lists.newArrayList(new Employee()));
 	service.update(testCompanyPayload);
 	verify(companyDAO, times(1)).update(company);
     }
     
     @Test
     public void testDelete() {
-	Company company = new Company(2, "TestCompany", Lists.newArrayList(new Employee()));
+	Company company = new Company(2, "TestCompany", Sets.newHashSet(new Employee()));
 	when(companyDAO.getById(2)).thenReturn(company);
 	service.delete(2);
 	verify(employeeDAO, atLeastOnce()).delete(any(Employee.class));

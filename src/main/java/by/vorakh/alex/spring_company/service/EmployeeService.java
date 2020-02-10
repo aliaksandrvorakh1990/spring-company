@@ -1,7 +1,9 @@
 package by.vorakh.alex.spring_company.service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityExistsException;
 import javax.transaction.Transactional;
@@ -51,8 +53,8 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 	return convertor.convert(employeeDAO.getById(id));
     }
     
-    public List<Employee> findListByIDs(List<Integer> employeeIDList) {
-	List<Employee> list = new ArrayList<Employee>();
+    public Set<Employee> findListByIDs(List<Integer> employeeIDList) {
+	Set<Employee> list = new LinkedHashSet<Employee>();
 	for (Integer employeeId : employeeIDList) {
 	    list.add(employeeDAO.getById(employeeId)) ;
 	}

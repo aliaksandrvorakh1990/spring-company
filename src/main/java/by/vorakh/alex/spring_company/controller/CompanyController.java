@@ -115,11 +115,15 @@ public class CompanyController {
     @GetMapping(value = "/companies/{id}/random-employee")
     @Transactional
     public @ResponseBody  DeferredResult<EmployeeViewModel> getRandomEmployee(@ApiParam(value = "company id", required = true)
-    @PathVariable("id") @Positive @NotNull Integer id) {
+    @PathVariable("id") @Positive @NotNull Integer id) throws InterruptedException {
 	Observable<EmployeeViewModel> employeeObservable = companyService.randomEmployee(id);
 	DeferredResult<EmployeeViewModel> deferredResult = new DeferredResult<EmployeeViewModel>();
 	
-	   employeeObservable.subscribe(deferredResult::setResult, deferredResult::setErrorResult);
+	employeeObservable.subscribe(deferredResult::setResult, deferredResult::setErrorResult);
+	
+	while(!deferredResult.hasResult()) {
+	    Thread.sleep(1000);
+	}
 	
 	return deferredResult;
     }

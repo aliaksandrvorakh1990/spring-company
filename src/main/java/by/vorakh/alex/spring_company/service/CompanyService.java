@@ -22,6 +22,7 @@ import javax.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CompanyService implements ServiceInterface<CompanyViewModel, CompanyPayload> {
@@ -61,7 +62,7 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
 		    "\" company cannot be created, because to exist in database.");
 	}
 	
-	List<Employee> employeeList = employeeService.findListByIDs(newPayload.getEmployeeIdList());
+	Set<Employee> employeeList = employeeService.findListByIDs(newPayload.getEmployeeIdList());
 	
 	Company newCompany =  new Company(name, employeeList);
 	
@@ -97,7 +98,7 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
 	    throw new ServiceException("The Company cannot be updated, because the Company with \'"+ 
 		    editedPayload.getId() +"\' ID does not exist in database.");
 	}
-	List<Employee> employeeList = employeeService.findListByIDs(editedPayload.getEmployeeIdList());
+	Set<Employee> employeeList = employeeService.findListByIDs(editedPayload.getEmployeeIdList());
 	editedCompany
 		.setName(name)
 		.setEmployeeList(employeeList);
@@ -159,8 +160,14 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
 	}
 	try {	
 	    randomEmployee = employeeService.getOrCreateAndGet(externalEmployee);
-	    company.getEmployeeList().add(randomEmployee);
-            companyDAO.update(company);
+	    System.out.println(company.getEmployeeList().size());
+	    company.getEmployeeList().forEach(emp -> {
+	    System.out.println(emp);
+	    });
+	   
+	 company.getEmployeeList().add(randomEmployee);
+         companyDAO.update(company);
+	 System.out.println(company.getEmployeeList().size());
             return employeeConvertor.convert(randomEmployee);
 	    
 	} catch (ClientException clEx) {

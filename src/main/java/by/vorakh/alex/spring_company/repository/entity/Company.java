@@ -1,8 +1,8 @@
 package by.vorakh.alex.spring_company.repository.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,16 +26,16 @@ public class Company implements Serializable {
     
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
-    private List<Employee> employeeList = new ArrayList<Employee>();
+    private Set<Employee> employeeList ;
 
     public Company() {}
 
-    public Company(@NotNull @Size(min = 2, max = 40) String name, List<Employee> employeeList) {
+    public Company(@NotNull @Size(min = 2, max = 40) String name, Set<Employee> employeeList) {
 	this.name = name;
 	this.employeeList = employeeList;
     }
 
-    public Company(Integer id, @NotNull @Size(min = 2, max = 40) String name, List<Employee> employeeList) {
+    public Company(Integer id, @NotNull @Size(min = 2, max = 40) String name, Set<Employee> employeeList) {
 	this.id = id;
 	this.name = name;
 	this.employeeList = employeeList;
@@ -51,7 +51,7 @@ public class Company implements Serializable {
         return this;
     }
 
-    public Company setEmployeeList(List<Employee> employeeList) {
+    public Company setEmployeeList(Set<Employee> employeeList) {
         this.employeeList = employeeList;
         return this;
     }
@@ -64,7 +64,7 @@ public class Company implements Serializable {
         return name;
     }
 
-    public List<Employee> getEmployeeList() {
+    public Set<Employee> getEmployeeList() {
         return employeeList;
     }
     
