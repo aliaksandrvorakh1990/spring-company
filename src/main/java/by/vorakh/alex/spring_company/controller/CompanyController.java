@@ -105,7 +105,7 @@ public class CompanyController {
         companyService.delete(id);
     }
     
-    @ApiOperation(value = "create and read a random employee from external source.", 
+    @ApiOperation(value = "Create and read a random employee from external source.", 
 	    notes = "ID has to be greater than zero.", 
 	    response = EmployeeViewModel.class , 
 	    code = 200)
@@ -113,7 +113,6 @@ public class CompanyController {
 	    @ApiResponse(code = 500, message = "The company does not exist or Problems with server")
 	})
     @GetMapping(value = "/companies/{id}/random-employee")
-    @Transactional
     public @ResponseBody  DeferredResult<EmployeeViewModel> getRandomEmployee(@ApiParam(value = "company id", required = true)
     @PathVariable("id") @Positive @NotNull Integer id) throws InterruptedException {
 	Observable<EmployeeViewModel> employeeObservable = companyService.randomEmployee(id);
