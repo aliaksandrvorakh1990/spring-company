@@ -13,7 +13,6 @@ import by.vorakh.alex.spring_company.repository.entity.Employee;
 
 @Component
 public final class EmployeeToEmployeeViewModelConverter implements Converter<Employee, EmployeeViewModel> {
-    
     @Autowired
     private SkillToSkillViewModelConverter skillConverter;
     @Autowired
@@ -23,9 +22,9 @@ public final class EmployeeToEmployeeViewModelConverter implements Converter<Emp
     
     @Override
     public EmployeeViewModel convert(Employee source) {
-	List<SkillViewModel> skillList = new ArrayList<SkillViewModel>();
+	List<SkillViewModel> skillList = new ArrayList<>();
 	
-	source.getSkillList().forEach(skill -> 
+	source.getSkills().forEach(skill -> 
 		skillList.add(skillConverter.convert(skill)));
 	
 	return new EmployeeViewModel(
@@ -34,5 +33,4 @@ public final class EmployeeToEmployeeViewModelConverter implements Converter<Emp
 		jobTitleConverter.convert(source.getJobTitle()),
 		skillList);
     }
-
 }

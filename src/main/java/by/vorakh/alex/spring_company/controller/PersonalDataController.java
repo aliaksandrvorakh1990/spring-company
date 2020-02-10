@@ -33,14 +33,13 @@ import by.vorakh.alex.spring_company.service.PersonalDataService;
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 1800)
 @RequestMapping("/project")
 public class PersonalDataController {
-    
     @Autowired
     private PersonalDataService personalDataService;
     
     @ApiOperation(value = "Get a list of existing personal data from the database",
 	    response = PersonalDataViewModel.class,
-	    responseContainer = "List", code = 200)
-    @ApiResponses(value = {
+	    responseContainer = "List")
+    @ApiResponses({
 	    @ApiResponse(code = 500, message = "Problems with server")
 	})
     @GetMapping("/people")
@@ -50,11 +49,11 @@ public class PersonalDataController {
 
     @ApiOperation(value = "Get a personal data by Id from the database", 
 	    notes = "ID has to be greater than zero.", 
-	    response = PersonalDataViewModel.class , code = 200)
-    @ApiResponses(value = {
+	    response = PersonalDataViewModel.class)
+    @ApiResponses({
 	    @ApiResponse(code = 500, message = "The personal data does not exist or Problems with server")
 	})
-    @GetMapping(value = "/people/{id}")
+    @GetMapping("/people/{id}")
     public PersonalDataViewModel getPersonalData(
 	    @ApiParam(value = "The personal data will be gotten from the database by his ID", required = true)
 	    @PathVariable("id") @Positive @NotNull Integer id) {
@@ -62,8 +61,8 @@ public class PersonalDataController {
     }
 
     @ApiOperation(value = "Create a personal data in the database",
-	    response = IdViewModel.class, code = 200)
-    @ApiResponses(value = {
+	    response = IdViewModel.class)
+    @ApiResponses({
 	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The personal data was not created in the database or Problems with server"),
@@ -75,13 +74,13 @@ public class PersonalDataController {
 	return personalDataService.create(newPersonalData);
     }
 
-    @ApiOperation(value = "Update an existing personal data in the database.", code = 200)
-    @ApiResponses(value = {
+    @ApiOperation("Update an existing personal data in the database.")
+    @ApiResponses({
 	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The personal data was not updated in the database or Problems with server")
 	})
-    @PutMapping(value = "/people/")
+    @PutMapping("/people/")
     public void updatePersonalData(
 	    @ApiParam(value = "The personal data data for updating in the database.", required = true)
 	    @Valid @RequestBody PersonalDataPayload editedPersonalData) {
@@ -89,12 +88,12 @@ public class PersonalDataController {
     }
 
     @ApiOperation(value = "Delete an existing personal data  by Id from the database.", 
-	    notes = "ID has to be greater than zero.", code = 200)
-    @ApiResponses(value = {
+	    notes = "ID has to be greater than zero.")
+    @ApiResponses({
 	    @ApiResponse(code = 500, 
 		    message = "The personal data was not delated from the database or Problems with server")
 	})
-    @DeleteMapping(value = "/people/{id}")
+    @DeleteMapping("/people/{id}")
     public void deletePersonalData(
 	    @ApiParam(value = "The personal data will be deleted from the database by his ID.", required = true)
 	    @PathVariable("id") @Positive @NotNull Integer id) {

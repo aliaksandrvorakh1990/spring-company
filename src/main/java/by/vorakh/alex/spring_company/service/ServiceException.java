@@ -1,7 +1,6 @@
 package by.vorakh.alex.spring_company.service;
 
 public class ServiceException extends RuntimeException {
-
     private static final long serialVersionUID = 1L;
 
     public ServiceException(String message, Throwable cause) {
@@ -11,5 +10,4 @@ public class ServiceException extends RuntimeException {
     public ServiceException(String message) {
 	super(message);
     }
-
 }

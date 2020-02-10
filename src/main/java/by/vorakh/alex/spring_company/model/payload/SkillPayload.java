@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "The skill details for that creating and updating in the database.")
 public class SkillPayload implements Serializable {
-    
     private static final long serialVersionUID = 1L;
    
     @PositiveOrZero
@@ -46,5 +45,4 @@ public class SkillPayload implements Serializable {
     public String getSkillName() {
         return skillName;
     }
-    
 }

@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Details about the job title of an employee for view")
 public class JobTitleViewModel implements Serializable  {
-    
     private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The job title ID in the database.", example = "7")
@@ -50,8 +49,7 @@ public class JobTitleViewModel implements Serializable  {
 	final int prime = 31;
 	int result = 1;
 	result = prime * result + id;
-	result = prime * result + ((title == null) ? 0 : title.hashCode());
-	return result;
+	return prime * result + ((title == null) ? 0 : title.hashCode());
     }
 
     @Override
@@ -59,10 +57,7 @@ public class JobTitleViewModel implements Serializable  {
 	if (this == obj) {
 	    return true;
 	}
-	if (obj == null) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
+	if (obj == null || getClass() != obj.getClass()) {
 	    return false;
 	}
 	JobTitleViewModel other = (JobTitleViewModel) obj;
@@ -78,5 +73,4 @@ public class JobTitleViewModel implements Serializable  {
 	}
 	return true;
     }
-    
 }

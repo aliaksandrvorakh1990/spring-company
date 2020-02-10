@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "The personal data details for that creating and updating in the database.")
 public class PersonalDataPayload implements Serializable {
-
     private static final long serialVersionUID = 1L;
     
     @PositiveOrZero
@@ -60,5 +59,4 @@ public class PersonalDataPayload implements Serializable {
     public String getLastName() {
         return lastName;
     }
-
 }

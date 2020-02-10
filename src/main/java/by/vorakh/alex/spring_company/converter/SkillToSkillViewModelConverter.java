@@ -8,10 +8,8 @@ import by.vorakh.alex.spring_company.repository.entity.Skill;
 
 @Component
 public final class SkillToSkillViewModelConverter implements Converter<Skill, SkillViewModel> {
-
     @Override
     public SkillViewModel convert(Skill source) {
-	return new SkillViewModel(source.getId(), source.getSkillName());
+	return new SkillViewModel(source.getId(), source.getName());
     }
-
 }

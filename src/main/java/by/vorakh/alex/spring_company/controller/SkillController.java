@@ -33,14 +33,13 @@ import by.vorakh.alex.spring_company.service.SkillService;
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 1800)
 @RequestMapping("/project")
 public class SkillController {
-    
     @Autowired
     private SkillService skillService;
     
     @ApiOperation(value = "Get a list of existing skils from the database",
 	    response = SkillViewModel.class,
-	    responseContainer = "List", code = 200)
-    @ApiResponses(value = {
+	    responseContainer = "List")
+    @ApiResponses({
 	    @ApiResponse(code = 500, message = "Problems with server")
 	})
     @GetMapping("/skills")
@@ -50,11 +49,11 @@ public class SkillController {
 
     @ApiOperation(value = "Get a skill by Id from the database", 
 	    notes = "ID has to be greater than zero.", 
-	    response = SkillViewModel.class , code = 200)
-    @ApiResponses(value = {
+	    response = SkillViewModel.class)
+    @ApiResponses({
 	    @ApiResponse(code = 500, message = "The skill does not exist or Problems with server")
 	})
-    @GetMapping(value = "/skills/{id}")
+    @GetMapping("/skills/{id}")
     public SkillViewModel getSkill(
 	    @ApiParam(value = "The skill will be gotten from the database by his ID", required = true)
 	    @PathVariable("id")@Valid @Positive @NotNull Integer id) {
@@ -62,8 +61,8 @@ public class SkillController {
     }
 
     @ApiOperation(value = "Create an skill in the database",
-	    response = IdViewModel.class, code = 200)
-    @ApiResponses(value = {
+	    response = IdViewModel.class)
+    @ApiResponses({
 	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(
 		    code = 500, 
@@ -76,13 +75,13 @@ public class SkillController {
 	return skillService.create(newSkill);
     }
 
-    @ApiOperation(value = "Update an existing skill in the database.", code = 200)
-    @ApiResponses(value = {
+    @ApiOperation("Update an existing skill in the database.")
+    @ApiResponses({
 	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The skill was not updated in the database or Problems with server")
 	})
-    @PutMapping(value = "/skills/")
+    @PutMapping("/skills/")
     public void updateSkill(
 	    @ApiParam(value = "The skill data for updating in the database.", required = true)
 	    @Valid @RequestBody SkillPayload editedSkill) {
@@ -90,16 +89,15 @@ public class SkillController {
     }
 
     @ApiOperation(value = "Delete an existing skill by Id from the database.", 
-	    notes = "ID has to be greater than zero.", code = 200)
-    @ApiResponses(value = {
+	    notes = "ID has to be greater than zero.")
+    @ApiResponses({
 	    @ApiResponse(code = 500, 
 		    message = "The skill was not delated from the database or Problems with server")
 	})
-    @DeleteMapping(value = "/skills/{id}")
+    @DeleteMapping("/skills/{id}")
     public void deleteSkill(
 	    @ApiParam(value = "The skill will be deleted from the database by his ID.", required = true)
 	    @PathVariable("id") @Valid @Positive @NotNull Integer id) {
 	skillService.delete(id);
     }
-
 }

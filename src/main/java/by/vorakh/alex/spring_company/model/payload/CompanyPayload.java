@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "The company details for that creating and updating in the database.")
 public class CompanyPayload implements Serializable {
-    
     private static final long serialVersionUID = 1L;
     
     @PositiveOrZero
@@ -60,5 +59,4 @@ public class CompanyPayload implements Serializable {
     public List<Integer> getEmployeeIdList() {
         return employeeIdList;
     }
-    
 }

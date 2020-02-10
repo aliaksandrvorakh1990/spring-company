@@ -11,14 +11,13 @@ import by.vorakh.alex.spring_company.repository.entity.PersonalData;
 
 @Repository
 public class PersonalDataDAO implements DAO<PersonalData> {
-
     @PersistenceContext
     EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
     @Override
     public List<PersonalData> getAll() {
-	return (List<PersonalData>) entityManager.createQuery("select p from PersonalData p").getResultList();
+	return entityManager.createQuery("select p from PersonalData p").getResultList();
     }
 
     @Override
@@ -59,5 +58,4 @@ public class PersonalDataDAO implements DAO<PersonalData> {
     public PersonalData findExisted(PersonalData object) {
 	return null;
     }
-
 }

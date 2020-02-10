@@ -1,21 +1,19 @@
-package by.vorakh.alex.spring_company.model.outsource;
+package by.vorakh.alex.spring_company.model.external;
 
 import java.io.Serializable;
 
-public class SkillOutsource implements  Serializable {
-    
+public class ExternalSkill implements  Serializable {
     private static final long serialVersionUID = 1L;
     
     private String skillName;
     
-    public SkillOutsource() {}
+    public ExternalSkill() {}
     
-    public SkillOutsource(String skillName) {
-	
+    public ExternalSkill(String skillName) {
 	this.skillName = skillName;
     }
 
-    public SkillOutsource setSkillName(String skillName) {
+    public ExternalSkill setSkillName(String skillName) {
         this.skillName = skillName;
         return this;
     }
@@ -33,22 +31,15 @@ public class SkillOutsource implements  Serializable {
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((skillName == null) ? 0 : skillName.hashCode());
-	return result;
+	return prime * result + ((skillName == null) ? 0 : skillName.hashCode());
     }
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj) {
+	if (this == obj || obj == null || getClass() != obj.getClass()) {
 	    return false;
 	}
-	if (obj == null) {
-	    return false;
-	}    
-	if (getClass() != obj.getClass()) {
-	    return false;
-	}   
-	SkillOutsource other = (SkillOutsource) obj;
+	ExternalSkill other = (ExternalSkill) obj;
 	if (skillName == null) {
 	    if (other.skillName != null) {
 		return false;
@@ -58,5 +49,4 @@ public class SkillOutsource implements  Serializable {
 	}   
 	return true;
     }
- 
 }

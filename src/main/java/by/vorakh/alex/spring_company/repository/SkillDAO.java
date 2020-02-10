@@ -11,78 +11,69 @@ import org.springframework.stereotype.Repository;
 import by.vorakh.alex.spring_company.repository.entity.Skill;
 
 @Repository
-public class SkillDAO implements DAO<Skill> {
-    
+public class SkillDAO implements DAO < Skill > {
     @PersistenceContext
     EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
     @Override
     public List<Skill> getAll() {
-	return (List<Skill>) entityManager.createQuery("select s from Skill s").getResultList();
+        return entityManager.createQuery("select s from Skill s")
+                .getResultList();
     }
-    
+
     @Override
     public Skill getById(int id) {
-	return entityManager.find(Skill.class, id);
+        return entityManager.find(Skill.class, id);
     }
 
     @Override
-    public int create(Skill object) {
-	entityManager.persist(object);
-	entityManager.flush();
-	return object.getId();
+    public int create(Skill entity) {
+        entityManager.persist(entity);
+        entityManager.flush();
+        return entity.getId();
     }
 
     @Override
-    public void update(Skill object) {
-	entityManager.merge(object);
+    public void update(Skill entity) {
+        entityManager.merge(entity);
     }
 
     @Override
-    public void delete(Skill object) {
-	entityManager.remove(object);
+    public void delete(Skill entity) {
+        entityManager.remove(entity);
     }
 
     @Override
-    public boolean isContained(Skill object) {
-	if (findExisted(object) == null) {
-	    return false;
-	}
-	return true;
+    public boolean isContained(Skill entity) {
+        return findExisted(entity) != null;
     }
-    
+
     public boolean isContained(String skillName) {
-	
-	if (findExisted(skillName) == null) {
-	    return false;
-	}
-	return true;
+        return findExisted(skillName) != null;
     }
 
     @Override
-    public Skill createAndGet(Skill object) {
-	entityManager.persist(object);
-	entityManager.flush();
-	return object;
+    public Skill createAndGet(Skill entity) {
+        entityManager.persist(entity);
+        entityManager.flush();
+        return entity;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Skill findExisted(Skill object) {
-	Query query = entityManager.createQuery("select s from Skill s "
-	 	+ "WHERE s.skillName = :p");
-	query.setParameter("p", object.getSkillName());
-	return (Skill) query.getResultList().stream().findFirst().orElse(null);
-	
+    public Skill findExisted(Skill entity) {
+        Query query = entityManager.createQuery("select s from Skill s " +
+            "WHERE s.skillName = :p");
+        query.setParameter("p", entity.getName());
+        return (Skill) query.getResultList().stream().findFirst().orElse(null);
     }
-    
+
     @SuppressWarnings("unchecked")
     public Skill findExisted(String skillName) {
-	Query query = entityManager.createQuery("select s from Skill s "
-	 	+ "WHERE s.skillName = :p");
-	query.setParameter("p", skillName);
-	return (Skill) query.getResultList().stream().findFirst().orElse(null);
+        Query query = entityManager.createQuery("select s from Skill s " +
+            "WHERE s.skillName = :p");
+        query.setParameter("p", skillName);
+        return (Skill) query.getResultList().stream().findFirst().orElse(null);
     }
-    
 }

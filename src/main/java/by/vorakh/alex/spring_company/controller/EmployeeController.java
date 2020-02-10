@@ -33,14 +33,13 @@ import by.vorakh.alex.spring_company.service.EmployeeService;
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 1800)
 @RequestMapping("/project")
 public class EmployeeController {
-    
     @Autowired
     private EmployeeService employeeService;
     
     @ApiOperation(value = "Get a list of existing employees from the database",
 	    response = EmployeeViewModel.class,
-	    responseContainer = "List", code = 200)
-    @ApiResponses(value = {
+	    responseContainer = "List")
+    @ApiResponses({
 	    @ApiResponse(code = 500, message = "Problems with server")
 	})
     @GetMapping("/employees")
@@ -48,14 +47,13 @@ public class EmployeeController {
         return employeeService.getAll();
     }
 
-    
-    @ApiOperation(value = "Get an employee by Id from the database", 
+        @ApiOperation(value = "Get an employee by Id from the database", 
 	    notes = "ID has to be greater than zero.", 
-	    response = EmployeeViewModel.class , code = 200)
-    @ApiResponses(value = {
+	    response = EmployeeViewModel.class)
+    @ApiResponses({
 	    @ApiResponse(code = 500, message = "The employee does not exist or Problems with server")
 	})
-    @GetMapping(value = "/employees/{id}")
+    @GetMapping("/employees/{id}")
     public EmployeeViewModel getEmployee(
 	    @ApiParam(value = "Employee will be gotten from the database by his ID", required = true) 
 	    @PathVariable("id") @Positive @NotNull Integer id) {
@@ -63,8 +61,8 @@ public class EmployeeController {
     }
 	    
     @ApiOperation(value = "Create an employee in the database",
-	    response = IdViewModel.class, code = 200)
-    @ApiResponses(value = {
+	    response = IdViewModel.class)
+    @ApiResponses({
 	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The employee was not created in the database or Problems with server"),
@@ -76,13 +74,13 @@ public class EmployeeController {
 	return employeeService.create(newEmployee);
     }
 
-    @ApiOperation(value = "Update an existing employee in the database.", code = 200)
-    @ApiResponses(value = {
+    @ApiOperation("Update an existing employee in the database.")
+    @ApiResponses({
 	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The employee was not updated in the database or Problems with server")
 	})
-    @PutMapping(value = "/employees/")
+    @PutMapping("/employees/")
     public void updateEmployee(
 	    @ApiParam(value = "The employee data for updating in the database.", required = true) 
 	    @Valid @RequestBody EmployeePayload editedEmployee) {
@@ -90,16 +88,15 @@ public class EmployeeController {
     }
     
     @ApiOperation(value = "Delete an existing employee by Id from the database.", 
-	    notes = "ID has to be greater than zero.", code = 200)
-    @ApiResponses(value = {
+	    notes = "ID has to be greater than zero.")
+    @ApiResponses({
 	    @ApiResponse(code = 500, 
 		    message = "The employee was not delated from the database or Problems with server")
 	})
-    @DeleteMapping(value = "/employees/{id}")
+    @DeleteMapping("/employees/{id}")
     public void deleteEmployee(
 	    @ApiParam(value = "The employee will be deleted from the database by his ID.", required = true)
 	    @PathVariable("id") @Positive @NotNull Integer id) {
 	employeeService.delete(id);
     }
-    
 }

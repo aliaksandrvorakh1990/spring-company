@@ -16,18 +16,17 @@ import by.vorakh.alex.spring_company.repository.entity.Skill;
 
 @Repository
 public class EmployeeDAO implements DAO<Employee> {
-    
     @PersistenceContext
     EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
     @Override
     public List<Employee> getAll() {
-	return (List<Employee>) entityManager.createQuery("select e from Employee e").getResultList();
+	return entityManager.createQuery("select e from Employee e").getResultList();
     }
     
     public List<Employee> getAll(List<Integer> employeeIdList) {
-	List<Employee> employeeList = new ArrayList<Employee>();
+	List<Employee> employeeList = new ArrayList<>();
 	
 	for (Integer employeeId : employeeIdList) {
 	    employeeList.add(entityManager.find(Employee.class, employeeId));
@@ -40,7 +39,7 @@ public class EmployeeDAO implements DAO<Employee> {
     public List<Employee> getAll(Skill skill) {
 	 Query query = entityManager.createQuery("select e from Employee e "
 	 	+ "WHERE :skill in elements(e.skillList)");
-	 return (List<Employee>) query.setParameter("skill", skill).getResultList();
+	 return query.setParameter("skill", skill).getResultList();
     }
     
     @Override
@@ -77,17 +76,11 @@ public class EmployeeDAO implements DAO<Employee> {
 
     @Override
     public boolean isContained(Employee object) {
-	if (findExisted(object) == null) {
-	    return false;
-	}
-	return true;
+	return findExisted(object) != null;
     }
     
     public boolean isContained(PersonalData personalData) {
-   	if (findExisted(personalData) == null) {
-   	    return false;
-   	}
-   	return true;
+   	return findExisted(personalData) != null;
        }
 
     @Override

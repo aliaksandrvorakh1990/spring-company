@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "The created object's ID.")
 public class IdViewModel implements Serializable  {
-    
     private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The ID is an object that was created in the database.", example = "12")
@@ -37,8 +36,7 @@ public class IdViewModel implements Serializable  {
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + id;
-	return result;
+	return prime * result + id;
     }
 
     @Override
@@ -46,19 +44,10 @@ public class IdViewModel implements Serializable  {
 	if (this == obj) {
 	    return true;
 	}
-	if (obj == null) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
+	if (obj == null || getClass() != obj.getClass()) {
 	    return false;
 	}
 	IdViewModel other = (IdViewModel) obj;
-	if (id != other.id) {
-	    return false;
-	}
-	return true;
+	return id == other.id;
     }
-
-    
-    
-}
+        }

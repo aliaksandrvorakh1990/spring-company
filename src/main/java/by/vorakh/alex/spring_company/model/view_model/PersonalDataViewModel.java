@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Details about the personal data of an employee for view.")
 public class PersonalDataViewModel implements Serializable  {
-    
     private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The personal data ID in the database.", example = "53")
@@ -63,8 +62,7 @@ public class PersonalDataViewModel implements Serializable  {
 	int result = 1;
 	result = prime * result + id;
 	result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-	result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-	return result;
+	return prime * result + ((lastName == null) ? 0 : lastName.hashCode());
     }
 
     @Override
@@ -72,10 +70,7 @@ public class PersonalDataViewModel implements Serializable  {
 	if (this == obj) {
 	    return true;
 	}
-	if (obj == null) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
+	if (obj == null || getClass() != obj.getClass()) {
 	    return false;
 	}
 	PersonalDataViewModel other = (PersonalDataViewModel) obj;
@@ -100,5 +95,4 @@ public class PersonalDataViewModel implements Serializable  {
 	    
 	return true;
     }
-
 }

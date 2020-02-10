@@ -9,15 +9,14 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Details about the employee for view.")
 public class EmployeeViewModel implements Serializable {
-    
     private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The employee ID in the database.", example = "11")
     private Integer id;
     private PersonalDataViewModel personalData;
     private JobTitleViewModel jobTitle;
-    @ApiModelProperty(value = "The employee's skills list.")
-    private List<SkillViewModel> skillList = new ArrayList<SkillViewModel>();
+    @ApiModelProperty("The employee's skills list.")
+    private List<SkillViewModel> skillList = new ArrayList<>();
     
     public EmployeeViewModel() {}
     
@@ -78,8 +77,7 @@ public class EmployeeViewModel implements Serializable {
 	result = prime * result + id;
 	result = prime * result + ((jobTitle == null) ? 0 : jobTitle.hashCode());
 	result = prime * result + ((personalData == null) ? 0 : personalData.hashCode());
-	result = prime * result + ((skillList == null) ? 0 : skillList.hashCode());
-	return result;
+	return prime * result + ((skillList == null) ? 0 : skillList.hashCode());
     }
 
     @Override
@@ -87,10 +85,7 @@ public class EmployeeViewModel implements Serializable {
 	if (this == obj) {
 	    return true;
 	}
-	if (obj == null) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
+	if (obj == null || getClass() != obj.getClass()) {
 	    return false;
 	}
 	EmployeeViewModel other = (EmployeeViewModel) obj;
@@ -120,7 +115,4 @@ public class EmployeeViewModel implements Serializable {
 	}
 	return true;
     }
-       
-    
-    
-}
+        }

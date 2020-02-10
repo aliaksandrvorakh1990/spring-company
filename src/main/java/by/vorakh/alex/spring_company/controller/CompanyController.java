@@ -36,14 +36,13 @@ import by.vorakh.alex.spring_company.service.CompanyService;
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 1800)
 @RequestMapping("/project")
 public class CompanyController {
-    
     @Autowired
     private CompanyService companyService;
     
     @ApiOperation(value = "Get a list of existing companies from the database",
 	    response = CompanyViewModel.class,
-	    responseContainer = "List", code = 200)
-    @ApiResponses(value = {
+	    responseContainer = "List")
+    @ApiResponses({
 	    @ApiResponse(code = 500, message = "Problems with server")
 	})
     @GetMapping("/companies")
@@ -53,11 +52,11 @@ public class CompanyController {
 
     @ApiOperation(value = "Get a company by Id from the database", 
 	    notes = "ID has to be greater than zero.", 
-	    response = CompanyViewModel.class , code = 200)
-    @ApiResponses(value = {
+	    response = CompanyViewModel.class)
+    @ApiResponses({
 	    @ApiResponse(code = 500, message = "The company does not exist or Problems with server")
 	})
-    @GetMapping(value = "/companies/{id}")
+    @GetMapping("/companies/{id}")
     public CompanyViewModel getCompany(
 	    @ApiParam(value = "The company will be gotten from the database by his ID", required = true) 
 	    @PathVariable("id") @Positive @NotNull Integer id) {
@@ -65,8 +64,8 @@ public class CompanyController {
     }
 
     @ApiOperation(value = "Create an company in the database",
-	    response = IdViewModel.class, code = 200)
-    @ApiResponses(value = {
+	    response = IdViewModel.class)
+    @ApiResponses({
 	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The company was not created in the database or Problems with server"),
@@ -78,13 +77,13 @@ public class CompanyController {
 	return companyService.create(newCompany);
     }
 
-    @ApiOperation(value = "Update an existing company in the database.", code = 200)
-    @ApiResponses(value = {
+    @ApiOperation("Update an existing company in the database.")
+    @ApiResponses({
 	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The company was not updated in the database or Problems with server")
 	})
-    @PutMapping(value = "/companies/")
+    @PutMapping("/companies/")
     public void updateCompany(
 	    @ApiParam(value = "The company data for updating in the database.", required = true)
 	    @Valid @RequestBody CompanyPayload editedCompany) {
@@ -92,12 +91,12 @@ public class CompanyController {
     }
 
     @ApiOperation(value = "Delete an existing company by Id from the database.", 
-	    notes = "ID has to be greater than zero.", code = 200)
-    @ApiResponses(value = {
+	    notes = "ID has to be greater than zero.")
+    @ApiResponses({
 	    @ApiResponse(code = 500, 
 		    message = "The company was not delated from the database or Problems with server")
 	})
-    @DeleteMapping(value = "/companies/{id}")
+    @DeleteMapping("/companies/{id}")
     public void deleteCompany(
 	    @ApiParam(value = "The company will be deleted from the database by his ID.", required = true)
 	    @PathVariable("id") @Positive @NotNull Integer id) {
@@ -106,20 +105,19 @@ public class CompanyController {
     
     @ApiOperation(value = "Create and read a random employee from external source.", 
 	    notes = "ID has to be greater than zero.", 
-	    response = EmployeeViewModel.class , 
-	    code = 200)
-    @ApiResponses(value = {
+	    response = EmployeeViewModel.class)
+    @ApiResponses({
 	    @ApiResponse(code = 500, message = "The company does not exist or Problems with server")
 	})
-    @GetMapping(value = "/companies/{id}/random-employee")
-    public @ResponseBody  DeferredResult<EmployeeViewModel> getRandomEmployee(@ApiParam(value = "company id", required = true)
+    @GetMapping("/companies/{id}/random-employee")
+    @ResponseBody
+    public  DeferredResult<EmployeeViewModel> getRandomEmployee(@ApiParam(value = "company id", required = true)
     @PathVariable("id") @Positive @NotNull Integer id) throws InterruptedException {
 	Observable<EmployeeViewModel> employeeObservable = companyService.randomEmployee(id);
-	DeferredResult<EmployeeViewModel> deferredResult = new DeferredResult<EmployeeViewModel>();
+	DeferredResult<EmployeeViewModel> deferredResult = new DeferredResult<>();
 	
 	employeeObservable.subscribe(deferredResult::setResult, deferredResult::setErrorResult);
 	
 	return deferredResult;
     }
-   
 }

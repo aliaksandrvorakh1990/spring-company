@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.PersistenceException;
+import javax.persistence.TransactionRequiredException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import by.vorakh.alex.spring_company.converter.EmployeeOutsourceToEmployeeConverter;
 import by.vorakh.alex.spring_company.converter.EmployeeToEmployeeViewModelConverter;
-import by.vorakh.alex.spring_company.model.outsource.EmployeeOutsource;
+import by.vorakh.alex.spring_company.model.external.ExternalEmployee;
 import by.vorakh.alex.spring_company.model.payload.EmployeePayload;
 import by.vorakh.alex.spring_company.model.view_model.EmployeeViewModel;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
@@ -25,7 +27,6 @@ import by.vorakh.alex.spring_company.repository.entity.Skill;
 
 @Service
 public class EmployeeService implements ServiceInterface<EmployeeViewModel, EmployeePayload> {
-    
     @Autowired
     private EmployeeDAO employeeDAO;
     @Autowired
@@ -41,7 +42,7 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 
     @Override
     public List<EmployeeViewModel> getAll() {
-	List<EmployeeViewModel>  employeeViewModelList= new ArrayList<EmployeeViewModel>();
+	List<EmployeeViewModel>  employeeViewModelList= new ArrayList<>();
 	employeeDAO.getAll().forEach(employee -> {
 	    employeeViewModelList.add(convertor.convert(employee));
 	});
@@ -54,18 +55,17 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
     }
     
     public Set<Employee> findListByIDs(List<Integer> employeeIDList) {
-	Set<Employee> list = new LinkedHashSet<Employee>();
+	Set<Employee> list = new LinkedHashSet<>();
 	for (Integer employeeId : employeeIDList) {
 	    list.add(employeeDAO.getById(employeeId)) ;
 	}
 	return list;
     }
     
-    @SuppressWarnings("finally")
     @Override
     @Transactional
     public IdViewModel create(EmployeePayload newPayload) {
-	int createdID = -1;
+	int createdID;
 	PersonalData personalDataById = personalDataService.findById(newPayload.getPersonalDataId());
 	
 	if (personalDataById == null) {
@@ -90,26 +90,24 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 	
 	try {
 	    createdID = employeeDAO.create(newEmployee);
+	    return new IdViewModel(createdID);
 	} catch (EntityExistsException e) {
-	    throw new ServiceException("The \"" + newEmployee.toString() +  
+	    throw new ServiceException("The \"" + newEmployee +  
 		    "\" cannot be created, because to exist in database.", e);
 	} catch (IllegalArgumentException ex) {
 	    throw new ServiceException("The EMPLOYEE cannot be created, because " + 
-		    newEmployee.toString() +  " is not a EMPLOYEE object.", ex);
-	}  catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new ServiceException("The \"" + newEmployee.toString() +  
+		    newEmployee +  " is not a EMPLOYEE object.", ex);
+	}  catch (TransactionRequiredException exc) { 
+	    throw new ServiceException("The \"" + newEmployee +  
 		    "\" cannot be created, NO Transaction.", exc);
-	} catch (javax.persistence.PersistenceException ex1) { 
-	    throw new ServiceException("The \"" + newEmployee.toString() +  
+	} catch (PersistenceException ex1) { 
+	    throw new ServiceException("The \"" + newEmployee +  
 		    "\" cannot be created, the database is not updated.", ex1);
-	} finally {
-	    return new IdViewModel(createdID);
-	}
-
+	} 
     } 
     
     @Transactional
-    public Employee getOrCreateAndGet(EmployeeOutsource externalSource) {
+    public Employee getOrCreateAndGet(ExternalEmployee externalSource) {
 	Employee newEmployee = extermalSourceConvertor.convert(externalSource);
 	
 	PersonalData personalData = personalDataService.createAndGetWithId(newEmployee.getPersonalData());
@@ -125,29 +123,27 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 	
 	newEmployee.setJobTitle(jobTitle);
 	
-	newEmployee.getSkillList().forEach(skill -> {
+	newEmployee.getSkills().forEach(skill -> {
 	    int id = skillService.getOrCreateAndGetWithId(skill).getId();
 	    skill.setId(id);
-	    
 	});
 	
 	try {
 	    newEmployee = employeeDAO.createAndGet(newEmployee);
+	    return newEmployee;
 	} catch (EntityExistsException e) {
-	    throw new ServiceException("The \"" + newEmployee.toString() +  
+	    throw new ServiceException("The \"" + newEmployee +  
 		    "\" cannot be created, because to exist in database.", e);
 	} catch (IllegalArgumentException ex) {
 	    throw new ServiceException("The EMPLOYEE cannot be created, because " + 
-		    newEmployee.toString() +  " is not a EMPLOYEE object.", ex);
-	}  catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new ServiceException("The \"" + newEmployee.toString() +  
+		    newEmployee +  " is not a EMPLOYEE object.", ex);
+	}  catch (TransactionRequiredException exc) { 
+	    throw new ServiceException("The \"" + newEmployee +  
 		    "\" cannot be created, NO Transaction.", exc);
-	} catch (javax.persistence.PersistenceException ex1) { 
-	    throw new ServiceException("The \"" + newEmployee.toString() +  
+	} catch (PersistenceException ex1) { 
+	    throw new ServiceException("The \"" + newEmployee +  
 		    "\" cannot be created, the database is not updated.", ex1);
 	} 
-	
-	return newEmployee;
     }
 
     @Override
@@ -166,8 +162,7 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 		    editedPayload.getPersonalDataId() +"\' ID does not exist in database.");
 	}
 
-	
-	JobTitle jobTitleById = jobTitleService.findById(editedPayload.getJobTitleId());
+		JobTitle jobTitleById = jobTitleService.findById(editedPayload.getJobTitleId());
 	
 	if (jobTitleById == null) {
 	    throw new ServiceException("The employee cannot be updated, because the job title with \'"+ 
@@ -179,14 +174,14 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 	editedEmployee
 		.setPersonalData(personalDataById)
 		.setJobTitle(jobTitleById)
-		.setSkillList(skillListByIds);
+		.setSkills(skillListByIds);
 	try {
 	    employeeDAO.update(editedEmployee);
 	} catch (IllegalArgumentException ex) {
 	    throw new ServiceException("The employee cannot be updated, because " + 
-		    editedEmployee.toString() +  " is not a employee object.", ex);
-	} catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new ServiceException("The \"" + editedEmployee.toString() +  
+		    editedEmployee +  " is not a employee object.", ex);
+	} catch (TransactionRequiredException exc) { 
+	    throw new ServiceException("The \"" + editedEmployee +  
 		    "\" cannot be updated, NO Transaction.", exc);
 	}
     }
@@ -194,7 +189,7 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
     @Transactional
     public void removeDeletedSkillfromSkillLists(Skill skill) {
 	employeeDAO.getAll(skill).forEach(emp -> {
-	    emp.getSkillList().remove(skill);
+	    emp.getSkills().remove(skill);
 	    update(emp);
 	});
     }
@@ -205,9 +200,9 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 	    employeeDAO.update(editedEmployee);
 	} catch (IllegalArgumentException ex) {
 	    throw new ServiceException("The employee cannot be updated, because " + 
-		    editedEmployee.toString() +  " is not a employee object.", ex);
-	} catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new ServiceException("The \"" + editedEmployee.toString() +  
+		    editedEmployee +  " is not a employee object.", ex);
+	} catch (TransactionRequiredException exc) { 
+	    throw new ServiceException("The \"" + editedEmployee +  
 		    "\" cannot be updated, NO Transaction.", exc);
 	}
     }
@@ -227,7 +222,7 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
     
     @Transactional
     public void delete(Employee deletedEmployee) {
-	deletedEmployee.getSkillList().clear();
+	deletedEmployee.getSkills().clear();
 	
 	update(deletedEmployee);
 	
@@ -235,9 +230,9 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
 	    employeeDAO.delete(deletedEmployee);
 	} catch (IllegalArgumentException ex) {
 	    throw new ServiceException("The employee cannot be deleted, because " + 
-		    deletedEmployee.toString() +  " is not a employee object.", ex);
-	} catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new ServiceException("The \"" + deletedEmployee.toString() +  
+		    deletedEmployee +  " is not a employee object.", ex);
+	} catch (TransactionRequiredException exc) { 
+	    throw new ServiceException("The \"" + deletedEmployee +  
 		    "\" cannot be deleted, NO Transaction.", exc);
 	}
     }
@@ -246,10 +241,9 @@ public class EmployeeService implements ServiceInterface<EmployeeViewModel, Empl
     public void delete(PersonalData personalData) {
 	try {
 	    employeeDAO.delete(personalData);
-	} catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new ServiceException("The Employee with \"" + personalData.toString() +  
+	} catch (TransactionRequiredException exc) { 
+	    throw new ServiceException("The Employee with \"" + personalData +  
 		    "\" cannot be deleted, NO Transaction.", exc);
 	}
     }
-
 }

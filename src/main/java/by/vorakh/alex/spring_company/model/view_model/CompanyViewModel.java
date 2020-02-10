@@ -9,15 +9,14 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Details about the company for view")
 public class CompanyViewModel implements Serializable {
-    
     private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The company ID in the database.", example = "4")
     private Integer id;
     @ApiModelProperty(value = "The company name.", example = "Evil-Corporation")
     private String name;
-    @ApiModelProperty(value = "The employees list.")
-    private List<EmployeeViewModel> employeeList = new ArrayList<EmployeeViewModel>();
+    @ApiModelProperty("The employees list.")
+    private List<EmployeeViewModel> employeeList = new ArrayList<>();
     
     public CompanyViewModel() {}
     
@@ -54,9 +53,7 @@ public class CompanyViewModel implements Serializable {
         return employeeList;
     }
     
-    
-
-    @Override
+        @Override
     public String toString() {
 	return "CompanyViewModel [id=" + id + ", name=" + name + ", employeeList=" + employeeList + "]";
     }
@@ -67,8 +64,7 @@ public class CompanyViewModel implements Serializable {
 	int result = 1;
 	result = prime * result + id; 
 	result = prime * result + ((name == null) ? 0 : name.hashCode());
-	result = prime * result + ((employeeList == null) ? 0 : employeeList.hashCode());
-	return result;
+	return prime * result + ((employeeList == null) ? 0 : employeeList.hashCode());
     }
 
     @Override
@@ -76,12 +72,9 @@ public class CompanyViewModel implements Serializable {
 	if (this == obj) {
 	    return true;
 	}
-	if (obj == null) {
+	if (obj == null || getClass() != obj.getClass()) {
 	    return false;
 	}
-	if (getClass() != obj.getClass()) {
-	    return false;
-	}    
 	CompanyViewModel other = (CompanyViewModel) obj;
 	if (id != other.id) {
 	    return false;
@@ -102,5 +95,4 @@ public class CompanyViewModel implements Serializable {
 	}
 	return true;
     }
-
 }

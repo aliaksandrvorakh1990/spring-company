@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import by.vorakh.alex.spring_company.converter.SkillOutsourceToSkillConverter;
 import by.vorakh.alex.spring_company.converter.SkillToSkillViewModelConverter;
-import by.vorakh.alex.spring_company.model.outsource.SkillOutsource;
+import by.vorakh.alex.spring_company.model.external.ExternalSkill;
 import by.vorakh.alex.spring_company.model.payload.SkillPayload;
 import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.model.view_model.SkillViewModel;
@@ -20,7 +20,6 @@ import by.vorakh.alex.spring_company.repository.entity.Skill;
 
 @Service
 public class SkillService implements ServiceInterface<SkillViewModel, SkillPayload> {
-
     @Autowired
     private SkillDAO skillDAO;
     @Autowired
@@ -32,7 +31,7 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
     
     @Override
     public List<SkillViewModel> getAll() {
-	List<SkillViewModel> skillViewModelList = new ArrayList<SkillViewModel>();
+	List<SkillViewModel> skillViewModelList = new ArrayList<>();
 	skillDAO.getAll().forEach(skill -> {
 	    skillViewModelList.add(convertor.convert(skill));
 	});
@@ -44,86 +43,81 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
 	return convertor.convert(skillDAO.getById(id));
     }
     
-    
-    public List<Skill> getListBy(List<Integer> skillIdList) {
-	List<Skill> list = new ArrayList<Skill>();
+        public List<Skill> getListBy(List<Integer> skillIdList) {
+	List<Skill> list = new ArrayList<>();
 	for (Integer skillId : skillIdList) {
 	    list.add(skillDAO.getById(skillId)) ;
 	}
 	return list;
     }
     
-
-    @SuppressWarnings("finally")
     @Override
     @Transactional
     public IdViewModel create(SkillPayload newPayload) {
-	int createdID = -1;
+	int createdID;
+	Skill createdSkill;
+	
 	if (skillDAO.isContained(newPayload.getSkillName())) {
 	    throw new ServiceException("The \"" + newPayload.getSkillName() + 
 		    "\" cannot be created, because to exist in database.");
 	}
-	Skill createdSkill = new Skill(newPayload.getSkillName());
+	createdSkill = new Skill(newPayload.getSkillName());
 	
 	try {
 	    createdID = skillDAO.create(createdSkill);
+	    return new IdViewModel(createdID);
 	} catch (EntityExistsException e) {
-	    throw new ServiceException("The \"" + createdSkill.getSkillName() + 
+	    throw new ServiceException("The \"" + createdSkill.getName() + 
 		    "\" cannot be created, because to exist in database.", e);
 	} catch (IllegalArgumentException ex) {
 	    throw new ServiceException("The SKILL cannot be created, because " + 
-		    createdSkill.toString() +  " is not a Skill object.", ex);
+		    createdSkill +  " is not a Skill object.", ex);
 	}  catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new ServiceException("The \"" + createdSkill.getSkillName() + 
+	    throw new ServiceException("The \"" + createdSkill.getName() + 
 		    "\" cannot be created, NO Transaction.", exc);
 	} catch (javax.persistence.PersistenceException ex1) { 
-	    throw new ServiceException("The \"" + createdSkill.getSkillName() + 
+	    throw new ServiceException("The \"" + createdSkill.getName() + 
 		    "\" cannot be created, the database is not updated.", ex1);
-	} finally {
-	    return new IdViewModel(createdID);
-	}
+	} 
     }
     
     @Transactional
-    public SkillViewModel getOrCreateAndGet(SkillOutsource extemalSource) {
+    public SkillViewModel getOrCreateAndGet(ExternalSkill extemalSource) {
 	Skill newSkill = extermalSourceConvertor.convert(extemalSource);
 	return getOrCreateAndGet(newSkill);
     }
     
-    
-    @Transactional
+        @Transactional
     public SkillViewModel getOrCreateAndGet(Skill newSkill) {
 	return convertor.convert(getOrCreateAndGetWithId(newSkill));
     }
     
-    @SuppressWarnings("finally")
     @Transactional
     public Skill getOrCreateAndGetWithId(Skill newSkill) {
-	if (skillDAO.isContained(newSkill.getSkillName())) {
-	    return skillDAO.findExisted(newSkill.getSkillName());
+	String skillName = newSkill.getName();
+	if (skillDAO.isContained(skillName)) {
+	    return skillDAO.findExisted(skillName);
 	} else {
-	    Skill returnedSkill = null;
+	    Skill returnedSkill;
 	    try {
 		returnedSkill = skillDAO.createAndGet(newSkill);
+		return returnedSkill;
 	    } catch (EntityExistsException e) {
-		throw new ServiceException("The \"" + newSkill.getSkillName() + 
+		throw new ServiceException("The \"" + skillName + 
 			"\" cannot be created, because to exist in database.", e);
 	    } catch (IllegalArgumentException ex) {
-		    throw new ServiceException("The SKILL cannot be created, because " + 
-			    newSkill.toString() +  " is not a Skill object.", ex);
+		    throw new ServiceException("The SKILL cannot be created, " +
+		    	 "because " + newSkill +  " is not a Skill object.", ex);
 	    }  catch (javax.persistence.TransactionRequiredException exc) { 
-		    throw new ServiceException("The \"" + newSkill.getSkillName() + 
+		    throw new ServiceException("The \"" + skillName + 
 			    "\" cannot be created, NO Transaction.", exc);
 	    } catch (javax.persistence.PersistenceException ex1) { 
-		throw new ServiceException("The \"" + newSkill.getSkillName() + 
+		throw new ServiceException("The \"" + skillName + 
 			"\" cannot be created, the database is not updated.", ex1);
-	    } finally {
-		return returnedSkill;
-	    }
+	    } 
 	}
     }
     
-
     @Override
     @Transactional
     public void update(SkillPayload editedPayload) {
@@ -140,18 +134,17 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
 		    + "\' ID does not exist in database");
 	}
 	
-	editedSkill.setSkillName(editedPayload.getSkillName());
+	editedSkill.setName(editedPayload.getSkillName());
 	
 	try {
 	    skillDAO.update(editedSkill);
 	} catch (IllegalArgumentException ex) {
 	    throw new ServiceException("The SKILL cannot be updated, because " + 
-		    editedSkill.toString() +  " is not a Skill object.", ex);
+		    editedSkill +  " is not a Skill object.", ex);
 	} catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new ServiceException("The \"" + editedSkill.getSkillName() + 
+	    throw new ServiceException("The \"" + editedSkill.getName() + 
 		    "\" cannot be updated, NO Transaction.", exc);
 	}
-	
     }
 
     @Override
@@ -169,9 +162,9 @@ public class SkillService implements ServiceInterface<SkillViewModel, SkillPaylo
 	skillDAO.delete(deletedSkill);
 	} catch (IllegalArgumentException ex) {
 	    throw new ServiceException("The SKILL cannot be deleted, because " + 
-		    deletedSkill.toString() +  " is not a Skill object.", ex);
+		    deletedSkill +  " is not a Skill object.", ex);
 	}  catch (javax.persistence.TransactionRequiredException exc) { 
-	    throw new ServiceException("The \"" + deletedSkill.getSkillName() + 
+	    throw new ServiceException("The \"" + deletedSkill.getName() + 
 		    "\" cannot be deleted, NO Transaction.", exc);
 	}
     }

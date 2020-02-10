@@ -29,10 +29,8 @@ import com.google.common.collect.Sets;
 import java.util.List;
 
 public class CompanyServiceTest {
-    
-    
-    private static final List<CompanyViewModel> controlList = Lists.newArrayList(new CompanyViewModel(1, "FirstCompany", null));
-    private static final CompanyViewModel controlResult = new CompanyViewModel(2, "TestCompany", null);
+        private static final List<CompanyViewModel> CONTROL_LIST = Lists.newArrayList(new CompanyViewModel(1, "FirstCompany", null));
+    private static final CompanyViewModel CONTROL_RESULT = new CompanyViewModel(2, "TestCompany", null);
     private static IdViewModel controlIdViewModel = new IdViewModel(3);
 
     @Mock
@@ -63,7 +61,7 @@ public class CompanyServiceTest {
         List<CompanyViewModel> resultList = service.getAll();
        
         assertEquals(1, resultList.size());
-        assertEquals(controlList, resultList);
+        assertEquals(CONTROL_LIST, resultList);
     }
     
     @Test
@@ -74,7 +72,7 @@ public class CompanyServiceTest {
 	 when(companyConverter.convert(company)).thenReturn(companyViewModel);
 	 when(companyDAO.getById(2)).thenReturn(company);
 	 
-	 assertEquals(controlResult,service.getById(2));
+	 assertEquals(CONTROL_RESULT,service.getById(2));
     }
      
     @Test
@@ -103,5 +101,4 @@ public class CompanyServiceTest {
 	verify(employeeDAO, atLeastOnce()).delete(any(Employee.class));
 	verify(companyDAO, times(1)).delete(company);
     }
-    
 }

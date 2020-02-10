@@ -12,14 +12,13 @@ import by.vorakh.alex.spring_company.repository.entity.JobTitle;
 
 @Repository
 public class JobTitleDAO implements DAO<JobTitle> {
-    
     @PersistenceContext
     EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
     @Override
     public List<JobTitle> getAll() {
-	return (List<JobTitle>) entityManager.createQuery("select j from JobTitle j")
+	return entityManager.createQuery("select j from JobTitle j")
 		.getResultList();
     }
 
@@ -47,17 +46,11 @@ public class JobTitleDAO implements DAO<JobTitle> {
 
     @Override
     public boolean isContained(JobTitle object) {
-	if (findExisted(object) == null) {
-	    return false;
-	}
-	return true;
+	return findExisted(object) != null;
     }
     
     public boolean isContained(String title) {
-	if (findExisted(title) == null) {
-	    return false;
-	}
-	return true;
+	return findExisted(title) != null;
     }
 
     @Override
@@ -83,5 +76,4 @@ public class JobTitleDAO implements DAO<JobTitle> {
 	query.setParameter("p", title);
 	return (JobTitle) query.getResultList().stream().findFirst().orElse(null);
     }
-
 }

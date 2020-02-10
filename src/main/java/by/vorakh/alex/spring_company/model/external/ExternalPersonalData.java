@@ -1,28 +1,26 @@
-package by.vorakh.alex.spring_company.model.outsource;
+package by.vorakh.alex.spring_company.model.external;
 
 import java.io.Serializable;
 
-public class PersonalDataOutsource implements  Serializable {
-    
+public class ExternalPersonalData implements  Serializable {
     private static final long serialVersionUID = 1L;
     
     private String firstName;
     private String lastName;
     
-    public PersonalDataOutsource() {}
+    public ExternalPersonalData() {}
     
-    public PersonalDataOutsource(String firstName, String lastName) {
+    public ExternalPersonalData(String firstName, String lastName) {
 	this.firstName = firstName;
 	this.lastName = lastName;
     }
 
-
-    public PersonalDataOutsource setFirstName(String firstName) {
+    public ExternalPersonalData setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
 
-    public PersonalDataOutsource setLastName(String lastName) {
+    public ExternalPersonalData setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -45,8 +43,7 @@ public class PersonalDataOutsource implements  Serializable {
 	final int prime = 31;
 	int result = 1;
 	result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-	result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-	return result;
+	return prime * result + ((lastName == null) ? 0 : lastName.hashCode());
     }
 
     @Override
@@ -54,13 +51,10 @@ public class PersonalDataOutsource implements  Serializable {
 	if (this == obj) {
 	    return true;
 	}
-	if (obj == null) {
+	if (obj == null || getClass() != obj.getClass()) {
 	    return false;
 	}
-	if (getClass() != obj.getClass()) {
-	    return false;
-	}
-	PersonalDataOutsource other = (PersonalDataOutsource) obj;
+	ExternalPersonalData other = (ExternalPersonalData) obj;
 	if (firstName == null) {
 	    if (other.firstName != null) {
 		return false;
@@ -78,5 +72,4 @@ public class PersonalDataOutsource implements  Serializable {
 	    
 	return true;
     }
-
 }

@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description = "Details about the skill for view")
 public class SkillViewModel implements Serializable  {
-    
     private static final long serialVersionUID = 1L;
     
     @ApiModelProperty(value = "The skill's ID in the database", example = "9")
@@ -50,21 +49,14 @@ public class SkillViewModel implements Serializable  {
 	final int prime = 31;
 	int result = 1;
 	result = prime * result + id;
-	result = prime * result + ((skillName == null) ? 0 : skillName.hashCode());
-	return result;
+	return prime * result + ((skillName == null) ? 0 : skillName.hashCode());
     }
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj) {
+	if (this == obj || obj == null || getClass() != obj.getClass()) {
 	    return false;
 	}
-	if (obj == null) {
-	    return false;
-	}    
-	if (getClass() != obj.getClass()) {
-	    return false;
-	}   
 	SkillViewModel other = (SkillViewModel) obj;
 	if (id != other.id) {
 	    return false;
@@ -78,5 +70,4 @@ public class SkillViewModel implements Serializable  {
 	}   
 	return true;
     }
- 
 }

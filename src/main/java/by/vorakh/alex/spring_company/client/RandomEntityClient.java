@@ -3,14 +3,15 @@ package by.vorakh.alex.spring_company.client;
 import java.nio.charset.Charset;
 import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
+
+import by.vorakh.alex.spring_company.model.external.ExternalEmployee;
+import by.vorakh.alex.spring_company.model.external.ExternalJobTitle;
 import io.netty.buffer.ByteBuf;
 import io.reactivex.netty.protocol.http.client.HttpClient;
 import io.reactivex.netty.protocol.http.client.HttpClientRequest;
 import io.reactivex.netty.protocol.http.client.HttpClientResponse;
 import io.reactivex.netty.util.CollectBytes;
 import rx.Single;
-import by.vorakh.alex.spring_company.model.outsource.EmployeeOutsource;
-import by.vorakh.alex.spring_company.model.outsource.JobTitleOutsource;
 
 @Component
 public class RandomEntityClient {
@@ -29,7 +30,7 @@ public class RandomEntityClient {
         this.client = HttpClient.newClient(HOST, PORT);
     }
   
-    private Single<JobTitleOutsource> getRandomJobTitleSingle() {
+    private Single<ExternalJobTitle> getRandomJobTitleSingle() {
 	HttpClientRequest<ByteBuf, ByteBuf> request = client
                 .createGet(URL_RANDOM_JOB);
         return request.flatMap(HttpClientResponse::getContent)
@@ -37,12 +38,12 @@ public class RandomEntityClient {
                 .map(bytes -> {
                     String json = bytes.toString(Charset.defaultCharset());
                     bytes.release();
-                    return gson.fromJson(json, JobTitleOutsource.class);
+                    return gson.fromJson(json, ExternalJobTitle.class);
                 })
                 .toSingle();
     }
       
-    private Single<EmployeeOutsource> getRandomEmployeeSingle() {
+    private Single<ExternalEmployee> getRandomEmployeeSingle() {
         HttpClientRequest<ByteBuf, ByteBuf> request = client
                 .createGet(URL_RANDOM_EMPLOYEE);
         return request.flatMap(HttpClientResponse::getContent)
@@ -50,12 +51,12 @@ public class RandomEntityClient {
                 .map(bytes -> {
                     String json = bytes.toString(Charset.defaultCharset());
                     bytes.release();
-                    return gson.fromJson(json, EmployeeOutsource.class);
+                    return gson.fromJson(json, ExternalEmployee.class);
                 })
                 .toSingle();
     }
    
-    public Single<EmployeeOutsource> findRandomEmployee() {
+    public Single<ExternalEmployee> findRandomEmployee() {
         return Single.zip(getRandomEmployeeSingle(), getRandomJobTitleSingle(), 
                 (employee, jotTitle) -> {
                     employee.setJobTitle(jotTitle);

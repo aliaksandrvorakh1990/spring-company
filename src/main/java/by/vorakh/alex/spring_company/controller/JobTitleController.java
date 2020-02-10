@@ -33,14 +33,13 @@ import by.vorakh.alex.spring_company.service.JobTitleService;
 @CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 1800)
 @RequestMapping("/project")
 public class JobTitleController {
-    
     @Autowired
     private JobTitleService jobTitleService;
     
     @ApiOperation(value = "Get a list of existing job titles from the database",
 	    response = JobTitleViewModel.class,
-	    responseContainer = "List", code = 200)
-    @ApiResponses(value = {
+	    responseContainer = "List")
+    @ApiResponses({
 	    @ApiResponse(code = 500, message = "Problems with server")
 	})
     @GetMapping("/jobs")
@@ -50,11 +49,11 @@ public class JobTitleController {
 
     @ApiOperation(value = "Get an job title by Id from the database", 
 	    notes = "ID has to be greater than zero.", 
-	    response = JobTitleViewModel.class , code = 200)
-    @ApiResponses(value = {
+	    response = JobTitleViewModel.class)
+    @ApiResponses({
 	    @ApiResponse(code = 500, message = "The job title does not exist or Problems with server")
 	})
-    @GetMapping(value = "/jobs/{id}")
+    @GetMapping("/jobs/{id}")
     public JobTitleViewModel getJobTitle(
 	    @ApiParam(value = "The job title will be gotten from the database by his ID", required = true)
 	    @PathVariable("id") @Positive @NotNull Integer id) {
@@ -62,8 +61,8 @@ public class JobTitleController {
     }
 
     @ApiOperation(value = "Create a job title in the database",
-	    response = IdViewModel.class, code = 200)
-    @ApiResponses(value = {
+	    response = IdViewModel.class)
+    @ApiResponses({
 	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The job title was not created in the database or Problems with server"),
@@ -75,13 +74,13 @@ public class JobTitleController {
 	return jobTitleService.create(newJobTitle);
     }
 
-    @ApiOperation(value = "Update an existing job title in the database.", code = 200)
-    @ApiResponses(value = {
+    @ApiOperation("Update an existing job title in the database.")
+    @ApiResponses({
 	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
 	    @ApiResponse(code = 500, 
 		    message = "The job title was not updated in the database or Problems with server")
 	})
-    @PutMapping(value = "/jobs/")
+    @PutMapping("/jobs/")
     public void updateJobTitle(
 	    @ApiParam(value = "The job title data for updating in the database.", required = true)
 	    @Valid @RequestBody JobTitlePayload editedJobTitle) {
@@ -89,16 +88,15 @@ public class JobTitleController {
     }
 
     @ApiOperation(value = "Delete an existing job title by Id from the database.", 
-	    notes = "ID has to be greater than zero.", code = 200)
-    @ApiResponses(value = {
+	    notes = "ID has to be greater than zero.")
+    @ApiResponses({
 	    @ApiResponse(code = 500, 
 		    message = "The job title was not delated from the database or Problems with server")
 	})
-    @DeleteMapping(value = "/jobs/{id}")
+    @DeleteMapping("/jobs/{id}")
     public void deleteJobTitle(
 	    @ApiParam(value = "The job title will be deleted from the database by his ID.", required = true)
 	    @PathVariable("id") @Positive @NotNull Integer id) {
 	jobTitleService.delete(id);
     }
-
 }

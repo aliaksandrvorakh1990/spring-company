@@ -12,14 +12,13 @@ import java.util.List;
 
 @Repository
 public class CompanyDAO implements DAO<Company> {
-
     @PersistenceContext
     EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
     @Override
     public List<Company> getAll() {
-        return (List<Company>) entityManager.createQuery("select c from Company c").getResultList();
+        return entityManager.createQuery("select c from Company c").getResultList();
     }
 
     @Override
@@ -46,17 +45,11 @@ public class CompanyDAO implements DAO<Company> {
 
     @Override
     public boolean isContained(Company object) {
-	if (findExisted(object) == null) {
-	    return false;
-	}
-	return true;
+	return findExisted(object) != null;
     }
     
     public boolean isContained(String companyName) {
-	if (findExisted(companyName) == null) {
-	    return false;
-	}
-	return true;
+	return findExisted(companyName) != null;
     }
 
     @Override
@@ -82,5 +75,4 @@ public class CompanyDAO implements DAO<Company> {
 	query.setParameter("p", companyName);
 	return (Company) query.getResultList().stream().findFirst().orElse(null);
     }
-
 }

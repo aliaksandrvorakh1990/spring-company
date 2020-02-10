@@ -13,18 +13,16 @@ import by.vorakh.alex.spring_company.repository.entity.Company;
 
 @Component
 public final class CompanyToCompanyViewModelConverter implements Converter<Company, CompanyViewModel> {
-
     @Autowired
     private EmployeeToEmployeeViewModelConverter employeeConverter;
     
     @Override
     public CompanyViewModel convert(Company source) {
-	List<EmployeeViewModel> employeeList = new ArrayList<EmployeeViewModel>();
+	List<EmployeeViewModel> employeeList = new ArrayList<>();
 	
-	source.getEmployeeList().forEach(employee -> 
+	source.getEmployees().forEach(employee -> 
 		employeeList.add(employeeConverter.convert(employee)));
 	
 	return new CompanyViewModel(source.getId(), source.getName(), employeeList);
     }
-
 }
