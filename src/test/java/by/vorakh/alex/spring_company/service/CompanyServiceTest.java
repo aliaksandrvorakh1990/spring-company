@@ -90,7 +90,7 @@ public class CompanyServiceTest {
 	CompanyPayload testCompanyPayload = new CompanyPayload(3, "TestCompany", Lists.newArrayList(4));
 	Company company = new Company(3, "OldTestCompany",  Sets.newHashSet(new Employee()));
 	when(companyDAO.getById(3)).thenReturn(company);
-	//when(employeeDAO.getAll(any(Set.class))).thenReturn(Lists.newArrayList(new Employee()));
+	when(employeeDAO.getAll(any(List.class))).thenReturn(Lists.newArrayList(new Employee()));
 	service.update(testCompanyPayload);
 	verify(companyDAO, times(1)).update(company);
     }
