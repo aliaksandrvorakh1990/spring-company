@@ -119,10 +119,6 @@ public class CompanyController {
 	
 	employeeObservable.subscribe(deferredResult::setResult, deferredResult::setErrorResult);
 	
-	while(!deferredResult.hasResult()) {
-	    Thread.sleep(1000);
-	}
-	
 	return deferredResult;
     }
    

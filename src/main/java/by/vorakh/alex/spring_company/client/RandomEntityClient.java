@@ -29,7 +29,7 @@ public class RandomEntityClient {
     private HttpClient<ByteBuf, ByteBuf> client;
     
     public RandomEntityClient() {
-	this.gson  = new Gson();
+	this.gson = new Gson();
 	this.client = HttpClient.newClient("127.0.1.1", 8082);
     }
     
