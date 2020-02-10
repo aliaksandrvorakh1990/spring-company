@@ -16,6 +16,8 @@ import rx.Observable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.persistence.EntityExistsException;
 import javax.transaction.Transactional;
@@ -37,6 +39,10 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
     private EmployeeToEmployeeViewModelConverter employeeConvertor;
     @Autowired
     private RandomEntityClient companyClient;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+    
+    
     @Override
     public List<CompanyViewModel> getAll() {
 	List<CompanyViewModel> companyViewModelList = new ArrayList<CompanyViewModel>();
@@ -148,34 +154,28 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
 	    return createRandomEmployee(id, exteranalEmployee);
 	}).toObservable();
     }
-    
-
-    @Transactional
+      
     public EmployeeViewModel createRandomEmployee(int id, EmployeeOutsource externalEmployee) {
-	Employee randomEmployee =  null;
-	Company company = companyDAO.getById(id);
-	 if (company == null) {
-	    throw new ServiceException("The Company cannot be updated, because the Company with \'" + 
-		    id +"\' ID does not exist in database.");
-	}
-	try {	
-	    randomEmployee = employeeService.getOrCreateAndGet(externalEmployee);
-	    System.out.println(company.getEmployeeList().size());
-	    company.getEmployeeList().forEach(emp -> {
-	    System.out.println(emp);
-	    });
-	   
-	 company.getEmployeeList().add(randomEmployee);
-         companyDAO.update(company);
-	 System.out.println(company.getEmployeeList().size());
-            return employeeConvertor.convert(randomEmployee);
-	    
-	} catch (ClientException clEx) {
-	    System.out.println(clEx);
-	    throw new ServiceException("Problem with the working of the client", clEx);
-	} catch (ServiceException serEx) {
-	    System.out.println(serEx);
-	    throw new ServiceException("A random employee does not create in the DB", serEx);
-	} 
+	TransactionTemplate transaction = new TransactionTemplate(transactionManager);
+	EmployeeViewModel employeeViewModel = transaction.execute(status -> {
+	    Company company = companyDAO.getById(id);
+	    if (company == null) {
+		throw new ServiceException("The Company cannot be updated, because the Company with'" + 
+			id + "' ID does not exist in database.");
+	    }
+	    try {
+		Employee randomEmployee = employeeService.getOrCreateAndGet(externalEmployee);
+	        company.getEmployeeList().add(randomEmployee);
+	        companyDAO.update(company);
+	        return employeeConvertor.convert(randomEmployee);
+	    } catch (ClientException clEx) {
+		throw new ServiceException("Problem with the working of the client", clEx);
+	    } catch (ServiceException serEx) {
+		throw new ServiceException("A random employee does not create in the DB", serEx);
+	    }
+	});
+
+	return employeeViewModel;
     }
+    
 }

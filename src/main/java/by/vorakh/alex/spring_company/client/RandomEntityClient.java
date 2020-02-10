@@ -44,8 +44,7 @@ public class RandomEntityClient {
 		    return jobTitle;
 		}).toSingle();
     }
-    
-    
+      
     private Single<EmployeeOutsource> getRandomEmployeeSubject() {
 	HttpClientRequest<ByteBuf, ByteBuf> request = client.createGet(URL_RANDOM_EMPLOYEE);
 	return request.flatMap(HttpClientResponse::getContent)
