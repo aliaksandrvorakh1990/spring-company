@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
+import rx.Observable;
 import by.vorakh.alex.spring_company.model.payload.CompanyPayload;
 import by.vorakh.alex.spring_company.model.view_model.CompanyViewModel;
 import by.vorakh.alex.spring_company.model.view_model.EmployeeViewModel;
@@ -104,14 +105,22 @@ public class CompanyController {
     
     @ApiOperation(value = "create and read a random employee from external source.", 
 	    notes = "ID has to be greater than zero.", 
-	    response = EmployeeViewModel.class , code = 200)
+	   // response = EmployeeViewModel.class , 
+	    code = 200)
     @ApiResponses(value = {
 	    @ApiResponse(code = 500, message = "The company does not exist or Problems with server")
 	})
     @GetMapping(value = "/companies/{id}/random-employee")
     public EmployeeViewModel getRandomEmployee(@ApiParam(value = "company id", required = true)
     @PathVariable("id") @Positive @NotNull Integer id) {
-	return companyService.randomEmployee(id);
+	Observable<EmployeeViewModel> employeeObservable = companyService.randomEmployee(id);
+	DeferredResult<EmployeeViewModel> deffered = new DeferredResult<EmployeeViewModel>();
+	
+	employeeObservable.subscribe(m -> { 
+	    deffered.setResult(m); 
+	}, e -> deffered.setErrorResult(e));
+	
+	return (EmployeeViewModel) deffered.getResult();
     }
    
 }

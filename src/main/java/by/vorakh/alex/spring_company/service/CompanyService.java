@@ -12,6 +12,7 @@ import by.vorakh.alex.spring_company.model.view_model.IdViewModel;
 import by.vorakh.alex.spring_company.repository.CompanyDAO;
 import by.vorakh.alex.spring_company.repository.entity.Company;
 import by.vorakh.alex.spring_company.repository.entity.Employee;
+import rx.Observable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -141,27 +142,46 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
        
     }
     
+    public Observable<EmployeeViewModel> randomEmployee(int id)  {
+	return companyClient.findRandomEmployee().map(exteranalEmployee -> {
+	    System.out.println("Service!!! " +exteranalEmployee);
+	    
+	    EmployeeViewModel emp =createRandomEmployee(id, exteranalEmployee);
+	    
+	    System.out.println("AFTER DAO " +emp);
+	    return emp;
+	}).toObservable();
+    }
+    
+    @SuppressWarnings("finally")
     @Transactional
-    public void randomEmployee(int id)  {
-	companyClient.findRandomEmployee().map(exteranalEmployee -> {
-	    EmployeeViewModel employeeView = null;
-	    Company company;
-	    Employee randomEmployee;
-		
-	    company = companyDAO.getById(id);
-	    if (company == null) {
-		throw new ServiceException("The Company cannot be updated, because the Company with \'" + 
-			id +"\' ID does not exist in database.");
-	    }
-	    
-	    randomEmployee = employeeService.getOrCreateAndGet(exteranalEmployee);
-	    company.getEmployeeList().add(randomEmployee);
-		
-	    update(company);
-	    
-	    employeeView = employeeConvertor.convert(randomEmployee);
-	    return employeeView;
-	});
+    private EmployeeViewModel createRandomEmployee(int id, EmployeeOutsource externalEmployee) {
 	
+	EmployeeViewModel employeeView = null;
+	Company company;
+	company = companyDAO.getById(id);
+	 if (company == null) {
+		    throw new ServiceException("The Company cannot be updated, because the Company with \'" + 
+			    id +"\' ID does not exist in database.");
+		}
+     
+	
+	try {
+	    Employee randomEmployee;
+	
+	    randomEmployee = employeeService.getOrCreateAndGet(externalEmployee);
+	    // BAG
+	    company.getEmployeeList().add(randomEmployee);
+	    
+	    companyDAO.update(company);
+	    employeeView = employeeConvertor.convert(randomEmployee);
+	    System.out.println(employeeView);
+	} catch (ClientException clEx) {
+	    throw new ServiceException("Problem with the working of the client", clEx);
+	} catch (ServiceException serEx) {
+	    throw new ServiceException("A random employee does not create in the DB", serEx);
+	}finally {
+	    return employeeView;
+	}
     }
 }
