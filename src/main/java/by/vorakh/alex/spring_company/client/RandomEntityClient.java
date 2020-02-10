@@ -33,7 +33,7 @@ public class RandomEntityClient {
 	this.client = HttpClient.newClient("127.0.1.1", 8082);
     }
     
-    private Single<JobTitleOutsource> getRandomJobTitleSubject() throws InterruptedException {
+    private Single<JobTitleOutsource> getRandomJobTitleSubject()  {
 	HttpClientRequest<ByteBuf, ByteBuf> request = client.createGet(URL_RANDOM_JOB);
 	return request.flatMap(HttpClientResponse::getContent)
 		.compose(CollectBytes.all())
@@ -46,7 +46,7 @@ public class RandomEntityClient {
     }
     
     
-    private Single<EmployeeOutsource> getRandomEmployeeSubject() throws InterruptedException {
+    private Single<EmployeeOutsource> getRandomEmployeeSubject() {
 	HttpClientRequest<ByteBuf, ByteBuf> request = client.createGet(URL_RANDOM_EMPLOYEE);
 	return request.flatMap(HttpClientResponse::getContent)
 		.compose(CollectBytes.all())
@@ -58,7 +58,7 @@ public class RandomEntityClient {
 		}).toSingle();
     }
     
-    public Single<EmployeeOutsource> findRandomEmployee() throws InterruptedException {
+    public Single<EmployeeOutsource> findRandomEmployee() {
 	Single<EmployeeOutsource> empWithJobSubject = Single.zip(getRandomEmployeeSubject(), getRandomJobTitleSubject(), (employee, jotTitle)->{
 	    employee.setJobTitle(jotTitle);
 	    return employee;

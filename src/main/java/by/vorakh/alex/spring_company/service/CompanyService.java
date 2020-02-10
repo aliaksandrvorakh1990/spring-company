@@ -141,39 +141,27 @@ public class CompanyService implements ServiceInterface<CompanyViewModel, Compan
        
     }
     
-    @SuppressWarnings("finally")
     @Transactional
-    public EmployeeViewModel randomEmployee(int id) {
-	EmployeeOutsource randomEmployeefromExternalSource;
-	EmployeeViewModel employeeView = null;
-	Company company;
-	
-	company = companyDAO.getById(id);
-        if (company == null) {
-	    throw new ServiceException("The Company cannot be updated, because the Company with \'" + 
-		    id +"\' ID does not exist in database.");
-	}
-	
-	try {
+    public void randomEmployee(int id)  {
+	companyClient.findRandomEmployee().map(exteranalEmployee -> {
+	    EmployeeViewModel employeeView = null;
+	    Company company;
 	    Employee randomEmployee;
+		
+	    company = companyDAO.getById(id);
+	    if (company == null) {
+		throw new ServiceException("The Company cannot be updated, because the Company with \'" + 
+			id +"\' ID does not exist in database.");
+	    }
 	    
-	    randomEmployeefromExternalSource = companyClient.findRandomEmployee().getValue();
-	    System.out.println(randomEmployeefromExternalSource);
-	    randomEmployee = employeeService.getOrCreateAndGet(randomEmployeefromExternalSource);
+	    randomEmployee = employeeService.getOrCreateAndGet(exteranalEmployee);
 	    company.getEmployeeList().add(randomEmployee);
 		
 	    update(company);
 	    
 	    employeeView = employeeConvertor.convert(randomEmployee);
-	} catch (InterruptedException e) {
-	    throw new ServiceException("Problem with the threads work in client", e);
-	} catch (ClientException clEx) {
-	    throw new ServiceException("Problem with the working of the client", clEx);
-	} catch (ServiceException serEx) {
-	    throw new ServiceException("A random employee does not create in the DB", serEx);
-	}finally {
 	    return employeeView;
-	}
+	});
+	
     }
-    
 }
