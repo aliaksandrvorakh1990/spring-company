@@ -8,9 +8,9 @@ import by.vorakh.alex.spring_company.repository.entity.JobTitle;
 
 @Component
 public class JobTitleOutsourceToJobTitleConverter implements 
-	Converter<ExternalJobTitle, JobTitle> {
+        Converter<ExternalJobTitle, JobTitle> {
     @Override
     public JobTitle convert(ExternalJobTitle source) {
-	return new JobTitle(source.getTitle());
+        return new JobTitle(source.getTitle());
     }
 }

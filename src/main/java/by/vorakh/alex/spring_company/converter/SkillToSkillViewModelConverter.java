@@ -7,9 +7,10 @@ import by.vorakh.alex.spring_company.model.view_model.SkillViewModel;
 import by.vorakh.alex.spring_company.repository.entity.Skill;
 
 @Component
-public final class SkillToSkillViewModelConverter implements Converter<Skill, SkillViewModel> {
+public final class SkillToSkillViewModelConverter implements 
+        Converter<Skill, SkillViewModel> {
     @Override
     public SkillViewModel convert(Skill source) {
-	return new SkillViewModel(source.getId(), source.getName());
+        return new SkillViewModel(source.getId(), source.getName());
     }
 }

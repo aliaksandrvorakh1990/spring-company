@@ -8,9 +8,9 @@ import by.vorakh.alex.spring_company.repository.entity.PersonalData;
 
 @Component
 public class PersonalDataOutsourceToPersonalDataConverter implements 
-	Converter<ExternalPersonalData, PersonalData> {
+        Converter<ExternalPersonalData, PersonalData> {
     @Override
     public PersonalData convert(ExternalPersonalData source) {
-	return new PersonalData(source.getFirstName(), source.getLastName());
+        return new PersonalData(source.getFirstName(), source.getLastName());
     }
 }

@@ -7,9 +7,10 @@ import by.vorakh.alex.spring_company.model.external.ExternalSkill;
 import by.vorakh.alex.spring_company.repository.entity.Skill;
 
 @Component
-public class SkillOutsourceToSkillConverter implements Converter<ExternalSkill,Skill>{
+public class SkillOutsourceToSkillConverter implements 
+        Converter<ExternalSkill,Skill>{
     @Override
     public Skill convert(ExternalSkill source) {
-	return new Skill(source.getSkillName());
+        return new Skill(source.getSkillName());
     }
 }

@@ -8,9 +8,9 @@ import by.vorakh.alex.spring_company.repository.entity.JobTitle;
 
 @Component
 public final class JobTitleToJobTitleViewModelConverter implements 
-	Converter<JobTitle, JobTitleViewModel> {
+        Converter<JobTitle, JobTitleViewModel> {
     @Override
     public JobTitleViewModel convert(JobTitle source) {
-	return new JobTitleViewModel(source.getId(), source.getTitle());
+        return new JobTitleViewModel(source.getId(), source.getTitle());
     }
 }

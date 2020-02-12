@@ -23,12 +23,14 @@ public class EmployeeOutsourceToEmployeeConverter implements
     
     @Override
     public Employee convert(ExternalEmployee source) {
-	List<Skill> skillList = new ArrayList<>();
-	source.getSkills().forEach(someSkill -> {
-	    skillList.add(skillOutsourceConverter.convert(someSkill));    
-	});
-	
-	return new Employee(personalDataOutsourceConverter.convert(source.getPersonalData()), 
-		jobTitleOutsourceConverter.convert(source.getJobTitle()), skillList);
+        List<Skill> skillList = new ArrayList<>();
+        source.getSkills().forEach(someSkill -> {
+            skillList.add(skillOutsourceConverter.convert(someSkill));    
+        });
+        	
+        return new Employee(personalDataOutsourceConverter
+                .convert(source.getPersonalData()), 
+                      jobTitleOutsourceConverter.convert(source.getJobTitle()), 
+                      skillList);
     }
 }

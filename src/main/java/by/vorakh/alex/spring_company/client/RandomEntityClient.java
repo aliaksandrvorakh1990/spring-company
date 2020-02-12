@@ -31,7 +31,7 @@ public class RandomEntityClient {
     }
   
     private Single<ExternalJobTitle> getRandomJobTitleSingle() {
-	HttpClientRequest<ByteBuf, ByteBuf> request = client
+        HttpClientRequest<ByteBuf, ByteBuf> request = client
                 .createGet(URL_RANDOM_JOB);
         return request.flatMap(HttpClientResponse::getContent)
                 .compose(CollectBytes.all())

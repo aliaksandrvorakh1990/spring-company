@@ -8,9 +8,10 @@ import by.vorakh.alex.spring_company.repository.entity.PersonalData;
 
 @Component
 public final class PersonalDataToPersonalDataViewModelConverter
-	implements Converter<PersonalData, PersonalDataViewModel> {
+        implements Converter<PersonalData, PersonalDataViewModel> {
     @Override
     public PersonalDataViewModel convert(PersonalData source) {
-	return new PersonalDataViewModel(source.getId(), source.getFirstName(), source.getLastName());
+        return new PersonalDataViewModel(source.getId(), source.getFirstName(), 
+                source.getLastName());
     }
 }
