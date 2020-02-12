@@ -20,10 +20,11 @@ public class CompanyViewModel implements Serializable {
     
     public CompanyViewModel() {}
     
-    public CompanyViewModel(Integer id, String name, List<EmployeeViewModel> employeeList) {
-	this.id = id;
-	this.name = name;
-	this.employeeList = employeeList;
+    public CompanyViewModel(Integer id, String name, 
+            List<EmployeeViewModel> employeeList) {
+      	this.id = id;
+      	this.name = name;
+      	this.employeeList = employeeList;
     }
     
     public CompanyViewModel setId(Integer id) {
@@ -36,7 +37,8 @@ public class CompanyViewModel implements Serializable {
         return this;
     }
 
-    public CompanyViewModel setEmployeeList(List<EmployeeViewModel> employeeList) {
+    public CompanyViewModel setEmployeeList(List<EmployeeViewModel> 
+            employeeList) {
         this.employeeList = employeeList;
         return this;
     }
@@ -55,44 +57,50 @@ public class CompanyViewModel implements Serializable {
     
         @Override
     public String toString() {
-	return "CompanyViewModel [id=" + id + ", name=" + name + ", employeeList=" + employeeList + "]";
+        return "CompanyViewModel [id=" + id + ", name=" + name + 
+                ", employeeList=" + employeeList + "]";
     }
 
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + id; 
-	result = prime * result + ((name == null) ? 0 : name.hashCode());
-	return prime * result + ((employeeList == null) ? 0 : employeeList.hashCode());
+      	final int prime = 31;
+      	int result = 1;
+      	result = prime * result + id; 
+      	result = prime * result + ((name == null) ? 0 : name.hashCode());
+      	return prime * result + ((employeeList == null) 
+                ? 0 
+                : employeeList.hashCode());
     }
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj) {
-	    return true;
-	}
-	if (obj == null || getClass() != obj.getClass()) {
-	    return false;
-	}
-	CompanyViewModel other = (CompanyViewModel) obj;
-	if (id != other.id) {
-	    return false;
-	} 
-	if (name == null) {
-	    if (other.name != null) {
-		return false;
-	    }
-	} else if (!name.equals(other.name)) {
-	    return false;
-	}  
-	if (employeeList == null) {
-	    if (other.employeeList != null) {
-		return false;
-	    }
-	} else if (!employeeList.equals(other.employeeList)) {
-	    return false;
-	}
-	return true;
+      	if (this == obj) {
+      	    return true;
+      	}
+      	if (obj == null) {
+      	    return false;
+      	}
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+      	CompanyViewModel other = (CompanyViewModel) obj;
+      	if (id != other.id) {
+      	    return false;
+      	} 
+      	if (name == null) {
+      	    if (other.name != null) {
+      		      return false;
+      	    }
+      	} else if (!name.equals(other.name)) {
+      	    return false;
+      	}  
+      	if (employeeList == null) {
+      	    if (other.employeeList != null) {
+      		      return false;
+      	    }
+      	} else if (!employeeList.equals(other.employeeList)) {
+      	    return false;
+      	}
+      	return true;
     }
 }

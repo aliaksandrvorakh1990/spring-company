@@ -54,9 +54,12 @@ public class ExternalPersonalData implements  Serializable {
       	if (this == obj) {
       	    return true;
       	}
-      	if (obj == null || getClass() != obj.getClass()) {
+      	if (obj == null) {
       	    return false;
       	}
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
       	ExternalPersonalData other = (ExternalPersonalData) obj;
       	if (firstName == null) {
       	    if (other.firstName != null) {

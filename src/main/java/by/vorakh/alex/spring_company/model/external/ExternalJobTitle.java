@@ -39,9 +39,12 @@ public class ExternalJobTitle implements  Serializable {
       	if (this == obj) {
       	    return true;
       	}
-      	if (obj == null || getClass() != obj.getClass()) {
+      	if (obj == null) {
       	    return false;
       	}
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
       	ExternalJobTitle other = (ExternalJobTitle) obj;
       	if (title == null) {
       	    if (other.title != null) {

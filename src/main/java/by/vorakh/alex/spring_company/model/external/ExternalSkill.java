@@ -38,9 +38,15 @@ public class ExternalSkill implements  Serializable {
 
     @Override
     public boolean equals(Object obj) {
-      	if (this == obj || obj == null || getClass() != obj.getClass()) {
-      	    return false;
+      	if (this == obj) {
+      	    return true;
       	}
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
       	ExternalSkill other = (ExternalSkill) obj;
       	if (skillName == null) {
       	    if (other.skillName != null) {

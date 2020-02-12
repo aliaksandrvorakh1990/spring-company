@@ -17,8 +17,8 @@ public class SkillViewModel implements Serializable  {
     public SkillViewModel() {}
     
     public SkillViewModel(int id, String skillName) {
-	this.id = id;
-	this.skillName = skillName;
+      	this.id = id;
+      	this.skillName = skillName;
     }
     
     public SkillViewModel setId(int id) {
@@ -41,7 +41,7 @@ public class SkillViewModel implements Serializable  {
 
     @Override
     public String toString() {
-	return "SkillViewModel [id=" + id + ", skillName=" + skillName + "]";
+        return "SkillViewModel [id=" + id + ", skillName=" + skillName + "]";
     }
 
     @Override
@@ -54,20 +54,26 @@ public class SkillViewModel implements Serializable  {
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj || obj == null || getClass() != obj.getClass()) {
-	    return false;
-	}
-	SkillViewModel other = (SkillViewModel) obj;
-	if (id != other.id) {
-	    return false;
-	}   
-	if (skillName == null) {
-	    if (other.skillName != null) {
-		return false;
-	    }	
-	} else if (!skillName.equals(other.skillName)) {
-	    return false;
-	}   
-	return true;
+      	if (this == obj) {
+      	    return true;
+      	}
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+      	SkillViewModel other = (SkillViewModel) obj;
+      	if (id != other.id) {
+      	    return false;
+      	}   
+      	if (skillName == null) {
+      	    if (other.skillName != null) {
+      		      return false;
+      	    }	
+      	} else if (!skillName.equals(other.skillName)) {
+      	    return false;
+      	}   
+      	return true;
     }
 }
