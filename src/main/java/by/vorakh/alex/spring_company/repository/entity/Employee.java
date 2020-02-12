@@ -26,8 +26,8 @@ public class Employee implements Serializable {
     @NotNull
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "employee_to_skill",
-        joinColumns = @JoinColumn(name = "employee_id"),
-        inverseJoinColumns = @JoinColumn(name = "skill_id"))
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id"))
     private List<Skill> skills;
 
     public Employee() {}
@@ -110,7 +110,10 @@ public class Employee implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (obj == null || getClass() != obj.getClass()) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
             return false;
         }
         Employee other = (Employee) obj;
