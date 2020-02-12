@@ -22,88 +22,95 @@ public class EmployeeDAO implements DAO<Employee> {
     @SuppressWarnings("unchecked")
     @Override
     public List<Employee> getAll() {
-	return entityManager.createQuery("select e from Employee e").getResultList();
+        return entityManager.createQuery("select e from Employee e")
+                .getResultList();
     }
     
     public List<Employee> getAll(List<Integer> employeeIdList) {
-	List<Employee> employeeList = new ArrayList<>();
-	
-	for (Integer employeeId : employeeIdList) {
-	    employeeList.add(entityManager.find(Employee.class, employeeId));
-	}
-	
-	return employeeList;
+      	List<Employee> employeeList = new ArrayList<>();
+      	
+      	for (Integer employeeId : employeeIdList) {
+      	    employeeList.add(entityManager.find(Employee.class, employeeId));
+      	}
+      	
+      	return employeeList;
     }
     
     @SuppressWarnings("unchecked")
     public List<Employee> getAll(Skill skill) {
-	 Query query = entityManager.createQuery("select e from Employee e "
-	 	+ "WHERE :skill in elements(e.skillList)");
-	 return query.setParameter("skill", skill).getResultList();
+        Query query = entityManager.createQuery("select e from Employee e " + 
+                "WHERE :skill in elements(e.skillList)");
+        return query.setParameter("skill", skill).getResultList();
     }
     
     @Override
     public Employee getById(int id) {
-	return entityManager.find(Employee.class, id);
+        return entityManager.find(Employee.class, id);
     }
 
     @Override
     public int create(Employee object) {
-	entityManager.persist(object);
-	entityManager.flush();
-	return object.getId();
+      	entityManager.persist(object);
+      	entityManager.flush();
+      	return object.getId();
     }
 
     @Override
     public void update(Employee object) {
-	entityManager.merge(object);
+        entityManager.merge(object);
     }
 
     @Override
     public void delete(Employee object) {
-	entityManager.remove(object);
+        entityManager.remove(object);
     }
     
     public void delete(PersonalData personalData) {
-	Query query = entityManager.createQuery("DELETE FROM Employee e WHERE e.personalData = :p");
-	query.setParameter("p", personalData).executeUpdate();
+      	Query query = entityManager.createQuery("DELETE FROM Employee e " + 
+                "WHERE e.personalData = :p");
+      	query.setParameter("p", personalData).executeUpdate();
     }
     
     public void delete(JobTitle jobTitle) {
-	Query query = entityManager.createQuery("DELETE FROM Employee e WHERE e.jobTitle = :j");
-	query.setParameter("j", jobTitle).executeUpdate();
+      	Query query = entityManager.createQuery("DELETE FROM Employee e " + 
+                "WHERE e.jobTitle = :j");
+      	query.setParameter("j", jobTitle).executeUpdate();
     }
 
     @Override
     public boolean isContained(Employee object) {
-	return findExisted(object) != null;
+        return findExisted(object) != null;
     }
     
     public boolean isContained(PersonalData personalData) {
-   	return findExisted(personalData) != null;
-       }
+   	    return findExisted(personalData) != null;
+    }
 
     @Override
     public Employee createAndGet(Employee object) {
-	entityManager.persist(object);
-	entityManager.flush();
-	return object;
+      	entityManager.persist(object);
+      	entityManager.flush();
+      	return object;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public Employee findExisted(Employee object) {
-	Query query = entityManager.createQuery("select e from Employee e "
-	 	+ "WHERE e.personalData = :p");
-	query.setParameter("p", object.getPersonalData());
-	return (Employee) query.getResultList().stream().findFirst().orElse(null);
+      	Query query = entityManager.createQuery("select e from Employee e "
+      	 	+ "WHERE e.personalData = :p");
+      	query.setParameter("p", object.getPersonalData());
+      	return (Employee) query.getResultList().stream()
+                .findFirst()
+                .orElse(null);
     }
     
     @SuppressWarnings("unchecked")
     public Employee findExisted(PersonalData personalData) {
-	Query query = entityManager.createQuery("select e from Employee e "
-	 	+ "WHERE e.personalData = :p");
-	query.setParameter("p", personalData);
-	return (Employee) query.getResultList().stream().findFirst().orElse(null);
+      	Query query = entityManager.createQuery("select e from Employee e "	+ 
+                "WHERE e.personalData = :p");
+      	query.setParameter("p", personalData);
+      	return (Employee) query.getResultList().stream()
+                .findFirst()
+                .orElse(null);
     }
 }

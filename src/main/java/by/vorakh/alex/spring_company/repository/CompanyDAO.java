@@ -18,7 +18,8 @@ public class CompanyDAO implements DAO<Company> {
     @SuppressWarnings("unchecked")
     @Override
     public List<Company> getAll() {
-        return entityManager.createQuery("select c from Company c").getResultList();
+        return entityManager.createQuery("select c from Company c")
+                .getResultList();
     }
 
     @Override
@@ -30,12 +31,12 @@ public class CompanyDAO implements DAO<Company> {
     public int create(Company object) {
         entityManager.persist(object);
         entityManager.flush();
-	return object.getId();
+        return object.getId();
     }
 
     @Override
     public void update(Company object) {
-	entityManager.merge(object);
+        entityManager.merge(object);
     }
 
     @Override
@@ -45,34 +46,38 @@ public class CompanyDAO implements DAO<Company> {
 
     @Override
     public boolean isContained(Company object) {
-	return findExisted(object) != null;
+        return findExisted(object) != null;
     }
     
     public boolean isContained(String companyName) {
-	return findExisted(companyName) != null;
+	     return findExisted(companyName) != null;
     }
 
     @Override
     public Company createAndGet(Company object) {
-	entityManager.persist(object);
-	entityManager.flush();
-	return object;
+      	entityManager.persist(object);
+      	entityManager.flush();
+      	return object;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public Company findExisted(Company object) {
-	Query query = entityManager.createQuery("select c from Company c "
-	 	+ "WHERE c.name = :p");
-	query.setParameter("p", object.getName());
-	return (Company) query.getResultList().stream().findFirst().orElse(null);
+      	Query query = entityManager.createQuery("select c from Company c "+ 
+                "WHERE c.name = :p");
+      	query.setParameter("p", object.getName());
+      	return (Company) query.getResultList().stream()
+                .findFirst()
+                .orElse(null);
     }
     
     @SuppressWarnings("unchecked")
     public Company findExisted(String companyName) {
-	Query query = entityManager.createQuery("select c from Company c "
-	 	+ "WHERE c.name = :p");
-	query.setParameter("p", companyName);
-	return (Company) query.getResultList().stream().findFirst().orElse(null);
+      	Query query = entityManager.createQuery("select c from Company c " + 
+                "WHERE c.name = :p");
+      	query.setParameter("p", companyName);
+      	return (Company) query.getResultList().stream()
+                .findFirst()
+                .orElse(null);
     }
 }

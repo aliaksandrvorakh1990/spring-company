@@ -64,16 +64,20 @@ public class SkillDAO implements DAO < Skill > {
     @Override
     public Skill findExisted(Skill entity) {
         Query query = entityManager.createQuery("select s from Skill s " +
-            "WHERE s.skillName = :p");
+                "WHERE s.skillName = :p");
         query.setParameter("p", entity.getName());
-        return (Skill) query.getResultList().stream().findFirst().orElse(null);
+        return (Skill) query.getResultList().stream()
+                .findFirst()
+                .orElse(null);
     }
 
     @SuppressWarnings("unchecked")
     public Skill findExisted(String skillName) {
         Query query = entityManager.createQuery("select s from Skill s " +
-            "WHERE s.skillName = :p");
+                "WHERE s.skillName = :p");
         query.setParameter("p", skillName);
-        return (Skill) query.getResultList().stream().findFirst().orElse(null);
+        return (Skill) query.getResultList().stream()
+                .findFirst()
+                .orElse(null);
     }
 }
