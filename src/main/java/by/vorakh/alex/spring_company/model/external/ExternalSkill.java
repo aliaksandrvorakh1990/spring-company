@@ -10,7 +10,7 @@ public class ExternalSkill implements  Serializable {
     public ExternalSkill() {}
     
     public ExternalSkill(String skillName) {
-	this.skillName = skillName;
+        this.skillName = skillName;
     }
 
     public ExternalSkill setSkillName(String skillName) {
@@ -24,29 +24,31 @@ public class ExternalSkill implements  Serializable {
 
     @Override
     public String toString() {
-	return "SkillOutsource[skillName=" + skillName + "]";
+        return "SkillOutsource[skillName=" + skillName + "]";
     }
 
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	return prime * result + ((skillName == null) ? 0 : skillName.hashCode());
+      	final int prime = 31;
+      	int result = 1;
+      	return prime * result + ((skillName == null) 
+                ? 0 
+                : skillName.hashCode());
     }
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj || obj == null || getClass() != obj.getClass()) {
-	    return false;
-	}
-	ExternalSkill other = (ExternalSkill) obj;
-	if (skillName == null) {
-	    if (other.skillName != null) {
-		return false;
-	    }	
-	} else if (!skillName.equals(other.skillName)) {
-	    return false;
-	}   
-	return true;
+      	if (this == obj || obj == null || getClass() != obj.getClass()) {
+      	    return false;
+      	}
+      	ExternalSkill other = (ExternalSkill) obj;
+      	if (skillName == null) {
+      	    if (other.skillName != null) {
+      		      return false;
+      	    }	
+      	} else if (!skillName.equals(other.skillName)) {
+      	    return false;
+      	}   
+      	return true;
     }
 }

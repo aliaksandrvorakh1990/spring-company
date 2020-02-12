@@ -11,8 +11,8 @@ public class ExternalPersonalData implements  Serializable {
     public ExternalPersonalData() {}
     
     public ExternalPersonalData(String firstName, String lastName) {
-	this.firstName = firstName;
-	this.lastName = lastName;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public ExternalPersonalData setFirstName(String firstName) {
@@ -35,41 +35,44 @@ public class ExternalPersonalData implements  Serializable {
 
     @Override
     public String toString() {
-	return "PersonalDataOutsource[firstName=" + firstName + ", lastName=" + lastName + "]";
+        return "PersonalDataOutsource[firstName=" + firstName + 
+                ", lastName=" + lastName + "]";
     }
 
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-	return prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((firstName == null) 
+                ? 0 
+                : firstName.hashCode());
+        return prime * result + ((lastName == null) ? 0 : lastName.hashCode());
     }
 
     @Override
     public boolean equals(Object obj) {
-	if (this == obj) {
-	    return true;
-	}
-	if (obj == null || getClass() != obj.getClass()) {
-	    return false;
-	}
-	ExternalPersonalData other = (ExternalPersonalData) obj;
-	if (firstName == null) {
-	    if (other.firstName != null) {
-		return false;
-	    }
-	} else if (!firstName.equals(other.firstName)) {
-	    return false;
-	}
-	if (lastName == null) {
-	    if (other.lastName != null) {
-		return false;
-	    }
-	} else if (!lastName.equals(other.lastName)) {
-	    return false;
-	}
-	    
-	return true;
+      	if (this == obj) {
+      	    return true;
+      	}
+      	if (obj == null || getClass() != obj.getClass()) {
+      	    return false;
+      	}
+      	ExternalPersonalData other = (ExternalPersonalData) obj;
+      	if (firstName == null) {
+      	    if (other.firstName != null) {
+      		      return false;
+      	    }
+      	} else if (!firstName.equals(other.firstName)) {
+      	    return false;
+      	}
+      	if (lastName == null) {
+      	    if (other.lastName != null) {
+      		      return false;
+      	    }
+      	} else if (!lastName.equals(other.lastName)) {
+      	    return false;
+      	}
+      	    
+      	return true;
     }
 }
