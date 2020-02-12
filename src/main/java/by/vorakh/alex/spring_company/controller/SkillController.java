@@ -37,11 +37,10 @@ public class SkillController {
     private SkillService skillService;
     
     @ApiOperation(value = "Get a list of existing skils from the database",
-	    response = SkillViewModel.class,
-	    responseContainer = "List")
+            response = SkillViewModel.class, responseContainer = "List")
     @ApiResponses({
-	    @ApiResponse(code = 500, message = "Problems with server")
-	})
+        @ApiResponse(code = 500, message = "Problems with server")
+    })
     @GetMapping("/skills")
     public List<SkillViewModel> getSkills() {
         return skillService.getAll();
@@ -51,53 +50,57 @@ public class SkillController {
 	    notes = "ID has to be greater than zero.", 
 	    response = SkillViewModel.class)
     @ApiResponses({
-	    @ApiResponse(code = 500, message = "The skill does not exist or Problems with server")
-	})
+        @ApiResponse(code = 500, message = "The skill does not exist or " 
+                + "Problems with server")
+    })
     @GetMapping("/skills/{id}")
     public SkillViewModel getSkill(
-	    @ApiParam(value = "The skill will be gotten from the database by his ID", required = true)
-	    @PathVariable("id")@Valid @Positive @NotNull Integer id) {
+            @ApiParam(value = "The skill will be gotten from the database" 
+                    + " by his ID", required = true)
+            @PathVariable("id")@Valid @Positive @NotNull Integer id) {
         return skillService.getById(id);
     }
 
     @ApiOperation(value = "Create an skill in the database",
-	    response = IdViewModel.class)
+            response = IdViewModel.class)
     @ApiResponses({
-	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
-	    @ApiResponse(
-		    code = 500, 
-		    message = "The skill was not created in the database or Problems with server"),
-	})
+        @ApiResponse(code = 400, message = "Bad Request: wrong data"),
+        @ApiResponse(code = 500,message = "The skill was not created " 
+                + "in the database or Problems with server"),
+    })
     @PostMapping("/skills")
     public IdViewModel createSkill(
-	    @ApiParam(value = "The skill data for creating in the database.", required = true)
-	    @Valid @RequestBody SkillPayload newSkill) {
-	return skillService.create(newSkill);
+            @ApiParam(value = "The skill data for creating in the database.", 
+                    required = true)
+            @Valid @RequestBody SkillPayload newSkill) {
+        return skillService.create(newSkill);
     }
 
     @ApiOperation("Update an existing skill in the database.")
     @ApiResponses({
-	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
-	    @ApiResponse(code = 500, 
-		    message = "The skill was not updated in the database or Problems with server")
-	})
+        @ApiResponse(code = 400, message = "Bad Request: wrong data"),
+        @ApiResponse(code = 500, message = "The skill was not updated " 
+                + "in the database or Problems with server")
+    })
     @PutMapping("/skills/")
     public void updateSkill(
-	    @ApiParam(value = "The skill data for updating in the database.", required = true)
-	    @Valid @RequestBody SkillPayload editedSkill) {
+            @ApiParam(value = "The skill data for updating in the database.", 
+                    required = true)
+            @Valid @RequestBody SkillPayload editedSkill) {
         skillService.update(editedSkill);
     }
 
     @ApiOperation(value = "Delete an existing skill by Id from the database.", 
-	    notes = "ID has to be greater than zero.")
+            notes = "ID has to be greater than zero.")
     @ApiResponses({
-	    @ApiResponse(code = 500, 
-		    message = "The skill was not delated from the database or Problems with server")
-	})
+        @ApiResponse(code = 500, message = "The skill was not delated " 
+                + "from the database or Problems with server")
+    })
     @DeleteMapping("/skills/{id}")
     public void deleteSkill(
-	    @ApiParam(value = "The skill will be deleted from the database by his ID.", required = true)
-	    @PathVariable("id") @Valid @Positive @NotNull Integer id) {
-	skillService.delete(id);
+            @ApiParam(value = "The skill will be deleted from the database " 
+                    + "by his ID.", required = true)
+            @PathVariable("id") @Valid @Positive @NotNull Integer id) {
+        skillService.delete(id);
     }
 }

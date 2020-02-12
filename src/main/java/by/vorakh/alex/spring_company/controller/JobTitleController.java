@@ -37,66 +37,70 @@ public class JobTitleController {
     private JobTitleService jobTitleService;
     
     @ApiOperation(value = "Get a list of existing job titles from the database",
-	    response = JobTitleViewModel.class,
-	    responseContainer = "List")
+            response = JobTitleViewModel.class, responseContainer = "List")
     @ApiResponses({
-	    @ApiResponse(code = 500, message = "Problems with server")
-	})
+        @ApiResponse(code = 500, message = "Problems with server")
+    })
     @GetMapping("/jobs")
     public List<JobTitleViewModel> getJobTitles() {
         return jobTitleService.getAll();
     }
 
     @ApiOperation(value = "Get an job title by Id from the database", 
-	    notes = "ID has to be greater than zero.", 
-	    response = JobTitleViewModel.class)
+            notes = "ID has to be greater than zero.", 
+            response = JobTitleViewModel.class)
     @ApiResponses({
-	    @ApiResponse(code = 500, message = "The job title does not exist or Problems with server")
-	})
+        @ApiResponse(code = 500, message = "The job title does not exist or " 
+                + "Problems with server")
+    })
     @GetMapping("/jobs/{id}")
     public JobTitleViewModel getJobTitle(
-	    @ApiParam(value = "The job title will be gotten from the database by his ID", required = true)
-	    @PathVariable("id") @Positive @NotNull Integer id) {
+            @ApiParam(value = "The job title will be gotten from the database " 
+                    + "by his ID", required = true)
+            @PathVariable("id") @Positive @NotNull Integer id) {
         return jobTitleService.getById(id);
     }
 
-    @ApiOperation(value = "Create a job title in the database",
-	    response = IdViewModel.class)
+    @ApiOperation(value = "Create a job title in the database", 
+            response = IdViewModel.class)
     @ApiResponses({
-	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
-	    @ApiResponse(code = 500, 
-		    message = "The job title was not created in the database or Problems with server"),
-	})
+        @ApiResponse(code = 400, message = "Bad Request: wrong data"),
+        @ApiResponse(code = 500,message = "The job title was not created "
+                + "in the database or Problems with server"),
+    })
     @PostMapping("/jobs")
     public IdViewModel createJobTitle(
-	    @ApiParam(value = "The job title data for creating in the database.", required = true)
-	    @Valid @RequestBody JobTitlePayload newJobTitle) {	
-	return jobTitleService.create(newJobTitle);
+            @ApiParam(value = "The jobtitle data for creating in the database.", 
+                    required = true)
+            @Valid @RequestBody JobTitlePayload newJobTitle) {	
+        return jobTitleService.create(newJobTitle);
     }
 
     @ApiOperation("Update an existing job title in the database.")
     @ApiResponses({
-	    @ApiResponse(code = 400, message = "Bad Request: wrong data"),
-	    @ApiResponse(code = 500, 
-		    message = "The job title was not updated in the database or Problems with server")
-	})
+        @ApiResponse(code = 400, message = "Bad Request: wrong data"),
+        @ApiResponse(code = 500, message = "The job title was not updated " 
+                  + "in the database or Problems with server")
+    })
     @PutMapping("/jobs/")
     public void updateJobTitle(
-	    @ApiParam(value = "The job title data for updating in the database.", required = true)
-	    @Valid @RequestBody JobTitlePayload editedJobTitle) {
+            @ApiParam(value = "The jobtitle data for updating in the database.", 
+                    required = true)
+            @Valid @RequestBody JobTitlePayload editedJobTitle) {
         jobTitleService.update(editedJobTitle);
     }
 
-    @ApiOperation(value = "Delete an existing job title by Id from the database.", 
-	    notes = "ID has to be greater than zero.")
+    @ApiOperation(value = "Delete an existing jobtitle by Id from the database.", 
+            notes = "ID has to be greater than zero.")
     @ApiResponses({
-	    @ApiResponse(code = 500, 
-		    message = "The job title was not delated from the database or Problems with server")
-	})
+        @ApiResponse(code = 500, message = "The job title was not delated " 
+                + "from the database or Problems with server")
+    })
     @DeleteMapping("/jobs/{id}")
     public void deleteJobTitle(
-	    @ApiParam(value = "The job title will be deleted from the database by his ID.", required = true)
-	    @PathVariable("id") @Positive @NotNull Integer id) {
-	jobTitleService.delete(id);
+      	    @ApiParam(value = "The job title will be deleted from the database " 
+                    + "by his ID.", required = true)
+      	    @PathVariable("id") @Positive @NotNull Integer id) {
+        jobTitleService.delete(id);
     }
 }
