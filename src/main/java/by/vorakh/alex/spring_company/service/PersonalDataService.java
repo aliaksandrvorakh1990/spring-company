@@ -32,13 +32,13 @@ public class PersonalDataService implements
     
     @Override
     public List<PersonalDataViewModel> getAll() {
-      	List<PersonalDataViewModel> personalDataViewModellist = 
+        List<PersonalDataViewModel> personalDataViewModellist = 
                 new ArrayList<>();
-      	personalDataDAO.getAll().forEach(personalData -> {
-      	    personalDataViewModellist.add(convertor.convert(personalData));
-      	});
-      	
-      	return personalDataViewModellist;
+        personalDataDAO.getAll().forEach(personalData -> {
+            personalDataViewModellist.add(convertor.convert(personalData));
+        });
+        
+        return personalDataViewModellist;
     }
 
     @Override
@@ -54,104 +54,104 @@ public class PersonalDataService implements
     @Override
     @Transactional
     public IdViewModel create(PersonalDataPayload newPayload) {
-      	int createdID;
-      	
-      	PersonalData newPersonalData;
-      	
-      	newPersonalData = new PersonalData(newPayload.getFirstName(), 
+        int createdID;
+        
+        PersonalData newPersonalData;
+        
+        newPersonalData = new PersonalData(newPayload.getFirstName(), 
                 newPayload.getLastName());
-      	
-      	try {
-      	    createdID= personalDataDAO.create(newPersonalData);
-      	    return new IdViewModel(createdID);
-      	} catch (EntityExistsException e) {
-      	    throw new ServiceException("The \"" + newPersonalData + "\" cannot " 
+        
+        try {
+            createdID= personalDataDAO.create(newPersonalData);
+            return new IdViewModel(createdID);
+        } catch (EntityExistsException e) {
+            throw new ServiceException("The \"" + newPersonalData + "\" cannot " 
                     + "be created, because to exist in database.", e);
-      	} catch (IllegalArgumentException ex) {
-      	    throw new ServiceException("The PERSONAL_DATA cannot be created, " 
+        } catch (IllegalArgumentException ex) {
+            throw new ServiceException("The PERSONAL_DATA cannot be created, " 
                     + "because " + newPersonalData 
                     + " is not a PERSONAL_DATA .", ex);
-      	} catch (javax.persistence.TransactionRequiredException exc) { 
-      	    throw new ServiceException("The \"" + newPersonalData 
+        } catch (javax.persistence.TransactionRequiredException exc) { 
+            throw new ServiceException("The \"" + newPersonalData 
                     + "\" cannot be created, NO Transaction.", exc);
-      	} catch (javax.persistence.PersistenceException ex1) { 
-      	    throw new ServiceException("The \"" + newPersonalData + "\" cannot" 
+        } catch (javax.persistence.PersistenceException ex1) { 
+            throw new ServiceException("The \"" + newPersonalData + "\" cannot" 
                     + " be created, the database is not updated.", ex1);
-      	} 
+        } 
     }
     
     @Transactional
     public PersonalDataViewModel createAndGet(
             ExternalPersonalData extemalSource) {
-      	PersonalData newPersonalData = extermalSourceConvertor
+        PersonalData newPersonalData = extermalSourceConvertor
                 .convert(extemalSource);
-      	return createAndGet(newPersonalData);
+        return createAndGet(newPersonalData);
     }
 
     @Transactional
     public PersonalDataViewModel createAndGet(PersonalData newPersonalData) {
-	       return convertor.convert(createAndGetWithId(newPersonalData));
+               return convertor.convert(createAndGetWithId(newPersonalData));
     }
   
     @Transactional
     public PersonalData createAndGetWithId(PersonalData newPersonalData) {
-      	try {
-      	    return personalDataDAO.createAndGet(newPersonalData);
-      	} catch (EntityExistsException e) {
-      	    throw new ServiceException("The \"" + newPersonalData +  "\" cannot" 
+        try {
+            return personalDataDAO.createAndGet(newPersonalData);
+        } catch (EntityExistsException e) {
+            throw new ServiceException("The \"" + newPersonalData +  "\" cannot" 
                     + " be created, because to exist in database.", e);
         } catch (IllegalArgumentException ex) {
-      	    throw new ServiceException("The PERSONAL_DATA cannot be created, " 
+            throw new ServiceException("The PERSONAL_DATA cannot be created, " 
                     + "because " + newPersonalData +" is not a Skill.", ex);
-      	} catch (javax.persistence.TransactionRequiredException exc) { 
-      	    throw new ServiceException("The \"" + newPersonalData + "\" cannot " 
+        } catch (javax.persistence.TransactionRequiredException exc) { 
+            throw new ServiceException("The \"" + newPersonalData + "\" cannot " 
                     + "be created, NO Transaction.", exc);
-      	} catch (javax.persistence.PersistenceException ex1) { 
-      	    throw new ServiceException("The \"" + newPersonalData + "\" cannot " 
+        } catch (javax.persistence.PersistenceException ex1) { 
+            throw new ServiceException("The \"" + newPersonalData + "\" cannot " 
                     + "be created, the database is not updated.", ex1);
-      	} 
+        } 
     }
     
     @Override
     @Transactional
     public void update(PersonalDataPayload editedPayload) {
-      	PersonalData personalDataForEditing = personalDataDAO
+        PersonalData personalDataForEditing = personalDataDAO
                 .getById(editedPayload.getId());
-      	personalDataForEditing
-      		      .setFirstName(editedPayload.getFirstName())
-      		      .setLastName(editedPayload.getLastName());
-      	try {
-      	    personalDataDAO.update(personalDataForEditing);
-      	} catch (IllegalArgumentException ex) {
-      	    throw new ServiceException("The PERSONAL_DATA cannot be updated, " 
+        personalDataForEditing
+                      .setFirstName(editedPayload.getFirstName())
+                      .setLastName(editedPayload.getLastName());
+        try {
+            personalDataDAO.update(personalDataForEditing);
+        } catch (IllegalArgumentException ex) {
+            throw new ServiceException("The PERSONAL_DATA cannot be updated, " 
                     + "because " + personalDataForEditing 
                     + " is not a PERSONAL_DATA object.", ex);
-      	} catch (javax.persistence.TransactionRequiredException exc) { 
-      	    throw new ServiceException("The \"" + personalDataForEditing 
+        } catch (javax.persistence.TransactionRequiredException exc) { 
+            throw new ServiceException("The \"" + personalDataForEditing 
                     + "\" cannot be updated, NO Transaction.", exc);
-      	}
+        }
     }
 
     @Override
     @Transactional
     public void delete(int id) {
-      	PersonalData deletedPersonalData = personalDataDAO.getById(id);
+        PersonalData deletedPersonalData = personalDataDAO.getById(id);
         
-      	if (deletedPersonalData == null) {
-      	    throw new ServiceException("The PERSONAL_DATA with \'" + id + 
-      		    "\' ID cannot be deleted, because to no exist in database");
-      	}
+        if (deletedPersonalData == null) {
+            throw new ServiceException("The PERSONAL_DATA with \'" + id 
+                    + "\' ID cannot be deleted, because to no exist in database");
+        }
         
-      	employeeService.delete(deletedPersonalData);
-      	try {
-      	    personalDataDAO.delete(deletedPersonalData);
-      	} catch (IllegalArgumentException ex) {
-      	    throw new ServiceException("The PERSONAL_DATA cannot be deleted," 
+        employeeService.delete(deletedPersonalData);
+        try {
+            personalDataDAO.delete(deletedPersonalData);
+        } catch (IllegalArgumentException ex) {
+            throw new ServiceException("The PERSONAL_DATA cannot be deleted," 
                     + " because " + deletedPersonalData 
                     + " is not a PERSONAL_DATA object.", ex);
-      	} catch (javax.persistence.TransactionRequiredException exc) { 
-      	    throw new ServiceException("The \"" + deletedPersonalData
+        } catch (javax.persistence.TransactionRequiredException exc) { 
+            throw new ServiceException("The \"" + deletedPersonalData
                     +  "\" cannot be deleted, NO Transaction.", exc);
-      	}
+        }
     }
 }
