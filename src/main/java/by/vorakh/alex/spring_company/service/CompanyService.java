@@ -60,7 +60,6 @@ public class CompanyService implements
     @Override
     @Transactional
     public IdViewModel create(CompanyPayload newPayload) {
-        int createdID;
         String name = newPayload.getName();
         if (companyDAO.isContained(name)) {
             throw new ServiceException("The \"" + name + 
@@ -73,7 +72,7 @@ public class CompanyService implements
       	Company newCompany =  new Company(name, employeeList);
       	
       	try {
-      	    createdID = companyDAO.create(newCompany);
+      	    int createdID = companyDAO.create(newCompany);
       	    return new IdViewModel(createdID);
       	} catch (EntityExistsException e) {
       	    throw new ServiceException("The \"" + newCompany  
@@ -106,8 +105,8 @@ public class CompanyService implements
         
         if (editedCompany == null) {
             throw new ServiceException("The Company cannot be updated, because " 
-                  + "the Company with \'"+ id 
-                  +"\' ID does not exist in database.");
+                    + "the Company with \'"+ id 
+                    +"\' ID does not exist in database.");
         }
         
         Set<Employee> employeeList = employeeService

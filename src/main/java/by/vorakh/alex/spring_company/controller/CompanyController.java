@@ -116,7 +116,7 @@ public class CompanyController {
     })
     @GetMapping("/companies/{id}/random-employee")
     @ResponseBody
-    public  DeferredResult<EmployeeViewModel> getRandomEmployee(
+    public DeferredResult<EmployeeViewModel> getRandomEmployee(
             @ApiParam(value = "company id", required = true)
             @PathVariable("id") @Positive @NotNull Integer id) throws 
             InterruptedException {
