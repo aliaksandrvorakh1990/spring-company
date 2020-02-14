@@ -101,19 +101,19 @@ public class SkillService implements
       	} else {
       	    Skill returnedSkill;
       	    try {
-            		returnedSkill = skillDAO.createAndGet(newSkill);
-            		return returnedSkill;
+                returnedSkill = skillDAO.createAndGet(newSkill);
+            	return returnedSkill;
       	    } catch (EntityExistsException e) {
-      		      throw new ServiceException("The \"" + skillName + "\" cannot " 
+      		throw new ServiceException("The \"" + skillName + "\" cannot " 
                         + "be created, because to exist in database.", e);
       	    } catch (IllegalArgumentException ex) {
-        		    throw new ServiceException("The SKILL cannot be created, " 
+        	throw new ServiceException("The SKILL cannot be created, " 
                         + "because " + newSkill +  " is not a Skill.", ex);
       	    }  catch (javax.persistence.TransactionRequiredException exc) { 
-        		    throw new ServiceException("The \"" + skillName + "\" cannot " 
+        	throw new ServiceException("The \"" + skillName + "\" cannot " 
                         + "be created, NO Transaction.", exc);
       	    } catch (javax.persistence.PersistenceException ex1) { 
-      		      throw new ServiceException("The \"" + skillName + "\" cannot " 
+      		throw new ServiceException("The \"" + skillName + "\" cannot " 
                         + "be created, the database is not updated.", ex1);
       	    } 
       	}
